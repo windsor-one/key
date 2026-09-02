@@ -24,19 +24,6 @@ const historiasSwiper = new Swiper('.mySwiperHistorias', {
     loop: true
 });
 
-// Swiper Aliados
-const aliadosSwiper = new Swiper('.mySwiperAliados', {
-    slidesPerView: 2,
-    spaceBetween: 20,
-    breakpoints: {
-        640: { slidesPerView: 3 },
-        1024: { slidesPerView: 5 }
-    },
-    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-    pagination: { el: '.swiper-pagination', clickable: true },
-    autoplay: { delay: 4000 }
-});
-
 // Contadores animados (Pilares)
 const counters = document.querySelectorAll('.numero[data-target]');
 const observer = new IntersectionObserver((entries) => {
