@@ -32,7 +32,6 @@ img {
     display: block;
 }
 
-/* Contenedor con padding lateral mínimo */
 .container {
     max-width: 100%;
     padding: 0 10px;
@@ -152,7 +151,7 @@ img {
     cursor: pointer;
 }
 
-/* ===== HERO (sin degradados, colores sólidos) ===== */
+/* ===== HERO (colores sólidos) ===== */
 .hero {
     background: #f5f7fa;
     padding: 40px 0;
@@ -339,7 +338,7 @@ img {
     background: var(--secondary);
 }
 
-/* ===== TRAYECTORIA (sin degradados, 4 colores complementarios) ===== */
+/* ===== TRAYECTORIA (4 colores sólidos) ===== */
 .historias {
     background: #f0f4f8;
     padding: 50px 0;
@@ -379,7 +378,6 @@ img {
 .timeline-content:hover {
     transform: scale(1.02);
 }
-/* Colores sólidos de la paleta para los 4 bloques */
 .bg-yellow {
     background-color: var(--yellow);
     color: var(--primary);
@@ -424,28 +422,7 @@ img {
     font-weight: 700;
 }
 
-/* ===== ALIADOS ===== */
-.aliados {
-    padding: 50px 0;
-    text-align: center;
-}
-.aliados h4 {
-    font-size: 1.8rem;
-    margin-bottom: 30px;
-    color: var(--primary);
-}
-.aliados .swiper-slide img {
-    max-height: 80px;
-    width: auto;
-    margin: 0 auto;
-    filter: grayscale(20%);
-    transition: 0.3s;
-}
-.aliados .swiper-slide img:hover {
-    filter: grayscale(0%);
-}
-
-/* ===== FOOTER (blanco, texto oscuro) ===== */
+/* ===== FOOTER (blanco) ===== */
 .footer {
     background: #ffffff;
     color: var(--primary);
