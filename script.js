@@ -12,8 +12,6 @@ function hidePreloader() {
 window.addEventListener("load", () => {
     setTimeout(hidePreloader, 450);
 });
-
-// Fallback
 setTimeout(hidePreloader, 2000);
 
 /* HEADER */
