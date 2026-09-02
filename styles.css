@@ -32,7 +32,7 @@ img {
     display: block;
 }
 
-/* Contenedor con padding lateral mínimo para aprovechar todo el ancho */
+/* Contenedor con padding lateral mínimo */
 .container {
     max-width: 100%;
     padding: 0 10px;
@@ -152,7 +152,7 @@ img {
     cursor: pointer;
 }
 
-/* ===== HERO ===== */
+/* ===== HERO (sin degradados, colores sólidos) ===== */
 .hero {
     background: #f5f7fa;
     padding: 40px 0;
@@ -193,7 +193,7 @@ img {
     flex: 1;
     min-width: 280px;
 }
-.swiper-slide .slide-bg {
+.slide-bg {
     background-size: cover;
     background-position: center;
     height: 250px;
@@ -206,6 +206,10 @@ img {
     font-size: 1.2rem;
     text-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
+.slide-bg-secondary { background-color: var(--secondary); }
+.slide-bg-purple    { background-color: var(--purple); }
+.slide-bg-orange    { background-color: var(--orange); }
+
 .swiper-slide .slide-btn {
     background: var(--orange);
     padding: 8px 24px;
@@ -254,8 +258,9 @@ img {
     color: var(--primary);
 }
 .card p {
-    color: #555;
+    color: #333;
     margin-bottom: 18px;
+    text-align: left;
 }
 .card p strong {
     color: var(--secondary);
@@ -291,7 +296,6 @@ img {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 30px;
 }
-/* Iconos de pilares (reemplazan al logo) */
 .pilar-icon {
     font-size: 4rem;
     color: var(--secondary);
@@ -335,7 +339,7 @@ img {
     background: var(--secondary);
 }
 
-/* ===== TRAYECTORIA (antes "Historias") ===== */
+/* ===== TRAYECTORIA (sin degradados, 4 colores complementarios) ===== */
 .historias {
     background: #f0f4f8;
     padding: 50px 0;
@@ -375,12 +379,35 @@ img {
 .timeline-content:hover {
     transform: scale(1.02);
 }
+/* Colores sólidos de la paleta para los 4 bloques */
+.bg-yellow {
+    background-color: var(--yellow);
+    color: var(--primary);
+}
+.bg-yellow .timeline-year {
+    color: var(--primary);
+}
+.bg-orange {
+    background-color: var(--orange);
+    color: #fff;
+}
+.bg-purple {
+    background-color: var(--purple);
+    color: #fff;
+}
+.bg-green {
+    background-color: var(--green);
+    color: #fff;
+}
 .timeline-year {
     font-size: 2.8rem;
     font-weight: 800;
     color: var(--yellow);
     line-height: 1;
     margin-bottom: 8px;
+}
+.bg-yellow .timeline-year {
+    color: var(--primary);
 }
 .timeline-title {
     font-size: 1.4rem;
@@ -391,6 +418,10 @@ img {
     font-size: 0.95rem;
     opacity: 0.9;
     line-height: 1.5;
+}
+.timeline-desc strong {
+    opacity: 1;
+    font-weight: 700;
 }
 
 /* ===== ALIADOS ===== */
@@ -522,7 +553,7 @@ img {
     .hero-text h2 {
         font-size: 1.8rem;
     }
-    .hero-slider .slide-bg {
+    .slide-bg {
         height: 180px;
     }
     .timeline-content {
@@ -556,5 +587,8 @@ img {
     }
     .timeline-desc {
         font-size: 0.85rem;
+    }
+    .card p {
+        text-align: center;
     }
 }
