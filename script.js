@@ -11,16 +11,17 @@ const heroSwiper = new Swiper('.mySwiperHero', {
     pagination: { el: '.swiper-pagination', clickable: true }
 });
 
-// Swiper Historias
+// Swiper Trayectoria (antes Historias)
 const historiasSwiper = new Swiper('.mySwiperHistorias', {
     slidesPerView: 1,
     spaceBetween: 20,
     breakpoints: {
         640: { slidesPerView: 2 },
-        1024: { slidesPerView: 4 }
+        1024: { slidesPerView: 3 }
     },
     pagination: { el: '.swiper-pagination', clickable: true },
-    autoplay: { delay: 5000 }
+    autoplay: { delay: 5000 },
+    loop: true
 });
 
 // Swiper Aliados
