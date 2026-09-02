@@ -196,39 +196,62 @@ img {
     min-width: 280px;
 }
 .slide-bg {
-    background-size: cover;
-    background-position: center;
     height: 250px;
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
+    text-align: center;
+}
+.slide-bg-primary { background-color: var(--primary); }
+.slide-bg-secondary { background-color: var(--secondary); }
+.slide-bg-purple { background-color: var(--purple); }
+
+.slide-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+.slide-title {
+    font-size: 1.4rem;
     font-weight: 700;
-    font-size: 1.2rem;
     text-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
-.slide-bg-secondary { background-color: var(--secondary); }
-.slide-bg-purple    { background-color: var(--purple); }
-.slide-bg-orange    { background-color: var(--orange); }
-
-.swiper-slide .slide-btn {
+.slide-btn {
     background: var(--orange);
+    color: #fff;
     padding: 8px 24px;
     border-radius: 40px;
-    display: inline-block;
-    margin-top: 12px;
     font-weight: 600;
+    transition: 0.3s;
 }
-.swiper-slide .slide-btn:hover {
+.slide-btn:hover {
     background: var(--yellow);
     color: var(--primary);
 }
 .swiper-button-next, .swiper-button-prev {
-    color: var(--secondary);
+    color: #fff;
+    background: rgba(0,0,0,0.3);
+    padding: 16px;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    transition: 0.3s;
+}
+.swiper-button-next:hover, .swiper-button-prev:hover {
+    background: rgba(0,0,0,0.6);
+}
+.swiper-button-next:after, .swiper-button-prev:after {
+    font-size: 18px;
+}
+.swiper-pagination-bullet {
+    background: rgba(255,255,255,0.6);
 }
 .swiper-pagination-bullet-active {
-    background: var(--secondary);
+    background: var(--orange);
 }
 
 /* ===== TARJETAS ===== */
@@ -345,7 +368,7 @@ img {
 /* ===== TRAYECTORIA ===== */
 .historias {
     background: #f0f4f8;
-    padding: 50px 0;
+    padding: 50px 0 70px;
     text-align: center;
 }
 .historias h2 {
@@ -356,6 +379,9 @@ img {
 .historias .sub {
     color: #555;
     margin-bottom: 30px;
+}
+.swiper-wrapper-container {
+    position: relative;
 }
 .historias .swiper-slide {
     border-radius: 12px;
@@ -423,6 +449,26 @@ img {
 .timeline-desc strong {
     opacity: 1;
     font-weight: 700;
+}
+/* Paginación fuera del swiper */
+.swiper-pagination-historias {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+.swiper-pagination-historias .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: var(--secondary);
+    opacity: 0.4;
+    border-radius: 50%;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.swiper-pagination-historias .swiper-pagination-bullet-active {
+    background: var(--orange);
+    opacity: 1;
 }
 
 /* ===== FOOTER ===== */
@@ -535,6 +581,9 @@ img {
     }
     .slide-bg {
         height: 180px;
+    }
+    .slide-title {
+        font-size: 1.1rem;
     }
     .timeline-content {
         padding: 30px 20px;
