@@ -11,7 +11,7 @@ const heroSwiper = new Swiper('.mySwiperHero', {
     pagination: { el: '.swiper-pagination', clickable: true }
 });
 
-// Swiper Historias de Éxito
+// Swiper Historias
 const historiasSwiper = new Swiper('.mySwiperHistorias', {
     slidesPerView: 1,
     spaceBetween: 20,
