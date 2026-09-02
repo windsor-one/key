@@ -9,22 +9,24 @@
     <!-- CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
-    <!-- Estilos propios (el CSS que ya tienes) -->
+    <!-- Estilos propios -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <!-- ===== HEADER ===== -->
 <header>
-    <div class="top-bar container">
-        <div class="menu-sup">
-            <a href="#">AYUDANDO A QUIENES AYUDAN</a>
-            <a href="#">OPORTUNIDADES</a>
-            <a href="#">TUCHANCE</a>
-            <a href="#">KREA</a>
-        </div>
-        <div>
-            <a href="#" class="donar-btn">DONACIONES</a>
+    <div class="top-bar">
+        <div class="container top-bar-inner">
+            <div class="menu-sup">
+                <a href="#">AYUDANDO A QUIENES AYUDAN</a>
+                <a href="#">OPORTUNIDADES</a>
+                <a href="#">TUCHANCE</a>
+                <a href="#">KREA</a>
+            </div>
+            <div>
+                <a href="#" class="donar-btn">DONACIONES</a>
+            </div>
         </div>
     </div>
     <div class="main-header container">
@@ -70,96 +72,102 @@
 </header>
 
 <!-- ===== HERO ===== -->
-<section class="hero container">
-    <div class="hero-text">
-        <h2>21 años trabajando para construir <span class="highlight">una sociedad más solidaria</span></h2>
-        <a href="#" class="btn">Conoce más</a>
-    </div>
-    <div class="hero-slider">
-        <div class="swiper mySwiperHero">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="slide-bg" style="background: linear-gradient(135deg, #0A42A0, #070921);">
-                        <div>
-                            <div>Dona y transforma vidas</div>
-                            <a href="#" class="slide-btn">CONOCER MÁS</a>
+<section class="hero">
+    <div class="container hero-inner">
+        <div class="hero-text">
+            <h2>21 años trabajando para construir <strong>una sociedad más solidaria</strong></h2>
+            <a href="#" class="btn">Conoce más</a>
+        </div>
+        <div class="hero-slider">
+            <div class="swiper mySwiperHero">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="slide-bg" style="background: linear-gradient(135deg, #0A42A0, #070921);">
+                            <div>
+                                <div>Dona y transforma vidas</div>
+                                <a href="#" class="slide-btn">CONOCER MÁS</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="slide-bg" style="background: linear-gradient(135deg, #8E24AA, #070921);">
+                            <div>
+                                <div>Nuevos episodios cada semana</div>
+                                <a href="#" class="slide-btn">Suscribirse</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="slide-bg" style="background: linear-gradient(135deg, #FF6D00, #070921);">
+                            <div>
+                                <div>Aplica aquí</div>
+                                <a href="#" class="slide-btn">Conoce más</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <div class="slide-bg" style="background: linear-gradient(135deg, #8E24AA, #070921);">
-                        <div>
-                            <div>Nuevos episodios cada semana</div>
-                            <a href="#" class="slide-btn">Suscribirse</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="slide-bg" style="background: linear-gradient(135deg, #FF6D00, #070921);">
-                        <div>
-                            <div>Aplica aquí</div>
-                            <a href="#" class="slide-btn">Conoce más</a>
-                        </div>
-                    </div>
-                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
             </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div>
         </div>
     </div>
 </section>
 
 <!-- ===== TARJETAS ===== -->
-<section class="cards container">
-    <div class="card">
-        <h3>¿Quiénes Somos?</h3>
-        <p>Somos los que multiplican la transformación para que el impacto trascienda en sus vidas y en la de los que los rodean.</p>
-        <a href="#" class="btn-small">Conoce más</a>
-    </div>
-    <div class="card">
-        <h3>¿Cómo Ayudamos?</h3>
-        <p>Equipamos con herramientas necesarias y formamos a los actores de la sociedad para que tengan más acceso a oportunidades.</p>
-        <a href="#" class="btn-small">Conoce más</a>
-    </div>
-    <div class="card">
-        <h3>Nuestro Impacto</h3>
-        <p>Más de 3 millones de salvadoreños impactados en infraestructura, desarrollo comunitario, juventud y prevención.</p>
-        <a href="#" class="btn-small">Conoce más</a>
+<section class="cards">
+    <div class="container cards-grid">
+        <div class="card">
+            <h3>¿Quiénes Somos?</h3>
+            <p>Somos los que multiplican la transformación para que el impacto trascienda en sus vidas y en la de los que los rodean.</p>
+            <a href="#" class="btn-small">Conoce más</a>
+        </div>
+        <div class="card">
+            <h3>¿Cómo Ayudamos?</h3>
+            <p>Equipamos con herramientas necesarias y formamos a los actores de la sociedad para que tengan más acceso a oportunidades.</p>
+            <a href="#" class="btn-small">Conoce más</a>
+        </div>
+        <div class="card">
+            <h3>Nuestro Impacto</h3>
+            <p>Más de 3 millones de salvadoreños impactados en infraestructura, desarrollo comunitario, juventud y prevención.</p>
+            <a href="#" class="btn-small">Conoce más</a>
+        </div>
     </div>
 </section>
 
 <!-- ===== PILARES ===== -->
-<section class="pilares container" id="pilares">
-    <h2>Pilares de Gestión</h2>
-    <p class="sub">Impacto por pilar 2025</p>
-    <div class="pilares-grid">
-        <div class="pilar-item">
-            <img src="./assets/logo-simbolo.png" alt="Educación">
-            <h4>Educación</h4>
-            <div class="numero" data-target="8.4">0</div><span class="numero-sufijo">K</span>
-            <div class="label">beneficiados</div>
+<section class="pilares" id="pilares">
+    <div class="container">
+        <h2>Pilares de Gestión</h2>
+        <p class="sub">Impacto por pilar 2025</p>
+        <div class="pilares-grid">
+            <div class="pilar-item">
+                <img src="./assets/logo-simbolo.png" alt="Educación">
+                <h4>Educación</h4>
+                <div class="numero" data-target="8.4">0</div><span class="numero-sufijo">K</span>
+                <div class="label">beneficiados</div>
+            </div>
+            <div class="pilar-item">
+                <img src="./assets/logo-simbolo.png" alt="Empleabilidad">
+                <h4>Empleabilidad</h4>
+                <div class="numero" data-target="26">0</div><span class="numero-sufijo">K</span>
+                <div class="label">beneficiados</div>
+            </div>
+            <div class="pilar-item">
+                <img src="./assets/logo-simbolo.png" alt="Colaboración">
+                <h4>Colaboración</h4>
+                <div class="numero" data-target="40">0</div><span class="numero-sufijo">K</span>
+                <div class="label">beneficiados</div>
+            </div>
+            <div class="pilar-item">
+                <img src="./assets/logo-simbolo.png" alt="Salud">
+                <h4>Salud</h4>
+                <div class="numero" data-target="29.8">0</div><span class="numero-sufijo">K</span>
+                <div class="label">beneficiados</div>
+            </div>
         </div>
-        <div class="pilar-item">
-            <img src="./assets/logo-simbolo.png" alt="Empleabilidad">
-            <h4>Empleabilidad</h4>
-            <div class="numero" data-target="26">0</div><span class="numero-sufijo">K</span>
-            <div class="label">beneficiados</div>
-        </div>
-        <div class="pilar-item">
-            <img src="./assets/logo-simbolo.png" alt="Colaboración">
-            <h4>Colaboración</h4>
-            <div class="numero" data-target="40">0</div><span class="numero-sufijo">K</span>
-            <div class="label">beneficiados</div>
-        </div>
-        <div class="pilar-item">
-            <img src="./assets/logo-simbolo.png" alt="Salud">
-            <h4>Salud</h4>
-            <div class="numero" data-target="29.8">0</div><span class="numero-sufijo">K</span>
-            <div class="label">beneficiados</div>
-        </div>
+        <a href="#" class="btn-memoria">Leer Memoria de Labores 2025</a>
     </div>
-    <a href="#" class="btn-memoria">Leer Memoria de Labores 2025</a>
 </section>
 
 <!-- ===== HISTORIAS DE ÉXITO ===== -->
@@ -170,19 +178,19 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <div class="img" style="background-image: url('https://via.placeholder.com/400x180/0A42A0/fff?text=Ecoletrinas');"></div>
-                    <div style="padding:12px;"><i class="fas fa-play-circle play" style="font-size:2.8rem; color:#FF6D00;"></i></div>
+                    <div style="padding:12px;"><i class="fas fa-play-circle play" style="font-size:2.5rem; color:#FF6D00;"></i></div>
                 </div>
                 <div class="swiper-slide">
                     <div class="img" style="background-image: url('https://via.placeholder.com/400x180/8E24AA/fff?text=ADESCO');"></div>
-                    <div style="padding:12px;"><i class="fas fa-play-circle play" style="font-size:2.8rem; color:#FF6D00;"></i></div>
+                    <div style="padding:12px;"><i class="fas fa-play-circle play" style="font-size:2.5rem; color:#FF6D00;"></i></div>
                 </div>
                 <div class="swiper-slide">
                     <div class="img" style="background-image: url('https://via.placeholder.com/400x180/00C853/fff?text=Sarai+Moreno');"></div>
-                    <div style="padding:12px;"><i class="fas fa-play-circle play" style="font-size:2.8rem; color:#FF6D00;"></i></div>
+                    <div style="padding:12px;"><i class="fas fa-play-circle play" style="font-size:2.5rem; color:#FF6D00;"></i></div>
                 </div>
                 <div class="swiper-slide">
                     <div class="img" style="background-image: url('https://via.placeholder.com/400x180/FFEB3B/000?text=Daniel+Echeverria');"></div>
-                    <div style="padding:12px;"><i class="fas fa-play-circle play" style="font-size:2.8rem; color:#FF6D00;"></i></div>
+                    <div style="padding:12px;"><i class="fas fa-play-circle play" style="font-size:2.5rem; color:#FF6D00;"></i></div>
                 </div>
             </div>
             <div class="swiper-pagination"></div>
@@ -191,20 +199,22 @@
 </section>
 
 <!-- ===== ALIADOS ===== -->
-<section class="aliados container">
-    <h4>Aliados Estratégicos</h4>
-    <div class="swiper mySwiperAliados">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://via.placeholder.com/120x80/ccc/fff?text=Aliado1" alt=""></div>
-            <div class="swiper-slide"><img src="https://via.placeholder.com/120x80/ccc/fff?text=Aliado2" alt=""></div>
-            <div class="swiper-slide"><img src="https://via.placeholder.com/120x80/ccc/fff?text=Aliado3" alt=""></div>
-            <div class="swiper-slide"><img src="https://via.placeholder.com/120x80/ccc/fff?text=Aliado4" alt=""></div>
-            <div class="swiper-slide"><img src="https://via.placeholder.com/120x80/ccc/fff?text=Aliado5" alt=""></div>
-            <div class="swiper-slide"><img src="https://via.placeholder.com/120x80/ccc/fff?text=Aliado6" alt=""></div>
+<section class="aliados">
+    <div class="container">
+        <h4>Aliados Estratégicos</h4>
+        <div class="swiper mySwiperAliados">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="https://via.placeholder.com/120x80/ccc/fff?text=Aliado1" alt=""></div>
+                <div class="swiper-slide"><img src="https://via.placeholder.com/120x80/ccc/fff?text=Aliado2" alt=""></div>
+                <div class="swiper-slide"><img src="https://via.placeholder.com/120x80/ccc/fff?text=Aliado3" alt=""></div>
+                <div class="swiper-slide"><img src="https://via.placeholder.com/120x80/ccc/fff?text=Aliado4" alt=""></div>
+                <div class="swiper-slide"><img src="https://via.placeholder.com/120x80/ccc/fff?text=Aliado5" alt=""></div>
+                <div class="swiper-slide"><img src="https://via.placeholder.com/120x80/ccc/fff?text=Aliado6" alt=""></div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
         </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-pagination"></div>
     </div>
 </section>
 
