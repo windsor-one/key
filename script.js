@@ -11,7 +11,7 @@ const heroSwiper = new Swiper('.mySwiperHero', {
     pagination: { el: '.swiper-pagination', clickable: true }
 });
 
-// Swiper Trayectoria
+// Swiper Trayectoria con paginación personalizada fuera del contenedor
 const historiasSwiper = new Swiper('.mySwiperHistorias', {
     slidesPerView: 1,
     spaceBetween: 20,
@@ -19,12 +19,15 @@ const historiasSwiper = new Swiper('.mySwiperHistorias', {
         640: { slidesPerView: 2 },
         1024: { slidesPerView: 3 }
     },
-    pagination: { el: '.swiper-pagination', clickable: true },
+    pagination: {
+        el: '.swiper-pagination-historias',
+        clickable: true
+    },
     autoplay: { delay: 5000 },
     loop: true
 });
 
-// Contadores animados (con números enteros)
+// Contadores animados (números enteros)
 const counters = document.querySelectorAll('.numero[data-target]');
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -32,7 +35,7 @@ const observer = new IntersectionObserver((entries) => {
             const el = entry.target;
             const target = parseFloat(el.dataset.target);
             let current = 0;
-            const step = Math.ceil(target / 60); // paso entero para números pequeños
+            const step = Math.ceil(target / 60);
             const timer = setInterval(() => {
                 current += step;
                 if (current >= target) {
