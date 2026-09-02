@@ -24,7 +24,7 @@ const historiasSwiper = new Swiper('.mySwiperHistorias', {
     loop: true
 });
 
-// Contadores animados (Pilares)
+// Contadores animados (con números enteros)
 const counters = document.querySelectorAll('.numero[data-target]');
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -32,14 +32,14 @@ const observer = new IntersectionObserver((entries) => {
             const el = entry.target;
             const target = parseFloat(el.dataset.target);
             let current = 0;
-            const step = target / 60;
+            const step = Math.ceil(target / 60); // paso entero para números pequeños
             const timer = setInterval(() => {
                 current += step;
                 if (current >= target) {
                     clearInterval(timer);
                     el.textContent = target;
                 } else {
-                    el.textContent = current.toFixed(1);
+                    el.textContent = Math.floor(current);
                 }
             }, 30);
             observer.unobserve(el);
