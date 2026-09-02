@@ -44,12 +44,14 @@ img {
     background: var(--primary);
     color: #fff;
     padding: 6px 0;
+    position: relative;
 }
 .top-bar-inner {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    position: relative;
 }
 .top-bar .menu-sup {
     display: flex;
@@ -66,6 +68,8 @@ img {
     border-radius: 20px;
     font-weight: 600;
     font-size: 0.8rem;
+    position: absolute;
+    right: 10px;
 }
 .main-header {
     display: flex;
@@ -284,9 +288,18 @@ img {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 30px;
 }
-.pilar-item img {
-    width: 80px;
+/* Iconos de pilares (reemplazan al logo) */
+.pilar-icon {
+    font-size: 4rem;
+    color: var(--secondary);
+    display: block;
     margin: 0 auto 12px;
+    width: auto;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+.pilar-item:hover .pilar-icon {
+    transform: scale(1.1);
 }
 .pilar-item h4 {
     font-size: 1.2rem;
@@ -441,7 +454,11 @@ img {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .top-bar .menu-sup {
-        display: none;
+        display: none; /* Oculto en móvil, se muestra en el menú hamburguesa */
+    }
+    .top-bar .donar-btn {
+        position: static;
+        margin: 4px auto;
     }
     .main-header {
         flex-wrap: wrap;
