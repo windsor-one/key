@@ -1118,3 +1118,105 @@ img {
         padding: 15px;
     }
 }
+/* ============================================================
+   PÁGINA LEGAL
+   ============================================================ */
+
+.legal-indice {
+    padding: 30px 0 20px;
+    background: #fff;
+}
+.indice-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.indice-list li a {
+    font-size: 1rem;
+    color: var(--secondary);
+    font-weight: 600;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    transition: 0.3s;
+}
+.indice-list li a:hover {
+    color: var(--primary);
+    border-bottom-color: var(--orange);
+}
+
+.legal-secciones {
+    padding: 20px 0 60px;
+    background: #f9f9f9;
+}
+.legal-block {
+    background: #fff;
+    border-radius: 12px;
+    padding: 40px 35px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    border-left: 6px solid var(--secondary);
+}
+.legal-block h2 {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.legal-block h2 i {
+    color: var(--secondary);
+    font-size: 1.6rem;
+}
+.legal-block p {
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 16px;
+    font-size: 1rem;
+}
+.legal-block ul {
+    padding-left: 24px;
+    margin-bottom: 16px;
+}
+.legal-block ul li {
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 6px;
+    font-size: 1rem;
+}
+.legal-block ul li strong {
+    color: var(--primary);
+}
+.legal-block a {
+    color: var(--secondary);
+    text-decoration: underline;
+}
+.legal-block a:hover {
+    color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    .indice-list {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    .legal-block {
+        padding: 25px 20px;
+    }
+    .legal-block h2 {
+        font-size: 1.5rem;
+    }
+}
+@media (max-width: 480px) {
+    .legal-block {
+        padding: 20px 15px;
+    }
+    .legal-block h2 {
+        font-size: 1.3rem;
+    }
+}
