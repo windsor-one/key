@@ -1,4 +1,4 @@
-// Menú móvil
+// ===== MENÚ MÓVIL =====
 document.getElementById('menuToggle').addEventListener('click', function() {
     document.getElementById('mainNav').classList.toggle('open');
 });
@@ -10,7 +10,7 @@ document.querySelectorAll('.nav-principal a').forEach(link => {
     });
 });
 
-// Swiper Hero (solo si existe en la página)
+// ===== SWIPER HERO =====
 if (document.querySelector('.mySwiperHero')) {
     const heroSwiper = new Swiper('.mySwiperHero', {
         loop: true,
@@ -20,7 +20,7 @@ if (document.querySelector('.mySwiperHero')) {
     });
 }
 
-// Swiper Trayectoria (solo si existe en la página)
+// ===== SWIPER TRAYECTORIA =====
 if (document.querySelector('.mySwiperHistorias')) {
     const historiasSwiper = new Swiper('.mySwiperHistorias', {
         slidesPerView: 1,
@@ -38,7 +38,7 @@ if (document.querySelector('.mySwiperHistorias')) {
     });
 }
 
-// Contadores animados (solo si existen en la página)
+// ===== CONTADORES ANIMADOS =====
 const counters = document.querySelectorAll('.numero[data-target]');
 if (counters.length > 0) {
     const observer = new IntersectionObserver((entries) => {
@@ -62,4 +62,37 @@ if (counters.length > 0) {
         });
     }, { threshold: 0.5 });
     counters.forEach(c => observer.observe(c));
+}
+
+// ===== MANEJO DE ENLACES DEL MENÚ (secciones en desarrollo) =====
+document.querySelectorAll('.menu-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const section = this.getAttribute('data-section') || 'esta sección';
+        alert('La sección "' + section + '" se encuentra en desarrollo. Pronto estará disponible.');
+    });
+});
+
+// ===== MANEJO DEL BOTÓN "PRÓXIMAMENTE" (Memoria de Labores) =====
+const btnMemoria = document.getElementById('btnMemoria');
+if (btnMemoria) {
+    btnMemoria.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('La Memoria de Labores estará disponible próximamente.');
+    });
+}
+
+// ===== MANEJO DEL FORMULARIO DE BOLETÍN =====
+const btnSuscripcion = document.getElementById('btnSuscripcion');
+if (btnSuscripcion) {
+    btnSuscripcion.addEventListener('click', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('emailInput').value.trim();
+        if (email === '') {
+            alert('Por favor, ingresa tu correo electrónico.');
+        } else {
+            alert('Gracias por tu interés. El servicio de suscripción estará disponible próximamente.');
+            document.getElementById('emailInput').value = '';
+        }
+    });
 }
