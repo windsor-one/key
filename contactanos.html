@@ -63,33 +63,40 @@
     </div>
 </section>
 
-<!-- ===== FORMULARIO DE CONTACTO ===== -->
-<section class="contacto-formulario" style="padding: 50px 0; background: #f9f9f9;">
+<!-- ===== FORMULARIO DE CONTACTO con FormSubmit ===== -->
+<section class="contacto-formulario">
     <div class="container">
         <h2 class="section-title"><i class="fas fa-pencil-alt" style="margin-right: 12px; color: var(--secondary);"></i> Envíanos un mensaje</h2>
-        <form id="formContacto" class="form-contacto">
+
+        <!-- FormSubmit: cambia info@key.org.sv por tu correo real -->
+        <form id="formContacto" class="form-contacto" action="https://formsubmit.co/info@key.org.sv" method="POST">
+            
+            <!-- Campos ocultos de FormSubmit -->
+            <input type="hidden" name="_subject" value="Nuevo mensaje desde Key">
+            <input type="hidden" name="_captcha" value="true">
+            <input type="hidden" name="_template" value="table">
+            <!-- Redirige a una página de agradecimiento (opcional) -->
+            <!-- <input type="hidden" name="_next" value="https://key.org.sv/gracias.html"> -->
+
             <div class="form-group">
                 <label for="nombre">Nombre completo</label>
-                <input type="text" id="nombre" placeholder="Tu nombre" required>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
             </div>
             <div class="form-group">
                 <label for="correo">Correo electrónico</label>
-                <input type="email" id="correo" placeholder="tucorreo@ejemplo.com" required>
+                <input type="email" id="correo" name="email" placeholder="tucorreo@ejemplo.com" required>
             </div>
             <div class="form-group">
                 <label for="mensaje">Mensaje</label>
-                <textarea id="mensaje" rows="5" placeholder="Cuéntanos cómo podemos ayudarte..." required></textarea>
+                <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos cómo podemos ayudarte..." required></textarea>
             </div>
             <button type="submit" class="btn-enviar">Enviar mensaje</button>
         </form>
-        <div id="mensajeConfirmacion" style="display:none; margin-top: 20px; padding: 15px; background: var(--green); color: #fff; border-radius: 8px; text-align: center;">
-            <i class="fas fa-check-circle"></i> ¡Gracias por contactarnos! Tu mensaje ha sido enviado. Te responderemos a la brevedad.
-        </div>
     </div>
 </section>
 
 <!-- ===== AVISO ===== -->
-<section class="contacto-aviso" style="padding: 0 0 40px; background: #f9f9f9;">
+<section class="contacto-aviso">
     <div class="container">
         <div class="aviso-block" style="border-left: 6px solid var(--orange); padding: 25px 30px; max-width: 100%; background: #fff; border-radius: 0 8px 8px 0;">
             <p style="margin-bottom: 0; font-size: 1rem; color: #333;">
