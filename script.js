@@ -65,7 +65,6 @@ if (counters.length > 0) {
 }
 
 // ===== MANEJO DE ENLACES DEL MENÚ (secciones en desarrollo) =====
-// Solo para los que aún no tienen página (ej: si quedan otros)
 document.querySelectorAll('.menu-link').forEach(link => {
     link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -95,23 +94,5 @@ if (btnSuscripcion) {
             alert('Gracias por tu interés. El servicio de suscripción estará disponible próximamente.');
             document.getElementById('emailInput').value = '';
         }
-    });
-}
-
-// ===== MANEJO DEL FORMULARIO DE CONTACTO =====
-const formContacto = document.getElementById('formContacto');
-if (formContacto) {
-    formContacto.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const nombre = document.getElementById('nombre').value.trim();
-        const correo = document.getElementById('correo').value.trim();
-        const mensaje = document.getElementById('mensaje').value.trim();
-        if (nombre === '' || correo === '' || mensaje === '') {
-            alert('Por favor, completa todos los campos.');
-            return;
-        }
-        // Ocultar formulario y mostrar confirmación
-        formContacto.style.display = 'none';
-        document.getElementById('mensajeConfirmacion').style.display = 'block';
     });
 }
