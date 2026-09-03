@@ -81,18 +81,3 @@ if (btnMemoria) {
         alert('La Memoria de Labores estará disponible próximamente.');
     });
 }
-
-// ===== MANEJO DEL FORMULARIO DE BOLETÍN =====
-const btnSuscripcion = document.getElementById('btnSuscripcion');
-if (btnSuscripcion) {
-    btnSuscripcion.addEventListener('click', function(e) {
-        e.preventDefault();
-        const email = document.getElementById('emailInput').value.trim();
-        if (email === '') {
-            alert('Por favor, ingresa tu correo electrónico.');
-        } else {
-            alert('Gracias por tu interés. El servicio de suscripción estará disponible próximamente.');
-            document.getElementById('emailInput').value = '';
-        }
-    });
-}
