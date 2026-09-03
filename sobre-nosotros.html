@@ -212,8 +212,13 @@
         </div>
         <div class="col-news">
             <h3>¡Únete a nuestro boletín!</h3>
-            <input type="email" id="emailInput" placeholder="Correo electrónico">
-            <button id="btnSuscripcion">SUSCRÍBETE</button>
+            <form id="formBoletin" class="form-boletin" action="https://formsubmit.co/alexhrnndz32@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="Nueva suscripción al boletín de Key">
+                <input type="hidden" name="_captcha" value="true">
+                <input type="hidden" name="_template" value="table">
+                <input type="email" id="emailInput" name="email" placeholder="Correo electrónico" required>
+                <button type="submit">SUSCRÍBETE</button>
+            </form>
         </div>
     </div>
     <div class="social">
