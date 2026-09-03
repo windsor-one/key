@@ -156,7 +156,7 @@
                 <p>Plataforma que reúne becas, empleo, capacitación, emprendimiento y más.</p>
                 <a href="https://www.tuchance.org.sv/" target="_blank" class="btn-conoce-mas">Conoce más</a>
             </div>
-            <!-- Tarjeta 2: Oportunidades FGK (nueva) -->
+            <!-- Tarjeta 2: Oportunidades FGK -->
             <div class="card-oportunidad">
                 <div class="card-oportunidad-icon" style="background: var(--purple);">
                     <i class="fas fa-university"></i>
@@ -178,10 +178,10 @@
     </div>
 </section>
 
-<!-- ===== AVISO LEGAL (sin fondo, solo línea) ===== -->
+<!-- ===== AVISO LEGAL ===== -->
 <section class="oportunidades-aviso">
     <div class="container">
-        <div class="aviso-block" style="border-left: 6px solid var(--orange); padding: 25px 30px; max-width: 100%;">
+        <div class="aviso-block" style="border-left: 6px solid var(--orange); padding: 25px 30px; max-width: 100%; background: #fff; border-radius: 0 8px 8px 0;">
             <p style="margin-bottom: 0; font-size: 1rem; color: #333;">
                 <strong>Importante:</strong> Las oportunidades y recursos publicados en esta sección pertenecen a sus respectivas organizaciones y plataformas. Key no garantiza la disponibilidad, admisión o selección de participantes. Recomendamos consultar directamente los requisitos y condiciones de cada oportunidad.
             </p>
@@ -202,8 +202,13 @@
         </div>
         <div class="col-news">
             <h3>¡Únete a nuestro boletín!</h3>
-            <input type="email" id="emailInput" placeholder="Correo electrónico">
-            <button id="btnSuscripcion">SUSCRÍBETE</button>
+            <form id="formBoletin" class="form-boletin" action="https://formsubmit.co/alexhrnndz32@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="Nueva suscripción al boletín de Key">
+                <input type="hidden" name="_captcha" value="true">
+                <input type="hidden" name="_template" value="table">
+                <input type="email" id="emailInput" name="email" placeholder="Correo electrónico" required>
+                <button type="submit">SUSCRÍBETE</button>
+            </form>
         </div>
     </div>
     <div class="social">
