@@ -506,50 +506,10 @@ img {
     border-radius: 2px;
 }
 
-/* Frase destacada con botón de tuit */
+/* Frase destacada */
 .frase-destacada {
-    padding: 40px 0 20px;
-    background: #f5f7fa;
-}
-.frase-blockquote {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px 30px;
-    border-left: 6px solid var(--secondary);
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-}
-.frase-blockquote p {
-    font-size: 1.6rem;
-    font-weight: 300;
-    line-height: 1.4;
-    color: var(--primary);
-    margin-bottom: 12px;
-}
-.frase-footer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-.frase-tweet {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #1DA1F2;
-    color: #fff;
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: 0.3s;
-}
-.frase-tweet:hover {
-    background: #1a8cd8;
-    color: #fff;
-}
-.frase-tweet i {
-    font-size: 1rem;
+    padding: 20px 0;
+    background: transparent;
 }
 
 /* Introducción dos columnas */
@@ -602,8 +562,8 @@ img {
     background: #f9f9f9;
 }
 .texto-adicional-content {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 100%;
+    padding: 0 10px;
 }
 .texto-adicional-content p {
     color: #333;
@@ -669,7 +629,7 @@ img {
     color: var(--secondary);
 }
 
-/* Áreas de interés (reutilizadas) */
+/* Áreas de interés */
 .areas-section {
     padding: 60px 0;
     background: #f5f7fa;
@@ -717,7 +677,7 @@ img {
     line-height: 1.5;
 }
 
-/* Jóvenes Key (fondo primario) */
+/* Jóvenes Key */
 .jovenes-key-section {
     background: var(--primary);
     color: #fff;
@@ -744,27 +704,15 @@ img {
 
 /* Visión de futuro */
 .vision-section {
-    padding: 60px 0;
     background: #fff;
-    text-align: center;
+    padding: 60px 0;
+    text-align: left;
 }
-.vision-block {
-    max-width: 800px;
-    margin: 0 auto;
-}
-.vision-block h2 {
-    font-size: 2.2rem;
-    color: var(--primary);
-    margin-bottom: 20px;
-}
-.vision-block p {
-    font-size: 1.05rem;
-    color: #333;
-    line-height: 1.8;
-    margin-bottom: 16px;
-}
-.vision-block p strong {
-    color: var(--secondary);
+.vision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
 }
 .vision-footer {
     margin-top: 30px;
@@ -775,6 +723,92 @@ img {
     font-size: 1.4rem;
     font-weight: 600;
     color: var(--primary);
+}
+
+/* ===== PÁGINA OPORTUNIDADES ===== */
+.page-hero .hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-top: 10px;
+}
+.oportunidades-intro {
+    padding: 30px 0 20px;
+    background: #fff;
+}
+.oportunidades-categorias {
+    padding: 30px 0 10px;
+    background: #fff;
+}
+.categoria-block {
+    margin-bottom: 50px;
+}
+.categoria-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #eaeaea;
+}
+.categoria-icon {
+    font-size: 2rem;
+    color: var(--secondary);
+}
+.categoria-header h2 {
+    font-size: 1.6rem;
+    color: var(--primary);
+    margin: 0;
+}
+.categoria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+.recurso-item {
+    background: #f9f9f9;
+    padding: 25px 24px;
+    border-radius: 12px;
+    border-left: 4px solid var(--secondary);
+    transition: 0.3s;
+}
+.recurso-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+.recurso-item h4 {
+    font-size: 1.15rem;
+    color: var(--primary);
+    margin-bottom: 6px;
+}
+.recurso-item p {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+.recurso-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: 0.2s;
+}
+.recurso-link:hover {
+    color: var(--primary);
+    gap: 10px;
+}
+.oportunidades-aviso {
+    padding: 20px 0 10px;
+    background: #fff;
+}
+.oportunidades-sugerir {
+    padding: 20px 0 50px;
+    background: #fff;
+}
+.btn-sugerir:hover {
+    background: var(--primary);
 }
 
 /* ===== FOOTER ===== */
@@ -902,13 +936,15 @@ img {
     .cards-grid {
         grid-template-columns: 1fr;
     }
-    /* Sobre nosotros responsive */
     .page-hero h1 { font-size: 2.5rem; }
-    .frase-blockquote p { font-size: 1.3rem; }
     .intro-grid { grid-template-columns: 1fr; gap: 30px; }
     .imagen-placeholder { min-height: 200px; }
     .trayectoria-grid { grid-template-columns: 1fr 1fr; }
     .areas-grid { grid-template-columns: 1fr 1fr; }
+    .vision-grid { grid-template-columns: 1fr; gap: 30px; }
+    .categoria-grid { grid-template-columns: 1fr; }
+    .categoria-header h2 { font-size: 1.3rem; }
+    .page-hero .hero-subtitle { font-size: 1rem; }
 }
 
 @media (max-width: 480px) {
@@ -937,9 +973,9 @@ img {
     .card p {
         text-align: center;
     }
-    /* Sobre nosotros responsive */
     .page-hero h1 { font-size: 2rem; }
-    .frase-blockquote p { font-size: 1.1rem; }
     .trayectoria-grid { grid-template-columns: 1fr; }
     .areas-grid { grid-template-columns: 1fr; }
+    .vision-grid { grid-template-columns: 1fr; }
+    .categoria-grid { grid-template-columns: 1fr; }
 }
