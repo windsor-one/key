@@ -505,6 +505,11 @@ img {
     margin: 20px auto 0;
     border-radius: 2px;
 }
+.page-hero .hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-top: 10px;
+}
 
 /* Frase destacada */
 .frase-destacada {
@@ -725,12 +730,9 @@ img {
     color: var(--primary);
 }
 
-/* ===== PÁGINA OPORTUNIDADES ===== */
-.page-hero .hero-subtitle {
-    font-size: 1.2rem;
-    opacity: 0.8;
-    margin-top: 10px;
-}
+/* ============================================================
+   PÁGINA OPORTUNIDADES
+   ============================================================ */
 .oportunidades-intro {
     padding: 30px 0 20px;
     background: #fff;
@@ -830,6 +832,76 @@ img {
 .oportunidades-aviso {
     padding: 20px 0 30px;
     background: #fff;
+}
+
+/* ============================================================
+   PÁGINA CONTÁCTANOS (solo formulario + aviso)
+   ============================================================ */
+.contacto-formulario {
+    padding: 50px 0;
+    background: #f9f9f9;
+}
+.contacto-formulario .section-title {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 30px;
+    text-align: left;
+    border-bottom: 2px solid #eaeaea;
+    padding-bottom: 12px;
+}
+.form-contacto {
+    max-width: 700px;
+    margin: 0 auto;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 6px;
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: var(--font);
+    transition: 0.3s;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px rgba(10, 66, 160, 0.1);
+}
+.btn-enviar {
+    display: inline-block;
+    background: var(--secondary);
+    color: #fff;
+    padding: 12px 40px;
+    border: none;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-enviar:hover {
+    background: var(--primary);
+}
+.contacto-aviso {
+    padding: 20px 0 40px;
+    background: #fff;
+}
+.contacto-aviso .aviso-block {
+    border-left: 6px solid var(--orange);
+    padding: 25px 30px;
+    background: #fff;
+    border-radius: 0 8px 8px 0;
 }
 
 /* ===== FOOTER ===== */
@@ -965,6 +1037,16 @@ img {
     .vision-grid { grid-template-columns: 1fr; gap: 30px; }
     .section-title { font-size: 1.5rem; text-align: center; }
     .cards-grid { grid-template-columns: 1fr; }
+    .contacto-formulario .section-title {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    .form-contacto {
+        padding: 0 10px;
+    }
+    .contacto-aviso .aviso-block {
+        padding: 20px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -999,120 +1081,11 @@ img {
     .vision-grid { grid-template-columns: 1fr; }
     .section-title { font-size: 1.3rem; }
     .card-oportunidad-icon { width: 64px; height: 64px; font-size: 2rem; }
-}
-/* ============================================================
-   PÁGINA CONTÁCTANOS
-   ============================================================ */
-
-.contacto-info {
-    padding: 50px 0 30px;
-    background: #fff;
-}
-.contacto-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 40px;
-    text-align: center;
-}
-.contacto-item i {
-    font-size: 3rem;
-    color: var(--secondary);
-    margin-bottom: 10px;
-}
-.contacto-item h4 {
-    font-size: 1.2rem;
-    color: var(--primary);
-    margin-bottom: 4px;
-}
-.contacto-item p {
-    color: #555;
-    font-size: 1rem;
-}
-.contacto-item p a {
-    color: var(--secondary);
-    transition: 0.2s;
-}
-.contacto-item p a:hover {
-    color: var(--primary);
-}
-
-.contacto-formulario {
-    padding: 50px 0;
-    background: #f9f9f9;
-}
-.contacto-formulario .section-title {
-    font-size: 1.8rem;
-    color: var(--primary);
-    margin-bottom: 30px;
-    text-align: left;
-    border-bottom: 2px solid #eaeaea;
-    padding-bottom: 12px;
-}
-.form-contacto {
-    max-width: 700px;
-    margin: 0 auto;
-}
-.form-group {
-    margin-bottom: 20px;
-}
-.form-group label {
-    display: block;
-    font-weight: 600;
-    color: var(--primary);
-    margin-bottom: 6px;
-}
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-family: var(--font);
-    transition: 0.3s;
-}
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--secondary);
-    box-shadow: 0 0 0 3px rgba(10, 66, 160, 0.1);
-}
-.btn-enviar {
-    display: inline-block;
-    background: var(--secondary);
-    color: #fff;
-    padding: 12px 40px;
-    border: none;
-    border-radius: 40px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.btn-enviar:hover {
-    background: var(--primary);
-}
-
-.contacto-aviso {
-    padding: 20px 0 40px;
-    background: #fff;
-}
-
-@media (max-width: 768px) {
-    .contacto-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
     .contacto-formulario .section-title {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         text-align: center;
     }
-    .form-contacto {
-        padding: 0 10px;
-    }
-}
-@media (max-width: 480px) {
-    .contacto-item i {
-        font-size: 2.5rem;
+    .contacto-aviso .aviso-block {
+        padding: 15px;
     }
 }
