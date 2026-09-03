@@ -38,14 +38,14 @@ if (document.querySelector('.mySwiperHistorias')) {
     });
 }
 
-// ===== CONTADORES ANIMADOS =====
+// ===== CONTADORES ANIMADOS (solo para index) =====
 const counters = document.querySelectorAll('.numero[data-target]');
 if (counters.length > 0) {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const el = entry.target;
-                const target = parseFloat(el.dataset.target);
+                const target = parseInt(el.dataset.target);
                 let current = 0;
                 const step = Math.ceil(target / 60);
                 const timer = setInterval(() => {
@@ -62,22 +62,4 @@ if (counters.length > 0) {
         });
     }, { threshold: 0.5 });
     counters.forEach(c => observer.observe(c));
-}
-
-// ===== MANEJO DE ENLACES DEL MENÚ (secciones en desarrollo) =====
-document.querySelectorAll('.menu-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const section = this.getAttribute('data-section') || 'esta sección';
-        alert('La sección "' + section + '" se encuentra en desarrollo. Pronto estará disponible.');
-    });
-});
-
-// ===== MANEJO DEL BOTÓN "PRÓXIMAMENTE" (Memoria de Labores) =====
-const btnMemoria = document.getElementById('btnMemoria');
-if (btnMemoria) {
-    btnMemoria.addEventListener('click', function(e) {
-        e.preventDefault();
-        alert('La Memoria de Labores estará disponible próximamente.');
-    });
 }
