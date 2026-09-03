@@ -98,6 +98,10 @@ img {
 .nav-principal a:hover {
     color: var(--secondary);
 }
+.nav-principal a.active {
+    color: var(--secondary);
+    border-bottom: 2px solid var(--secondary);
+}
 .nav-principal .submenu {
     position: relative;
 }
@@ -365,7 +369,7 @@ img {
     background: var(--secondary);
 }
 
-/* ===== TRAYECTORIA ===== */
+/* ===== TRAYECTORIA (carrusel del index) ===== */
 .historias {
     background: #f0f4f8;
     padding: 50px 0 70px;
@@ -450,7 +454,6 @@ img {
     opacity: 1;
     font-weight: 700;
 }
-/* Paginación fuera del swiper */
 .swiper-pagination-historias {
     margin-top: 25px;
     display: flex;
@@ -469,6 +472,204 @@ img {
 .swiper-pagination-historias .swiper-pagination-bullet-active {
     background: var(--orange);
     opacity: 1;
+}
+
+/* ===== PÁGINA SOBRE NOSOTROS (estilos adicionales) ===== */
+.page-hero {
+    background-color: var(--primary);
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+}
+.page-hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+.page-hero p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-top: 8px;
+}
+
+.intro-section {
+    padding: 60px 0;
+    background: #fff;
+}
+.intro-section .container {
+    max-width: 900px;
+}
+.intro-section h2 {
+    font-size: 2.2rem;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+.intro-section .subhead {
+    font-size: 1.3rem;
+    color: var(--secondary);
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.intro-section p {
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 16px;
+}
+.intro-section p strong {
+    color: var(--secondary);
+}
+
+.trayectoria-section {
+    background: #f5f7fa;
+    padding: 60px 0;
+    text-align: center;
+}
+.trayectoria-section h2 {
+    font-size: 2.2rem;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+.trayectoria-section .sub {
+    color: #555;
+    margin-bottom: 40px;
+}
+.trayectoria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+    text-align: left;
+}
+.trayectoria-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border-top: 4px solid var(--secondary);
+    transition: transform 0.3s;
+}
+.trayectoria-item:hover {
+    transform: translateY(-6px);
+}
+.trayectoria-item .year {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--secondary);
+    margin-bottom: 6px;
+}
+.trayectoria-item .title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+.trayectoria-item .desc {
+    color: #555;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+.trayectoria-item .desc strong {
+    color: var(--secondary);
+}
+
+.areas-section {
+    padding: 60px 0;
+    background: #fff;
+    text-align: center;
+}
+.areas-section h2 {
+    font-size: 2.2rem;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+.areas-section .sub {
+    color: #555;
+    margin-bottom: 40px;
+}
+.areas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+}
+.area-item {
+    background: #f9f9f9;
+    border-radius: 16px;
+    padding: 30px 20px;
+    transition: 0.3s;
+    border-bottom: 4px solid var(--secondary);
+}
+.area-item:hover {
+    background: #f0f4f8;
+    transform: translateY(-4px);
+}
+.area-item i {
+    font-size: 3.5rem;
+    color: var(--secondary);
+    margin-bottom: 12px;
+}
+.area-item h4 {
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin-bottom: 6px;
+}
+.area-item p {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.jovenes-key-section {
+    background: var(--primary);
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+}
+.jovenes-key-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+}
+.jovenes-key-section p {
+    max-width: 800px;
+    margin: 0 auto 16px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    opacity: 0.9;
+}
+.jovenes-key-section p strong {
+    color: var(--yellow);
+}
+
+.vision-section {
+    padding: 60px 0;
+    background: #f5f7fa;
+    text-align: center;
+}
+.vision-section h2 {
+    font-size: 2.2rem;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+.vision-section .propósito {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin: 30px 0 20px;
+}
+.vision-section p {
+    max-width: 800px;
+    margin: 0 auto 16px;
+    color: #333;
+    line-height: 1.8;
+}
+.vision-section p strong {
+    color: var(--secondary);
+}
+.vision-section .frase-final {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-top: 30px;
+    border-top: 2px solid var(--secondary);
+    padding-top: 30px;
 }
 
 /* ===== FOOTER ===== */
@@ -595,6 +796,11 @@ img {
     .cards-grid {
         grid-template-columns: 1fr;
     }
+    .page-hero h1 { font-size: 2.2rem; }
+    .intro-section h2 { font-size: 1.8rem; }
+    .trayectoria-grid { grid-template-columns: 1fr; }
+    .areas-grid { grid-template-columns: 1fr 1fr; }
+    .vision-section .propósito { font-size: 1.3rem; }
 }
 
 @media (max-width: 480px) {
@@ -623,4 +829,6 @@ img {
     .card p {
         text-align: center;
     }
+    .areas-grid { grid-template-columns: 1fr; }
+    .page-hero h1 { font-size: 1.8rem; }
 }
