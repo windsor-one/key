@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contáctanos · Key</title>
+    <meta name="description" content="Ponte en contacto con Key · Fundación Hernández. Estamos aquí para escucharte.">
+    <link rel="icon" href="./assets/logo-simbolo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="top-bar">
+        <div class="container top-bar-inner">
+            <div class="menu-sup">
+                <a href="oportunidades.html">OPORTUNIDADES</a>
+            </div>
+            <a href="#" class="donar-btn">DONACIONES</a>
+        </div>
+    </div>
+    <div class="main-header container">
+        <div class="logo">
+            <a href="index.html"><img src="./assets/logo-horizontal.png" alt="Key · Fundación Hernández"></a>
+        </div>
+        <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
+        <nav class="nav-principal" id="mainNav">
+            <div class="submenu">
+                <a href="sobre-nosotros.html">Sobre nosotros <i class="fas fa-chevron-down"></i></a>
+                <div class="submenu-content">
+                    <a href="sobre-nosotros.html#trayectoria">Nuestra Trayectoria</a>
+                    <a href="sobre-nosotros.html#areas">Áreas de Interés</a>
+                    <a href="sobre-nosotros.html#jovenes-key">Jóvenes Key</a>
+                    <a href="sobre-nosotros.html#vision">Visión de Futuro</a>
+                </div>
+            </div>
+            <div class="submenu">
+                <a href="oportunidades.html">Oportunidades <i class="fas fa-chevron-down"></i></a>
+                <div class="submenu-content">
+                    <a href="oportunidades.html#empleo">Empleo</a>
+                    <a href="oportunidades.html#educacion">Educación y formación</a>
+                    <a href="oportunidades.html#becas">Becas y oportunidades</a>
+                </div>
+            </div>
+            <a href="contactanos.html" class="active">Contáctanos</a>
+            <div class="search-box">
+                <input type="text" placeholder="BUSCAR...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="page-hero">
+    <div class="container">
+        <h1>CONTÁCTANOS</h1>
+        <div class="hero-line"></div>
+        <p class="hero-subtitle">Estamos aquí para escucharte. Cuéntanos tus inquietudes, sugerencias o cómo podemos ayudarte.</p>
+    </div>
+</section>
+
+<!-- ===== INFORMACIÓN DE CONTACTO ===== -->
+<section class="contacto-info">
+    <div class="container">
+        <div class="contacto-grid">
+            <div class="contacto-item">
+                <i class="fas fa-phone-alt"></i>
+                <h4>Teléfono</h4>
+                <p>+503 2222-0000</p>
+            </div>
+            <div class="contacto-item">
+                <i class="fas fa-envelope"></i>
+                <h4>Correo electrónico</h4>
+                <p><a href="mailto:info@key.org.sv">info@key.org.sv</a></p>
+            </div>
+            <div class="contacto-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <h4>Dirección</h4>
+                <p>San Salvador, El Salvador</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FORMULARIO DE CONTACTO ===== -->
+<section class="contacto-formulario" style="background: #f9f9f9;">
+    <div class="container">
+        <h2 class="section-title"><i class="fas fa-pencil-alt" style="margin-right: 12px; color: var(--secondary);"></i> Envíanos un mensaje</h2>
+        <form id="formContacto" class="form-contacto">
+            <div class="form-group">
+                <label for="nombre">Nombre completo</label>
+                <input type="text" id="nombre" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo electrónico</label>
+                <input type="email" id="correo" placeholder="tucorreo@ejemplo.com" required>
+            </div>
+            <div class="form-group">
+                <label for="mensaje">Mensaje</label>
+                <textarea id="mensaje" rows="5" placeholder="Cuéntanos cómo podemos ayudarte..." required></textarea>
+            </div>
+            <button type="submit" class="btn-enviar">Enviar mensaje</button>
+        </form>
+        <div id="mensajeConfirmacion" style="display:none; margin-top: 20px; padding: 15px; background: var(--green); color: #fff; border-radius: 8px; text-align: center;">
+            <i class="fas fa-check-circle"></i> ¡Gracias por contactarnos! Tu mensaje ha sido enviado. Te responderemos a la brevedad.
+        </div>
+    </div>
+</section>
+
+<!-- ===== AVISO ===== -->
+<section class="contacto-aviso" style="padding: 20px 0 40px; background: #fff;">
+    <div class="container">
+        <div class="aviso-block" style="border-left: 6px solid var(--orange); padding: 25px 30px; max-width: 100%;">
+            <p style="margin-bottom: 0; font-size: 1rem; color: #333;">
+                <strong>Importante:</strong> Este formulario es solo para consultas generales. Si deseas postularte a una oportunidad o beca, por favor utiliza los enlaces directos en la sección de <a href="oportunidades.html" style="color: var(--secondary);">Oportunidades</a>.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="col-logo">
+            <a href="index.html"><img src="./assets/logo-horizontal.png" alt="Key · Fundación Hernández"></a>
+        </div>
+        <div class="col-enlaces">
+            <a href="sobre-nosotros.html">Sobre Nosotros</a>
+            <a href="oportunidades.html">Oportunidades</a>
+            <a href="contactanos.html">Contáctanos</a>
+        </div>
+        <div class="col-news">
+            <h3>¡Únete a nuestro boletín!</h3>
+            <input type="email" id="emailInput" placeholder="Correo electrónico">
+            <button id="btnSuscripcion">SUSCRÍBETE</button>
+        </div>
+    </div>
+    <div class="social">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="copyright">Key · Fundación Hernández, 2026</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
