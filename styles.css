@@ -979,3 +979,142 @@ img {
     .vision-grid { grid-template-columns: 1fr; }
     .categoria-grid { grid-template-columns: 1fr; }
 }
+/* ============================================================
+   PÁGINA OPORTUNIDADES (estilo FGK)
+   ============================================================ */
+
+.page-hero .hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-top: 10px;
+}
+
+.oportunidades-intro {
+    padding: 40px 0 20px;
+    background: #fff;
+}
+
+.oportunidades-section {
+    padding: 50px 0;
+    background: #fff;
+}
+.oportunidades-section:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 30px;
+    text-align: left;
+    border-bottom: 2px solid #eaeaea;
+    padding-bottom: 12px;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.card-oportunidad {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: 0.3s;
+    border-bottom: 4px solid var(--secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-oportunidad:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.card-oportunidad-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    color: #fff;
+    font-size: 2.5rem;
+}
+
+.card-oportunidad h3 {
+    font-size: 1.3rem;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.card-oportunidad p {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    flex-grow: 1;
+}
+
+.btn-conoce-mas {
+    display: inline-block;
+    background: var(--secondary);
+    color: #fff;
+    padding: 8px 24px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-conoce-mas:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-conoce-mas[style*="background: #ccc"] {
+    cursor: default;
+}
+.btn-conoce-mas[style*="background: #ccc"]:hover {
+    background: #ccc !important;
+}
+
+.oportunidades-aviso {
+    padding: 30px 0 20px;
+    background: #fff;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+    .section-title {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    .card-oportunidad {
+        padding: 24px 18px;
+    }
+    .page-hero .hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+    .card-oportunidad-icon {
+        width: 64px;
+        height: 64px;
+        font-size: 2rem;
+    }
+}
