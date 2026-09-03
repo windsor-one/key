@@ -311,7 +311,7 @@ img {
     background: var(--primary);
 }
 
-/* ===== PILARES ===== */
+/* ===== NUESTRO ALCANCE (antes "Pilares") ===== */
 .pilares {
     padding: 50px 0;
     text-align: center;
@@ -364,12 +364,16 @@ img {
     padding: 10px 32px;
     border-radius: 40px;
     display: inline-block;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
 }
 .pilares .btn-memoria:hover {
     background: var(--secondary);
 }
 
-/* ===== TRAYECTORIA (carrusel del index) ===== */
+/* ===== TRAYECTORIA (carrusel) ===== */
 .historias {
     background: #f0f4f8;
     padding: 50px 0 70px;
@@ -431,6 +435,10 @@ img {
     background-color: var(--green);
     color: #fff;
 }
+.bg-secondary {
+    background-color: var(--secondary);
+    color: #fff;
+}
 .timeline-year {
     font-size: 2.8rem;
     font-weight: 800;
@@ -474,7 +482,7 @@ img {
     opacity: 1;
 }
 
-/* ===== PÁGINA SOBRE NOSOTROS (estilos adicionales) ===== */
+/* ===== PÁGINA SOBRE NOSOTROS ===== */
 .page-hero {
     background-color: var(--primary);
     color: #fff;
@@ -519,8 +527,34 @@ img {
     color: var(--secondary);
 }
 
-.trayectoria-section {
+.proposito-section {
+    padding: 50px 0;
     background: #f5f7fa;
+    text-align: center;
+}
+.proposito-section h2 {
+    font-size: 2.2rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+.proposito-text {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.proposito-text p:first-child {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 16px;
+}
+.proposito-text p {
+    color: #333;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.trayectoria-section {
+    background: #fff;
     padding: 60px 0;
     text-align: center;
 }
@@ -568,6 +602,27 @@ img {
     font-size: 0.95rem;
 }
 .trayectoria-item .desc strong {
+    color: var(--secondary);
+}
+
+.como-trabajamos-section {
+    padding: 60px 0;
+    background: #f5f7fa;
+    text-align: center;
+}
+.como-trabajamos-section h2 {
+    font-size: 2.2rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+.como-trabajamos-section p {
+    max-width: 800px;
+    margin: 0 auto 16px;
+    color: #333;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+.como-trabajamos-section p strong {
     color: var(--secondary);
 }
 
@@ -646,13 +701,7 @@ img {
 .vision-section h2 {
     font-size: 2.2rem;
     color: var(--primary);
-    margin-bottom: 12px;
-}
-.vision-section .propósito {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--secondary);
-    margin: 30px 0 20px;
+    margin-bottom: 20px;
 }
 .vision-section p {
     max-width: 800px;
@@ -670,6 +719,9 @@ img {
     margin-top: 30px;
     border-top: 2px solid var(--secondary);
     padding-top: 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* ===== FOOTER ===== */
@@ -718,6 +770,7 @@ img {
     font-weight: 600;
     margin-top: 8px;
     cursor: pointer;
+    transition: 0.3s;
 }
 .footer-grid .col-news button:hover {
     background: var(--yellow);
@@ -800,7 +853,7 @@ img {
     .intro-section h2 { font-size: 1.8rem; }
     .trayectoria-grid { grid-template-columns: 1fr; }
     .areas-grid { grid-template-columns: 1fr 1fr; }
-    .vision-section .propósito { font-size: 1.3rem; }
+    .proposito-text p:first-child { font-size: 1.3rem; }
 }
 
 @media (max-width: 480px) {
