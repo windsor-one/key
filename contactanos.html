@@ -63,20 +63,16 @@
     </div>
 </section>
 
-<!-- ===== FORMULARIO DE CONTACTO con FormSubmit ===== -->
+<!-- ===== FORMULARIO DE CONTACTO ===== -->
 <section class="contacto-formulario">
     <div class="container">
         <h2 class="section-title"><i class="fas fa-pencil-alt" style="margin-right: 12px; color: var(--secondary);"></i> Envíanos un mensaje</h2>
 
-        <!-- FormSubmit: cambia info@key.org.sv por tu correo real -->
         <form id="formContacto" class="form-contacto" action="https://formsubmit.co/alexhrnndz32@gmail.com" method="POST">
-            
             <!-- Campos ocultos de FormSubmit -->
             <input type="hidden" name="_subject" value="Nuevo mensaje desde Key">
             <input type="hidden" name="_captcha" value="true">
             <input type="hidden" name="_template" value="table">
-            <!-- Redirige a una página de agradecimiento (opcional) -->
-            <!-- <input type="hidden" name="_next" value="https://key.org.sv/gracias.html"> -->
 
             <div class="form-group">
                 <label for="nombre">Nombre completo</label>
@@ -119,8 +115,13 @@
         </div>
         <div class="col-news">
             <h3>¡Únete a nuestro boletín!</h3>
-            <input type="email" id="emailInput" placeholder="Correo electrónico">
-            <button id="btnSuscripcion">SUSCRÍBETE</button>
+            <form id="formBoletin" class="form-boletin" action="https://formsubmit.co/alexhrnndz32@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="Nueva suscripción al boletín de Key">
+                <input type="hidden" name="_captcha" value="true">
+                <input type="hidden" name="_template" value="table">
+                <input type="email" id="emailInput" name="email" placeholder="Correo electrónico" required>
+                <button type="submit">SUSCRÍBETE</button>
+            </form>
         </div>
     </div>
     <div class="social">
