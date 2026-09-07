@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog · Key · Fundación Hernández</title>
+    <meta name="description" content="Blog de Key · Fundación Hernández. Artículos, noticias y reflexiones sobre nuestra labor y el impacto social.">
+    <link rel="icon" href="./assets/logo-simbolo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .blog-iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            background: #fff;
+        }
+        @media (max-width: 768px) {
+            .blog-iframe {
+                height: 600px;
+            }
+        }
+        @media (max-width: 480px) {
+            .blog-iframe {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="top-bar">
+        <div class="container top-bar-inner">
+            <div class="menu-sup">
+                <a href="oportunidades.html">OPORTUNIDADES</a>
+                <a href="https://windsor-one.github.io/windsor/" target="_blank" rel="noopener noreferrer">WINDSOR</a>
+                <a href="https://windsor-one.github.io/Heliot-Media/" target="_blank" rel="noopener noreferrer">HELIOT</a>
+            </div>
+        </div>
+    </div>
+    <div class="main-header container">
+        <div class="logo">
+            <a href="index.html"><img src="./assets/logo-horizontal.png" alt="Key · Fundación Hernández"></a>
+        </div>
+        <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
+        <nav class="nav-principal" id="mainNav">
+            <div class="submenu">
+                <a href="sobre-nosotros.html">Sobre nosotros <i class="fas fa-chevron-down"></i></a>
+                <div class="submenu-content">
+                    <a href="sobre-nosotros.html#trayectoria">Nuestra Trayectoria</a>
+                    <a href="sobre-nosotros.html#areas">Áreas de Interés</a>
+                    <a href="sobre-nosotros.html#jovenes-key">Jóvenes Key</a>
+                    <a href="sobre-nosotros.html#vision">Visión de Futuro</a>
+                </div>
+            </div>
+            <div class="submenu">
+                <a href="oportunidades.html">Oportunidades <i class="fas fa-chevron-down"></i></a>
+                <div class="submenu-content">
+                    <a href="oportunidades.html#empleo">Empleo</a>
+                    <a href="oportunidades.html#educacion">Educación y formación</a>
+                    <a href="oportunidades.html#becas">Becas y oportunidades</a>
+                </div>
+            </div>
+            <a href="administrados.html">Administrados</a>
+            <a href="blog.html" class="active">Blog</a>
+            <a href="contactanos.html">Contáctanos</a>
+            <div class="search-box">
+                <input type="text" placeholder="BUSCAR...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="page-hero">
+    <div class="container">
+        <h1>BLOG</h1>
+        <div class="hero-line"></div>
+        <p class="hero-subtitle">Artículos, noticias y reflexiones sobre nuestra labor y el impacto social.</p>
+    </div>
+</section>
+
+<!-- ===== IFRAME DEL BLOG ===== -->
+<section style="padding: 40px 0; background: #f9f9f9;">
+    <div class="container">
+        <iframe class="blog-iframe" src="https://the-newkey.blogspot.com/" title="Blog de Key · Fundación Hernández"></iframe>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="col-logo">
+            <a href="index.html"><img src="./assets/logo-horizontal.png" alt="Key · Fundación Hernández"></a>
+        </div>
+        <div class="col-enlaces">
+            <p><strong>Organización</strong></p>
+            <a href="sobre-nosotros.html">Sobre nosotros</a>
+            <a href="oportunidades.html">Oportunidades</a>
+            <a href="administrados.html">Administrados</a>
+            <a href="blog.html">Blog</a>
+            <a href="contactanos.html">Contáctanos</a>
+        </div>
+        <div class="col-enlaces">
+            <p><strong>Transparencia y legal</strong></p>
+            <a href="legal.html#naturaleza">Naturaleza de Key</a>
+            <a href="legal.html#aviso-legal">Aviso Legal</a>
+            <a href="legal.html#politica-editorial">Política Editorial</a>
+            <a href="legal.html#politica-privacidad">Política de Privacidad</a>
+            <a href="legal.html#politica-cookies">Política de Cookies</a>
+            <a href="legal.html#terminos-condiciones">Términos y Condiciones</a>
+            <a href="legal.html#propiedad-intelectual">Propiedad Intelectual</a>
+        </div>
+    </div>
+    <div class="social">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="copyright">Key · Fundación Hernández · 2026</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
