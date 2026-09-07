@@ -10,17 +10,28 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* ===== AJUSTES PARA QUE EL IFRAME OCUPE TODO EL ESPACIO ===== */
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden;
+            overflow: hidden; /* Evita doble scroll, el iframe tendrá su propio scroll */
         }
-        .blog-wrapper {
+        body {
             display: flex;
             flex-direction: column;
-            height: 100vh;
-            width: 100%;
+        }
+        header, footer {
+            flex-shrink: 0;
+        }
+        .blog-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0 !important;
+            margin: 0 !important;
+            max-width: 100% !important;
+            width: 100% !important;
         }
         .blog-iframe {
             flex: 1;
@@ -28,19 +39,6 @@
             border: none;
             display: block;
             background: #f5f7fa;
-        }
-        header, footer {
-            flex-shrink: 0;
-        }
-        /* Eliminar cualquier padding o margen extra */
-        .container-blog {
-            padding: 0 !important;
-            margin: 0 !important;
-            max-width: 100% !important;
-            width: 100% !important;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
         }
     </style>
 </head>
@@ -91,8 +89,8 @@
     </div>
 </header>
 
-<!-- ===== CONTENEDOR DEL IFRAME (sin hero) ===== -->
-<div class="container-blog">
+<!-- ===== CONTENEDOR DEL IFRAME (sin hero, sin banners) ===== -->
+<div class="blog-container">
     <iframe class="blog-iframe" src="https://the-newkey.blogspot.com/" title="Blog de Key · Fundación Hernández"></iframe>
 </div>
 
