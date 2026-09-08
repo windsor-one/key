@@ -63,15 +63,14 @@ if (counters.length > 0) {
     }, { threshold: 0.5 });
     counters.forEach(c => observer.observe(c));
 }
-// ===== BOTÓN FLOTANTE DE DONACIÓN =====
+
+// ===== BOTÓN FLOTANTE DE DONACIÓN (esquina inferior izquierda) =====
 (function() {
-    // Crear el botón
     const btnDonar = document.createElement('a');
-    btnDonar.href = 'donar.html';  // Enlace a la página de donación
+    btnDonar.href = 'donar.html';
     btnDonar.innerHTML = '<i class="fas fa-heart" style="margin-right: 8px;"></i> DONAR';
     btnDonar.setAttribute('aria-label', 'Donar a Key');
     
-    // Estilos del botón
     btnDonar.style.position = 'fixed';
     btnDonar.style.bottom = '30px';
     btnDonar.style.left = '30px';
@@ -94,7 +93,6 @@ if (counters.length > 0) {
     btnDonar.style.cursor = 'pointer';
     btnDonar.style.letterSpacing = '0.5px';
     
-    // Efectos hover
     btnDonar.addEventListener('mouseenter', function() {
         this.style.transform = 'scale(1.08) translateY(-4px)';
         this.style.boxShadow = '0 12px 40px rgba(255, 109, 0, 0.6)';
@@ -106,6 +104,5 @@ if (counters.length > 0) {
         this.style.backgroundColor = '#FF6D00';
     });
     
-    // Agregar al body
     document.body.appendChild(btnDonar);
 })();
