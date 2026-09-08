@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Donar · Key · Fundación Hernández</title>
+    <meta name="description" content="Contribuye con Key · Fundación Hernández. Dona dinero, pertenencias o tu talento.">
+    <link rel="icon" href="./assets/logo-simbolo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .donar-hero {
+            background: var(--primary);
+            color: #fff;
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .donar-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,235,59,0.05), transparent 60%);
+            animation: pulse 6s ease-in-out infinite;
+        }
+        .donar-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            position: relative;
+            z-index: 1;
+        }
+        .donar-hero .hero-line {
+            width: 80px;
+            height: 4px;
+            background: var(--orange);
+            margin: 20px auto;
+            border-radius: 2px;
+            transition: width 0.6s ease;
+        }
+        .donar-hero:hover .hero-line {
+            width: 120px;
+        }
+        .donar-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .donar-opciones {
+            padding: 50px 0;
+            background: #f9f9f9;
+        }
+        .donar-opciones h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        .donar-opciones .sub {
+            text-align: center;
+            color: #555;
+            margin-bottom: 40px;
+        }
+        .donar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .donar-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px 24px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-top: 4px solid var(--secondary);
+        }
+        .donar-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-top-color: var(--orange);
+        }
+        .donar-card i {
+            font-size: 3.5rem;
+            color: var(--secondary);
+            margin-bottom: 16px;
+            transition: transform 0.4s ease, color 0.3s ease;
+        }
+        .donar-card:hover i {
+            transform: scale(1.15) rotate(-6deg);
+            color: var(--orange);
+        }
+        .donar-card h3 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .donar-card p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .donar-card .btn-donar {
+            display: inline-block;
+            background: var(--secondary);
+            color: #fff;
+            padding: 10px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .donar-card .btn-donar:hover {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+        .donar-formulario {
+            padding: 50px 0;
+            background: #fff;
+        }
+        .donar-formulario h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+        .form-donar {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: var(--font);
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 4px rgba(10, 66, 160, 0.1);
+        }
+        .btn-enviar {
+            display: inline-block;
+            background: var(--orange);
+            color: #fff;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .btn-enviar:hover {
+            background: var(--primary);
+            transform: scale(1.02);
+        }
+        .donar-aviso {
+            padding: 20px 0 40px;
+            background: #f9f9f9;
+        }
+        .donar-aviso .aviso-block {
+            border-left: 6px solid var(--orange);
+            padding: 25px 30px;
+            background: #fff;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+        .donar-aviso .aviso-block:hover {
+            transform: translateX(4px);
+            border-left-color: var(--secondary);
+        }
+        @media (max-width: 768px) {
+            .donar-hero h1 {
+                font-size: 2.5rem;
+            }
+            .donar-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="top-bar">
+        <div class="container top-bar-inner">
+            <div class="menu-sup">
+                <a href="oportunidades.html">OPORTUNIDADES</a>
+                <a href="cosecha.html">COSECHA</a>
+                <a href="https://windsor-one.github.io/windsor/" target="_blank" rel="noopener noreferrer">WINDSOR</a>
+                <a href="https://windsor-one.github.io/Heliot-Media/" target="_blank" rel="noopener noreferrer">HELIOT</a>
+                <a href="donar.html" style="background: var(--orange); color: #fff; padding: 4px 16px; border-radius: 30px; font-weight: 700; transition: all 0.3s ease;">DONAR</a>
+            </div>
+        </div>
+    </div>
+    <div class="main-header container">
+        <div class="logo">
+            <a href="index.html"><img src="./assets/logo-horizontal.png" alt="Key · Fundación Hernández"></a>
+        </div>
+        <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
+        <nav class="nav-principal" id="mainNav">
+            <div class="submenu">
+                <a href="sobre-nosotros.html">Sobre nosotros <i class="fas fa-chevron-down"></i></a>
+                <div class="submenu-content">
+                    <a href="sobre-nosotros.html#trayectoria">Nuestra Trayectoria</a>
+                    <a href="sobre-nosotros.html#areas">Áreas de Interés</a>
+                    <a href="sobre-nosotros.html#jovenes-key">Jóvenes Key</a>
+                    <a href="sobre-nosotros.html#vision">Visión de Futuro</a>
+                </div>
+            </div>
+            <div class="submenu">
+                <a href="oportunidades.html">Oportunidades <i class="fas fa-chevron-down"></i></a>
+                <div class="submenu-content">
+                    <a href="oportunidades.html#empleo">Empleo</a>
+                    <a href="oportunidades.html#educacion">Educación y formación</a>
+                    <a href="oportunidades.html#becas">Becas y oportunidades</a>
+                </div>
+            </div>
+            <a href="administrados.html">Administrados</a>
+            <a href="blog.html">Blog</a>
+            <a href="contactanos.html">Contáctanos</a>
+            <a href="donar.html" style="background: var(--orange); color: #fff; padding: 6px 20px; border-radius: 30px; font-weight: 700; transition: all 0.3s ease;">DONAR</a>
+            <div class="search-box">
+                <input type="text" placeholder="BUSCAR...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="donar-hero">
+    <div class="container">
+        <h1>DONAR</h1>
+        <div class="hero-line"></div>
+        <p>Tu apoyo puede transformar vidas. Cada donación, grande o pequeña, suma y nos permite seguir acompañando a jóvenes y comunidades.</p>
+    </div>
+</section>
+
+<!-- ===== OPCIONES DE DONACIÓN ===== -->
+<section class="donar-opciones">
+    <div class="container">
+        <h2>¿Cómo puedes contribuir?</h2>
+        <p class="sub">Elige la forma que mejor se adapte a ti</p>
+        <div class="donar-grid">
+            <!-- Dinero -->
+            <div class="donar-card">
+                <i class="fas fa-hand-holding-usd"></i>
+                <h3>Donación económica</h3>
+                <p>Apoya con un aporte monetario para cubrir necesidades básicas, medicinas, alimentos y programas de formación.</p>
+                <a href="#formulario" class="btn-donar">Quiero donar dinero</a>
+            </div>
+            <!-- Pertenencias -->
+            <div class="donar-card">
+                <i class="fas fa-box-open"></i>
+                <h3>Donación de pertenencias</h3>
+                <p>Ropa, alimentos no perecederos, medicamentos, útiles escolares, libros y otros recursos que puedan ser útiles.</p>
+                <a href="#formulario" class="btn-donar">Quiero donar pertenencias</a>
+            </div>
+            <!-- Talento -->
+            <div class="donar-card">
+                <i class="fas fa-users-cog"></i>
+                <h3>Talento humano</h3>
+                <p>Comparte tu tiempo, conocimientos o habilidades: docencia, mentoría, acompañamiento, diseño, programación, etc.</p>
+                <a href="#formulario" class="btn-donar">Quiero donar mi talento</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FORMULARIO DE CONTACTO ===== -->
+<section class="donar-formulario" id="formulario">
+    <div class="container">
+        <h2>Cuéntanos cómo quieres ayudar</h2>
+        <form class="form-donar" action="https://formsubmit.co/alexhrnndz32@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="Nueva donación desde Key">
+            <input type="hidden" name="_captcha" value="true">
+            <input type="hidden" name="_template" value="table">
+
+            <div class="form-group">
+                <label for="nombre">Nombre completo</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo electrónico</label>
+                <input type="email" id="correo" name="email" placeholder="tucorreo@ejemplo.com" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono (opcional)</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="Ej: 7000-0000">
+            </div>
+            <div class="form-group">
+                <label for="tipo-donacion">Tipo de donación</label>
+                <select id="tipo-donacion" name="tipo_donacion" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="economica">Donación económica</option>
+                    <option value="pertenencias">Donación de pertenencias</option>
+                    <option value="talento">Talento humano</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="mensaje">Describe tu donación o cómo puedes ayudar</label>
+                <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos con qué deseas contribuir..." required></textarea>
+            </div>
+            <button type="submit" class="btn-enviar">Enviar mensaje</button>
+        </form>
+    </div>
+</section>
+
+<!-- ===== AVISO ===== -->
+<section class="donar-aviso">
+    <div class="container">
+        <div class="aviso-block">
+            <p style="margin-bottom: 0; font-size: 1rem; color: #333;">
+                <strong>Transparencia:</strong> Todas las donaciones se utilizan directamente para apoyar a los jóvenes y comunidades que acompañamos. Si tienes dudas sobre cómo gestionamos los recursos, puedes contactarnos a través de nuestro <a href="contactanos.html" style="color: var(--secondary);">formulario de contacto</a>.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="col-logo">
+            <a href="index.html"><img src="./assets/logo-horizontal.png" alt="Key · Fundación Hernández"></a>
+        </div>
+        <div class="col-enlaces">
+            <p><strong>Organización</strong></p>
+            <a href="sobre-nosotros.html">Sobre nosotros</a>
+            <a href="oportunidades.html">Oportunidades</a>
+            <a href="administrados.html">Administrados</a>
+            <a href="cosecha.html">Programa Cosecha</a>
+            <a href="blog.html">Blog</a>
+            <a href="contactanos.html">Contáctanos</a>
+            <a href="donar.html" style="font-weight: 700; color: var(--orange);">Donar</a>
+        </div>
+        <div class="col-enlaces">
+            <p><strong>Transparencia y legal</strong></p>
+            <a href="legal.html#naturaleza">Naturaleza de Key</a>
+            <a href="legal.html#aviso-legal">Aviso Legal</a>
+            <a href="legal.html#politica-editorial">Política Editorial</a>
+            <a href="legal.html#politica-privacidad">Política de Privacidad</a>
+            <a href="legal.html#politica-cookies">Política de Cookies</a>
+            <a href="legal.html#terminos-condiciones">Términos y Condiciones</a>
+            <a href="legal.html#propiedad-intelectual">Propiedad Intelectual</a>
+        </div>
+    </div>
+    <div class="social">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="copyright">Key · Fundación Hernández · 2026</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
