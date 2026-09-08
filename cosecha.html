@@ -3,97 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Programa Cosecha · Key · Fundación Hernández</title>
-    <meta name="description" content="Programa Cosecha: apoyamos económicamente a adultos mayores de Oriente a cambio de sus historias. Recogemos lo que sembraron.">
+    <title>Donar · Key · Fundación Hernández</title>
+    <meta name="description" content="Contribuye con Key · Fundación Hernández. Dona dinero, pertenencias o tu talento.">
     <link rel="icon" href="./assets/logo-simbolo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .cosecha-destacado {
-            background: var(--primary);
-            color: #fff;
-            padding: 40px 0;
-            text-align: center;
-        }
-        .cosecha-destacado h2 {
-            font-size: 2.8rem;
-            font-weight: 300;
-            margin-bottom: 8px;
-        }
-        .cosecha-destacado .eslogan {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--yellow);
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-        .cosecha-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-        .cosecha-item {
-            background: #fff;
-            border-radius: 12px;
-            padding: 30px 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--secondary);
-        }
-        .cosecha-item i {
-            font-size: 3rem;
-            color: var(--secondary);
-            margin-bottom: 12px;
-        }
-        .cosecha-item h3 {
-            font-size: 1.3rem;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-        .cosecha-item p {
-            color: #555;
-            line-height: 1.6;
-        }
-        .cosecha-cta {
-            background: var(--secondary);
-            color: #fff;
-            padding: 50px 0;
-            text-align: center;
-        }
-        .cosecha-cta h2 {
-            font-size: 2rem;
-            margin-bottom: 12px;
-        }
-        .cosecha-cta p {
-            max-width: 700px;
-            margin: 0 auto 24px;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        .btn-cosecha {
-            display: inline-block;
-            background: var(--yellow);
-            color: var(--primary);
-            padding: 14px 40px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: 0.3s;
-        }
-        .btn-cosecha:hover {
-            background: #fff;
-            transform: scale(1.05);
-        }
-        @media (max-width: 768px) {
-            .cosecha-destacado h2 {
-                font-size: 2rem;
-            }
-            .cosecha-destacado .eslogan {
-                font-size: 1.6rem;
-            }
-        }
-    </style>
 </head>
 <body>
 
@@ -103,9 +18,10 @@
         <div class="container top-bar-inner">
             <div class="menu-sup">
                 <a href="oportunidades.html">OPORTUNIDADES</a>
-                <a href="cosecha.html" style="color: var(--yellow);">COSECHA</a>
+                <a href="cosecha.html">COSECHA</a>
                 <a href="https://windsor-one.github.io/windsor/" target="_blank" rel="noopener noreferrer">WINDSOR</a>
                 <a href="https://windsor-one.github.io/Heliot-Media/" target="_blank" rel="noopener noreferrer">HELIOT</a>
+                <a href="donar.html" style="background: var(--orange); color: #fff; padding: 4px 16px; border-radius: 30px; font-weight: 700; transition: all 0.3s ease;">DONAR</a>
             </div>
         </div>
     </div>
@@ -135,6 +51,7 @@
             <a href="administrados.html">Administrados</a>
             <a href="blog.html">Blog</a>
             <a href="contactanos.html">Contáctanos</a>
+            <a href="donar.html" style="background: var(--orange); color: #fff; padding: 6px 20px; border-radius: 30px; font-weight: 700; transition: all 0.3s ease;">DONAR</a>
             <div class="search-box">
                 <input type="text" placeholder="BUSCAR...">
                 <button><i class="fas fa-search"></i></button>
@@ -144,92 +61,90 @@
 </header>
 
 <!-- ===== HERO ===== -->
-<section class="page-hero">
+<section class="donar-hero">
     <div class="container">
-        <h1>PROGRAMA COSECHA</h1>
+        <h1>DONAR</h1>
         <div class="hero-line"></div>
-        <p class="hero-subtitle">"Recogemos lo que sembraron"</p>
+        <p>Tu apoyo puede transformar vidas. Cada donación, grande o pequeña, suma y nos permite seguir acompañando a jóvenes y comunidades.</p>
     </div>
 </section>
 
-<!-- ===== DESTACADO ===== -->
-<section class="cosecha-destacado">
+<!-- ===== OPCIONES ===== -->
+<section class="donar-opciones">
     <div class="container">
-        <h2>Apoyamos a quienes nos dieron la vida</h2>
-        <p class="eslogan">"Recogemos lo que sembraron"</p>
-        <p style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; line-height: 1.6; opacity: 0.9;">
-            En el oriente de El Salvador, la tierra es generosa y da frutos. Pero hay una cosecha que va más allá de los cultivos: la cosecha de historias, de sabiduría y de vida que nuestros adultos mayores han sembrado durante décadas.
-        </p>
-    </div>
-</section>
-
-<!-- ===== QUÉ HACEMOS ===== -->
-<section style="padding: 60px 0; background: #fff;">
-    <div class="container">
-        <h2 style="text-align: center; font-size: 2rem; color: var(--primary); margin-bottom: 12px;">¿Qué hacemos?</h2>
-        <p style="text-align: center; max-width: 700px; margin: 0 auto 30px; color: #555;">
-            Programa Cosecha funciona a través de un intercambio justo y digno.
-        </p>
-        <div class="cosecha-grid">
-            <div class="cosecha-item">
-                <i class="fas fa-hand-holding-heart"></i>
-                <h3>Apoyo económico</h3>
-                <p>Brindamos un apoyo mensual a adultos mayores en situación de vulnerabilidad para cubrir sus necesidades básicas: alimentos, medicinas y atención médica.</p>
+        <h2>¿Cómo puedes contribuir?</h2>
+        <p class="sub">Elige la forma que mejor se adapte a ti</p>
+        <div class="donar-grid">
+            <div class="donar-card">
+                <i class="fas fa-hand-holding-usd"></i>
+                <h3>Donación económica</h3>
+                <p>Apoya con un aporte monetario para cubrir necesidades básicas, medicinas, alimentos y programas de formación.</p>
+                <a href="#formulario" class="btn-donar">Quiero donar dinero</a>
             </div>
-            <div class="cosecha-item">
-                <i class="fas fa-book-open"></i>
-                <h3>Historias de vida</h3>
-                <p>A cambio, ellos nos comparten sus historias, recuerdos y sabiduría, que serán registradas y preservadas como parte del archivo histórico de Oriente.</p>
+            <div class="donar-card">
+                <i class="fas fa-box-open"></i>
+                <h3>Donación de pertenencias</h3>
+                <p>Ropa, alimentos no perecederos, medicamentos, útiles escolares, libros y otros recursos que puedan ser útiles.</p>
+                <a href="#formulario" class="btn-donar">Quiero donar pertenencias</a>
             </div>
-            <div class="cosecha-item">
-                <i class="fas fa-users"></i>
-                <h3>Acompañamiento</h3>
-                <p>Jóvenes de Key visitan semanalmente a los adultos mayores, creando un vínculo intergeneracional que combate la soledad y fortalece nuestra comunidad.</p>
+            <div class="donar-card">
+                <i class="fas fa-users-cog"></i>
+                <h3>Talento humano</h3>
+                <p>Comparte tu tiempo, conocimientos o habilidades: docencia, mentoría, acompañamiento, diseño, programación, etc.</p>
+                <a href="#formulario" class="btn-donar">Quiero donar mi talento</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== POR QUÉ ORIENTE ===== -->
-<section style="padding: 60px 0; background: #f9f9f9;">
+<!-- ===== FORMULARIO ===== -->
+<section class="donar-formulario" id="formulario">
     <div class="container">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
-            <div>
-                <h2 style="font-size: 2rem; color: var(--primary); margin-bottom: 16px;">¿Por qué Oriente?</h2>
-                <p style="color: #333; line-height: 1.8; font-size: 1.05rem;">
-                    Oriente es tierra de raíces profundas, de tradiciones que se transmiten de generación en generación, de historias que merecen ser contadas. Nuestros adultos mayores son los guardianes de esa memoria.
-                </p>
-                <p style="color: #333; line-height: 1.8; font-size: 1.05rem;">
-                    <strong>Programa Cosecha</strong> nace para que esas historias no se pierdan, y para que quienes las sembraron reciban el reconocimiento y el apoyo que merecen.
-                </p>
+        <h2>Cuéntanos cómo quieres ayudar</h2>
+        <form class="form-donar" action="https://formsubmit.co/alexhrnndz32@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="Nueva donación desde Key">
+            <input type="hidden" name="_captcha" value="true">
+            <input type="hidden" name="_template" value="table">
+
+            <div class="form-group">
+                <label for="nombre">Nombre completo</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
             </div>
-            <div style="background: var(--primary); border-radius: 12px; padding: 40px 30px; color: #fff; text-align: center;">
-                <i class="fas fa-map-marked-alt" style="font-size: 4rem; color: var(--yellow); margin-bottom: 16px;"></i>
-                <p style="font-size: 1.2rem; font-weight: 300; line-height: 1.6;">
-                    "Oriente no es solo un lugar, es una memoria viva que nuestros abuelos guardan en sus historias."
-                </p>
+            <div class="form-group">
+                <label for="correo">Correo electrónico</label>
+                <input type="email" id="correo" name="email" placeholder="tucorreo@ejemplo.com" required>
             </div>
-        </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono (opcional)</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="Ej: 7000-0000">
+            </div>
+            <div class="form-group">
+                <label for="tipo-donacion">Tipo de donación</label>
+                <select id="tipo-donacion" name="tipo_donacion" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="economica">Donación económica</option>
+                    <option value="pertenencias">Donación de pertenencias</option>
+                    <option value="talento">Talento humano</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="mensaje">Describe tu donación o cómo puedes ayudar</label>
+                <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos con qué deseas contribuir..." required></textarea>
+            </div>
+            <button type="submit" class="btn-enviar">Enviar mensaje</button>
+        </form>
     </div>
 </section>
 
-<!-- ===== CÓMO PARTICIPAR ===== -->
-<section style="padding: 60px 0; background: #fff;">
+<!-- ===== AVISO ===== -->
+<section class="donar-aviso">
     <div class="container">
-        <h2 style="text-align: center; font-size: 2rem; color: var(--primary); margin-bottom: 12px;">¿Cómo participar?</h2>
-        <p style="text-align: center; max-width: 700px; margin: 0 auto 30px; color: #555;">
-            Si conoces a un adulto mayor en Oriente que necesite apoyo, o si deseas sumarte como voluntario, contáctanos.
-        </p>
-        <div style="text-align: center;">
-            <a href="contactanos.html" class="btn" style="background: var(--secondary); color: #fff; padding: 14px 40px; border-radius: 40px; font-weight: 700; font-size: 1.1rem;">Contáctanos</a>
+        <div class="aviso-block">
+            <p style="margin-bottom: 0; font-size: 1rem; color: #333;">
+                <strong>Transparencia:</strong> Todas las donaciones se utilizan directamente para apoyar a los jóvenes y comunidades que acompañamos. Si tienes dudas sobre cómo gestionamos los recursos, puedes contactarnos a través de nuestro <a href="contactanos.html" style="color: var(--secondary);">formulario de contacto</a>.
+            </p>
         </div>
-    </div>
-</section>
-
-<!-- ===== TESTIMONIOS (próximamente) ===== -->
-<section style="padding: 40px 0; background: #f9f9f9; text-align: center;">
-    <div class="container">
-        <p style="color: #777; font-style: italic;">Próximamente, las historias de nuestros adultos mayores.</p>
     </div>
 </section>
 
@@ -247,6 +162,7 @@
             <a href="cosecha.html">Programa Cosecha</a>
             <a href="blog.html">Blog</a>
             <a href="contactanos.html">Contáctanos</a>
+            <a href="donar.html" style="font-weight: 700; color: var(--orange);">Donar</a>
         </div>
         <div class="col-enlaces">
             <p><strong>Transparencia y legal</strong></p>
