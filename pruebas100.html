@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Ship It 💘 · Matchmaker Edition</title>
+<style>
+:root{
+  --bg:#12071a; --card:#1e1230; --card-2:#281a3f;
+  --border:#3a2854; --text:#f5efff; --muted:#a394c4;
+  --pink:#ff66a3; --purple:#a78bfa; --red:#ff4d6d;
+  --gold:#fbbf24; --cyan:#22d3ee; --green:#34d399;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);user-select:none;-webkit-tap-highlight-color:transparent}
+
+/* Fondo romántico con gradientes */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255,102,163,.22) 0%, transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(167,139,250,.22) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(255,77,109,.08) 0%, transparent 60%);
+}
+/* Corazones flotantes */
+.heart-float{
+  position:fixed;font-size:20px;pointer-events:none;z-index:1;
+  animation:floatUp linear infinite;
+  opacity:.12;
+}
+@keyframes floatUp{
+  0%{transform:translateY(100vh) rotate(0);opacity:0}
+  10%{opacity:.25}
+  90%{opacity:.15}
+  100%{transform:translateY(-10vh) rotate(360deg);opacity:0}
+}
+
+/* ============ TOPBAR ============ */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:50;height:64px;
+  padding:0 20px;display:flex;align-items:center;gap:14px;
+  background:rgba(18,7,26,.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(135deg,#ff66a3,#a78bfa);
+  display:grid;place-items:center;font-size:22px;
+  box-shadow:0 0 28px rgba(255,102,163,.55);
+  animation:brandBeat 2.4s ease-in-out infinite;
+}
+@keyframes brandBeat{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.06)}
+}
+.brand-text h1{font-size:15px;font-weight:900;letter-spacing:-.3px;
+  background:linear-gradient(135deg,#ff66a3,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.brand-text p{font-size:10.5px;color:var(--muted);margin-top:2px;font-weight:600;letter-spacing:.3px}
+
+.progress-wrap{margin-left:auto;display:flex;align-items:center;gap:14px}
+.progress-stats{display:flex;gap:14px}
+.stat-mini{text-align:right}
+.stat-mini .n{font-size:15px;font-weight:900;line-height:1}
+.stat-mini .n.pink{color:var(--pink)}
+.stat-mini .n.purple{color:var(--purple)}
+.stat-mini .l{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;font-weight:700;margin-top:3px}
+.progress-bar{
+  width:120px;height:5px;border-radius:5px;
+  background:rgba(255,255,255,.08);overflow:hidden;
+}
+.progress-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#ff66a3,#a78bfa);
+  transition:width .4s cubic-bezier(.4,0,.2,1);
+}
+
+/* ============ STAGE ============ */
+.stage{
+  position:fixed;inset:64px 0 0 0;z-index:2;
+  display:flex;align-items:center;justify-content:center;
+  padding:16px 16px 140px;
+}
+
+.pair-wrap{
+  display:grid;grid-template-columns:1fr auto 1fr;gap:16px;
+  width:100%;max-width:900px;max-height:100%;
+  align-items:stretch;
+}
+
+/* ============ CARD ============ */
+.person-card{
+  background:linear-gradient(165deg,#1f1235 0%,#160a24 100%);
+  border:1.5px solid var(--border);border-radius:24px;
+  padding:22px 20px;overflow:hidden;
+  display:flex;flex-direction:column;
+  box-shadow:0 20px 50px rgba(0,0,0,.5);
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .4s;
+  position:relative;
+  min-height:380px;
+}
+.person-card.enter{
+  animation:cardEnter .55s cubic-bezier(.34,1.56,.64,1) backwards;
+}
+.person-card.enter-l{animation-delay:.05s}
+.person-card.enter-r{animation-delay:.15s}
+@keyframes cardEnter{
+  0%{transform:translateY(40px) scale(.94);opacity:0}
+  100%{transform:translateY(0) scale(1);opacity:1}
+}
+.person-card.exit-l{transform:translateX(-120%) rotate(-8deg);opacity:0}
+.person-card.exit-r{transform:translateX(120%) rotate(8deg);opacity:0}
+
+.pc-avatar{
+  width:100px;height:100px;border-radius:50%;
+  margin:0 auto 14px;
+  display:grid;place-items:center;
+  font-size:36px;font-weight:900;color:#fff;
+  letter-spacing:-1px;
+  border:3px solid rgba(255,255,255,.2);
+  box-shadow:0 8px 30px rgba(0,0,0,.4);
+  position:relative;
+}
+.pc-avatar::after{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:2px dashed rgba(255,255,255,.15);
+  animation:spin 20s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.pc-name{
+  font-size:19px;font-weight:900;text-align:center;letter-spacing:-.4px;line-height:1.15;
+}
+.pc-age{
+  font-size:11px;color:var(--muted);text-align:center;margin-top:5px;
+  font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+}
+.pc-loc{
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  font-size:11px;color:var(--muted);margin-top:8px;font-weight:600;
+}
+.pc-role{
+  font-size:11.5px;color:var(--muted);text-align:center;margin-top:8px;
+  font-weight:500;line-height:1.4;
+  padding:0 4px;
+}
+.pc-bio{
+  font-size:11.5px;color:#c8c0dc;text-align:center;line-height:1.5;
+  margin-top:12px;padding:10px 12px;border-radius:10px;
+  background:rgba(255,255,255,.03);
+  font-style:italic;
+}
+.pc-interests{
+  display:flex;flex-wrap:wrap;gap:5px;justify-content:center;
+  margin-top:auto;padding-top:14px;
+}
+.interest-chip{
+  font-size:10px;padding:4px 9px;border-radius:20px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  color:#d6ccec;font-weight:600;
+}
+.interest-chip.common{
+  background:linear-gradient(135deg,rgba(255,102,163,.25),rgba(167,139,250,.25));
+  border-color:rgba(255,102,163,.5);
+  color:#fff;
+  box-shadow:0 0 12px rgba(255,102,163,.3);
+}
+
+/* ============ MATCH METER (centro) ============ */
+.match-meter{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;padding:0 4px;
+  min-width:110px;
+}
+.heart-big{
+  font-size:44px;
+  filter:drop-shadow(0 0 20px rgba(255,102,163,.7));
+  animation:heartBeat 1.4s ease-in-out infinite;
+}
+@keyframes heartBeat{
+  0%,100%{transform:scale(1)}
+  25%{transform:scale(1.15)}
+  50%{transform:scale(1)}
+  75%{transform:scale(1.08)}
+}
+.match-pct-big{
+  font-size:34px;font-weight:900;letter-spacing:-1.5px;line-height:1;
+  background:linear-gradient(135deg,#ff66a3,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter:drop-shadow(0 0 16px rgba(255,102,163,.4));
+}
+.match-tag{
+  font-size:9.5px;font-weight:800;letter-spacing:1px;
+  color:var(--muted);text-transform:uppercase;
+  background:var(--card);
+  padding:4px 10px;border-radius:12px;
+  border:1px solid var(--border);
+  white-space:nowrap;
+  text-align:center;
+}
+.match-tag.high{color:var(--pink);border-color:var(--pink);background:rgba(255,102,163,.1)}
+.match-tag.mid{color:var(--gold);border-color:var(--gold);background:rgba(251,191,36,.1)}
+.match-tag.low{color:var(--muted)}
+
+.common-list{
+  display:flex;flex-direction:column;gap:4px;
+  max-width:100px;
+  margin-top:4px;
+}
+.common-item{
+  font-size:9.5px;color:#d6ccec;text-align:center;
+  padding:3px 6px;border-radius:8px;
+  background:rgba(255,102,163,.1);
+  border:1px solid rgba(255,102,163,.2);
+  line-height:1.2;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* ============ CONTROLS ============ */
+.controls{
+  position:fixed;bottom:20px;left:0;right:0;z-index:30;
+  display:flex;justify-content:center;align-items:center;gap:22px;
+}
+.ctrl{
+  width:70px;height:70px;border-radius:50%;
+  display:grid;place-items:center;
+  cursor:pointer;
+  border:2.5px solid;background:rgba(18,7,26,.9);
+  backdrop-filter:blur(20px);
+  transition:.25s cubic-bezier(.34,1.56,.64,1);
+  font-size:32px;
+}
+.ctrl:hover{transform:scale(1.12) rotate(-3deg)}
+.ctrl:active{transform:scale(.94)}
+.ctrl.skip{color:var(--red);border-color:var(--red);box-shadow:0 0 26px rgba(255,77,109,.35)}
+.ctrl.skip:hover{background:rgba(255,77,109,.12);box-shadow:0 0 36px rgba(255,77,109,.55)}
+.ctrl.ship{color:var(--pink);border-color:var(--pink);box-shadow:0 0 26px rgba(255,102,163,.35)}
+.ctrl.ship:hover{background:rgba(255,102,163,.12);box-shadow:0 0 36px rgba(255,102,163,.55)}
+.ctrl.undo{
+  width:52px;height:52px;font-size:22px;
+  color:var(--muted);border-color:var(--border);
+}
+.ctrl.undo:hover{color:#fff;border-color:var(--muted)}
+
+/* ============ MATCH MODAL ============ */
+.match-modal{
+  position:fixed;inset:0;z-index:100;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(18,7,26,.92);backdrop-filter:blur(20px);
+  opacity:0;pointer-events:none;transition:opacity .35s;
+  padding:20px;
+}
+.match-modal.show{opacity:1;pointer-events:auto}
+.match-card{
+  text-align:center;padding:36px 28px;max-width:460px;
+  background:linear-gradient(165deg,#241538 0%,#180a26 100%);
+  border:1.5px solid rgba(255,102,163,.4);
+  border-radius:26px;
+  transform:scale(.7);transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(255,102,163,.2);
+}
+.match-modal.show .match-card{transform:scale(1)}
+.match-icon{
+  font-size:72px;margin-bottom:14px;
+  animation:heartBeat 1.2s ease-in-out infinite;
+  filter:drop-shadow(0 0 30px rgba(255,102,163,.8));
+}
+.match-title{
+  font-size:26px;font-weight:900;letter-spacing:-.8px;
+  background:linear-gradient(135deg,#ff66a3,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.match-names{
+  margin-top:18px;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  flex-wrap:wrap;
+}
+.match-name{
+  font-size:15px;font-weight:800;
+  padding:8px 14px;border-radius:14px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+}
+.match-plus{font-size:20px;color:var(--pink);font-weight:900}
+.match-sub{
+  font-size:13px;color:#c8c0dc;margin-top:16px;line-height:1.6;
+}
+.match-sub strong{color:var(--pink);font-weight:800}
+.match-continue{
+  margin-top:24px;padding:14px 36px;border-radius:14px;
+  background:linear-gradient(135deg,#ff66a3,#a78bfa);
+  border:none;color:#fff;font-size:14px;font-weight:800;
+  cursor:pointer;font-family:inherit;letter-spacing:.3px;
+  box-shadow:0 8px 30px rgba(255,102,163,.45);
+  transition:.2s;
+}
+.match-continue:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,102,163,.6)}
+
+.confetti{
+  position:fixed;width:10px;height:10px;z-index:99;pointer-events:none;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  0%{transform:translateY(-10vh) rotate(0);opacity:1}
+  100%{transform:translateY(110vh) rotate(720deg);opacity:0}
+}
+
+/* ============ SUMMARY ============ */
+.summary{
+  position:fixed;inset:64px 0 0 0;z-index:60;
+  background:var(--bg);overflow-y:auto;
+  padding:30px 20px 120px;
+  transform:translateY(100%);transition:transform .55s cubic-bezier(.4,0,.2,1);
+}
+.summary.show{transform:translateY(0)}
+.summary::before{
+  content:'';position:fixed;inset:64px 0 0 0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255,102,163,.15) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(167,139,250,.15) 0%, transparent 50%);
+}
+.summary-header{text-align:center;margin-bottom:26px}
+.summary-header .emoji{font-size:52px;margin-bottom:8px;display:block}
+.summary-header h2{
+  font-size:28px;font-weight:900;letter-spacing:-.8px;
+  background:linear-gradient(135deg,#ff66a3,#a78bfa,#22d3ee);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.summary-header p{color:var(--muted);margin-top:8px;font-size:13px;font-weight:500}
+.summary-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  max-width:520px;margin:22px auto 30px;
+}
+.stat{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:16px 10px;text-align:center;
+}
+.stat-num{font-size:28px;font-weight:900;letter-spacing:-1px;line-height:1}
+.stat-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-top:6px}
+
+.ships-list{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.ship-card{
+  display:flex;align-items:center;gap:12px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:14px 16px;
+  animation:shipEnter .4s cubic-bezier(.34,1.56,.64,1) backwards;
+}
+@keyframes shipEnter{0%{transform:translateY(20px);opacity:0}100%{transform:translateY(0);opacity:1}}
+.ship-avatar{
+  width:46px;height:46px;border-radius:50%;flex-shrink:0;
+  display:grid;place-items:center;font-weight:800;font-size:15px;color:#fff;
+  border:2px solid rgba(255,255,255,.15);
+}
+.ship-heart{
+  font-size:20px;flex-shrink:0;
+  filter:drop-shadow(0 0 8px rgba(255,102,163,.7));
+  animation:heartBeat 1.6s ease-in-out infinite;
+}
+.ship-info{min-width:0;flex:1}
+.ship-names{font-size:13.5px;font-weight:800;line-height:1.2}
+.ship-names span{color:var(--pink)}
+.ship-meta{font-size:10.5px;color:var(--muted);margin-top:4px;font-weight:500}
+.ship-pct{
+  font-size:17px;font-weight:900;letter-spacing:-.5px;
+  background:linear-gradient(135deg,#ff66a3,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  flex-shrink:0;
+}
+.no-ships{
+  text-align:center;padding:50px 20px;color:var(--muted);
+  font-size:14px;line-height:1.7;
+}
+.no-ships .icon{font-size:52px;display:block;margin-bottom:14px;opacity:.4}
+.restart-btn{
+  display:block;margin:30px auto 0;
+  padding:14px 30px;background:linear-gradient(135deg,#ff66a3,#a78bfa);
+  border:none;border-radius:14px;color:#fff;font-size:14px;font-weight:800;
+  cursor:pointer;font-family:inherit;
+  box-shadow:0 8px 30px rgba(255,102,163,.4);transition:.2s;
+}
+.restart-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,102,163,.55)}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:820px){
+  .pair-wrap{
+    grid-template-columns:1fr;gap:8px;
+    max-width:420px;
+    overflow-y:auto;padding:8px 0;
+  }
+  .person-card{min-height:auto;padding:18px 16px}
+  .pc-avatar{width:76px;height:76px;font-size:26px;margin-bottom:10px}
+  .pc-name{font-size:16px}
+  .match-meter{flex-direction:row;gap:14px;padding:6px 0;flex-wrap:wrap;justify-content:center}
+  .heart-big{font-size:32px}
+  .match-pct-big{font-size:26px}
+  .common-list{flex-direction:row;max-width:none;flex-wrap:wrap;justify-content:center}
+  .common-item{font-size:9px}
+  .stage{padding:8px 10px 130px}
+  .ctrl{width:62px;height:62px;font-size:28px}
+  .ctrl.undo{width:46px;height:46px;font-size:19px}
+  .progress-bar{display:none}
+  .brand-text p{display:none}
+}
+@media (max-width:520px){
+  .progress-stats .stat-mini:first-child{display:none}
+}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">💘</div>
+    <div class="brand-text">
+      <h1>Ship It · Matchmaker</h1>
+      <p>Cupido Edition · 30 solteros disponibles</p>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-stats">
+      <div class="stat-mini">
+        <div class="n pink" id="shipCount">0</div>
+        <div class="l">Ships</div>
+      </div>
+      <div class="stat-mini">
+        <div class="n purple" id="roundCount">1</div>
+        <div class="l">Ronda</div>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</header>
+
+<div class="stage">
+  <div class="pair-wrap" id="pairWrap"></div>
+</div>
+
+<div class="controls" id="controls">
+  <button class="ctrl undo" id="undoBtn" title="Deshacer">↺</button>
+  <button class="ctrl skip" id="skipBtn" title="No pegan">💔</button>
+  <button class="ctrl ship" id="shipBtn" title="¡Ship!">💖</button>
+</div>
+
+<div class="match-modal" id="matchModal">
+  <div class="match-card">
+    <div class="match-icon">💘</div>
+    <div class="match-title">¡Se shipean!</div>
+    <div class="match-names" id="matchNames"></div>
+    <div class="match-sub" id="matchSub"></div>
+    <button class="match-continue" id="matchContinue">Continuar</button>
+  </div>
+</div>
+
+<div class="summary" id="summary"></div>
+
+<script>
+/* =========================================================
+   POOL DE PERSONAS
+   ========================================================= */
+const people = [
+  {id:'juana', name:'Juana Jule', age:50, location:'San Salvador', role:'Directora Ejecutiva',
+   bio:'MBA y viajera empedernida. Busca a alguien con quien discutir sobre economía hasta las 2 AM.',
+   interests:['Café','Viajes','Libros','Estrategia','Vino']},
+  {id:'pineda', name:'José M. Pineda', age:58, location:'San Salvador', role:'Ex-Ministro de Educación',
+   bio:'Lee el periódico entero cada mañana. Fanático del orden y de las conversaciones largas.',
+   interests:['Política','Lectura','Café','Senderismo','Historia']},
+  {id:'violeta', name:'Violeta Valencia', age:42, location:'San Salvador', role:'Psicóloga Social',
+   bio:'Escucha mejor que nadie. Le encanta el cine de autor y las caminatas al atardecer.',
+   interests:['Cine','Senderismo','Café','Fotografía','Yoga']},
+  {id:'josue', name:'Josué Aguilar', age:38, location:'San Salvador', role:'Arquitecto de Software',
+   bio:'Vive entre nubes (de Azure). Busca a alguien que entienda sus silencios de deploy.',
+   interests:['Tecnología','Café','Ciclismo','Videojuegos','Cerveza artesanal']},
+  {id:'keny', name:'Keny Márquez', age:40, location:'San Salvador', role:'Coach Ejecutiva',
+   bio:'Cree que todo se resuelve con una buena conversación y un café bien cargado.',
+   interests:['Coaching','Café','Viajes','Lectura','Yoga']},
+  {id:'monica', name:'Mónica Gálvez', age:45, location:'San Salvador', role:'Directora de Empleabilidad',
+   bio:'+20 años en comunicación. Le apasiona el vino, la playa y las buenas historias.',
+   interests:['Vino','Playa','Marketing','Viajes','Cine']},
+  {id:'cristian', name:'Cristian Escalante', age:28, location:'San Salvador', role:'Backend & Blockchain',
+   bio:'Programa de día, mina Bitcoin de noche. Busca a alguien curioso y noctámbulo.',
+   interests:['Blockchain','Programación','Café','Cripto','Ciencia ficción']},
+  {id:'bryan-m', name:'Bryan Molina', age:30, location:'Santa Tecla', role:'Ilustrador & Diseñador',
+   bio:'Dibuja desde los 12. Busca a alguien que aprecie el arte y el silencio compartido.',
+   interests:['Arte','Ilustración','Café','Cine','Gatos']},
+  {id:'fernando-ch', name:'Fernando Chávez', age:32, location:'San Miguel', role:'Periodista & Docente',
+   bio:'Locutor de corazón. Le encanta conversar, la radio y los conciertos en vivo.',
+   interests:['Música','Radio','Periodismo','Conciertos','Café']},
+  {id:'karen', name:'Karen Carreño', age:30, location:'Sonsonate', role:'Psicóloga & Coach Vocacional',
+   bio:'Diseña experiencias formativas y colecciona atardeceres. Busca a alguien con propósito.',
+   interests:['Yoga','Café','Viajes','Lectura','Arte']},
+  {id:'gabriela-q', name:'Gabriela Quintanilla', age:30, location:'San Miguel', role:'Psicóloga',
+   bio:'Trabaja con niñez y adolescencia. Busca a alguien paciente, empático y con buen humor.',
+   interests:['Niñez','Lectura','Café','Senderismo','Cine']},
+  {id:'nelson', name:'Nelson Inno', age:36, location:'San Salvador', role:'Innovador & Autor',
+   bio:'Dio una TEDx. Vive entre Bitcoin, IA y libros raros. Busca a alguien que le siga el ritmo.',
+   interests:['Innovación','Bitcoin','IA','Lectura','Viajes']},
+  {id:'jeison', name:'Jeison Paz', age:33, location:'Usulután', role:'Psicólogo & Docente',
+   bio:'Trabajó en Aldeas SOS. Cree en las segundas oportunidades y en el café bien hecho.',
+   interests:['Psicología','Café','Lectura','Senderismo','Cine']},
+  {id:'marcela', name:'Marcela Cruz', age:42, location:'San Miguel', role:'Psicóloga Humanitaria',
+   bio:'Defensora de derechos humanos. Busca a alguien con causa y sentido del humor.',
+   interests:['DDHH','Café','Lectura','Viajes','Arte']},
+  {id:'carlos', name:'Carlos Quintanilla', age:45, location:'San Miguel', role:'Director de Capacitación',
+   bio:'+13 años en ONGs. Le gusta enseñar, cocinar y las conversaciones profundas.',
+   interests:['Docencia','Cocina','Café','Lectura','Senderismo']},
+  {id:'elmer', name:'Elmer Galdámez', age:48, location:'Sonsonate', role:'Coach & Docente',
+   bio:'+18 años enseñando. Fanático de la tecnología y de las buenas sobremesas.',
+   interests:['Docencia','Tecnología','Café','Cocina','Música']},
+  {id:'ingrid', name:'Ingrid Vela', age:40, location:'Chalatenango', role:'Especialista en Educación Digital',
+   bio:'Maestra, tecnóloga y emprendedora. Busca a alguien con mente abierta.',
+   interests:['Tecnología','Educación','Café','Lectura','Yoga']},
+  {id:'gabriela-paiz', name:'Gabriela Paiz', age:28, location:'San Salvador', role:'Psicóloga & Psicoterapeuta',
+   bio:'Organizacional de día, clínica de tarde. Busca a alguien con quien compartir el silencio.',
+   interests:['Psicología','Café','Cine','Gatos','Lectura']},
+  {id:'ernesto', name:'Ernesto Bonilla', age:35, location:'Santa Tecla', role:'Especialista en Talento',
+   bio:'Psicólogo organizacional. Le gusta el deporte, el café y la gente auténtica.',
+   interests:['RRHH','Café','Deportes','Lectura','Cerveza artesanal']},
+  {id:'alexander', name:'Alexander Hernández', age:20, location:'Morazán', role:'Emprendedor & Estudiante',
+   bio:'Fundó una agencia de medios a los 19. Busca a alguien curioso y con visión.',
+   interests:['Emprendimiento','Marketing','Café','Tecnología','Música']},
+  {id:'wilmer', name:'Wilmer Luna', age:28, location:'Sonsonate', role:'Psicólogo & Reclutador',
+   bio:'Psicólogo por vocación. Le gusta el análisis, la música y las conversaciones sin prisa.',
+   interests:['Psicología','Música','Café','Lectura','Cine']},
+  {id:'katherine-g', name:'Katherine Guzmán', age:27, location:'Sonsonate', role:'Analista de Talento',
+   bio:'Psicóloga y headhunter. Busca a alguien que la sorprenda con planes inesperados.',
+   interests:['Psicología','Café','Viajes','Cine','Conciertos']},
+  {id:'abigail', name:'Abigail Sigarán', age:26, location:'San Salvador', role:'Analista de Reclutamiento',
+   bio:'Cree en el reclutamiento con empatía. Fanática del gym y de los planes tranquilos.',
+   interests:['RRHH','Gym','Café','Cine','Brunch']},
+  {id:'stephanie', name:'Stephanie Arévalo', age:28, location:'San Salvador', role:'Psicóloga Organizacional',
+   bio:'Maestría en RRHH. Ama los libros, el vino tinto y las tardes de lluvia.',
+   interests:['Lectura','Vino','Café','Cine','Yoga']},
+  {id:'daniel', name:'Daniel Miranda', age:29, location:'San Juan Opico', role:'Generalista RRHH',
+   bio:'Psicólogo con enfoque humano. Le gusta el fútbol, la cerveza y las buenas vibras.',
+   interests:['Fútbol','Cerveza','Café','Música','Viajes']},
+  {id:'karol', name:'Karol Alfaro', age:24, location:'San Salvador', role:'Estratega Digital',
+   bio:'Diseñadora de experiencias. Fanática del cine, los atardeceres y la natación.',
+   interests:['Cine','Natación','Café','Diseño','Instagram']},
+  {id:'francisco', name:'Francisco Rivas', age:30, location:'San Salvador', role:'Productor Audiovisual',
+   bio:'Filmmaker. Cuenta historias en cada frame. Busca a alguien que ame el cine.',
+   interests:['Cine','Fotografía','Café','Música','Viajes']},
+  {id:'oscar', name:'Oscar Magaña', age:26, location:'San Salvador', role:'Comunicador',
+   bio:'Community manager y editor. Le gusta el café, la fotografía y la gente creativa.',
+   interests:['Fotografía','Café','Diseño','Música','Cine']},
+  {id:'gerson', name:'Gerson Franco', age:23, location:'San Miguel', role:'Desarrollador Full Stack',
+   bio:'Programa con café en mano. Le gustan los videojuegos, el anime y la comida.',
+   interests:['Videojuegos','Anime','Café','Programación','Música']},
+  {id:'david-r', name:'David Rivera', age:23, location:'San Miguel', role:'Frontend Developer',
+   bio:'Código limpio, diseños pixel-perfect. Busca a alguien detallista y curioso.',
+   interests:['Programación','Diseño','Café','Gatos','Música']}
+];
+
+/* =========================================================
+   CÁLCULO DE COMPATIBILIDAD
+   ========================================================= */
+function compatibility(a, b){
+  let score = 25;
+  const common = a.interests.filter(i => b.interests.includes(i));
+  score += common.length * 11;
+  if(a.location === b.location) score += 14;
+  const ageDiff = Math.abs(a.age - b.age);
+  if(ageDiff <= 3) score += 18;
+  else if(ageDiff <= 7) score += 11;
+  else if(ageDiff <= 12) score += 5;
+  // Pequeño ruido para variedad
+  score += Math.floor(Math.random() * 9);
+  return {score: Math.min(98, score), common};
+}
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+let pool = [...people].sort(()=>Math.random()-0.5);
+let round = 0;
+let ships = [];
+let history = [];
+
+const pairWrap = document.getElementById('pairWrap');
+const modal = document.getElementById('matchModal');
+const summary = document.getElementById('summary');
+const controls = document.getElementById('controls');
+
+function initials(name){
+  return name.split(' ').filter(w=>w.length>1).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+}
+function colorFor(id){
+  const palette = ['#ff66a3','#a78bfa','#22d3ee','#fbbf24','#34d399','#f472b6','#818cf8','#fb7185'];
+  let h = 0;
+  for(let i=0;i<id.length;i++) h = (h*31 + id.charCodeAt(i)) >>> 0;
+  return palette[h % palette.length];
+}
+
+/* =========================================================
+   RENDER PAREJA
+   ========================================================= */
+function currentPair(){
+  const a = pool[round * 2];
+  const b = pool[round * 2 + 1];
+  if(!a || !b) return null;
+  return {a, b};
+}
+
+function renderPair(){
+  const pair = currentPair();
+  if(!pair){ showSummary(); return; }
+
+  const {a, b} = pair;
+  const {score, common} = compatibility(a, b);
+
+  // Etiqueta según score
+  let tag = 'Vecinos de barrio';
+  let tagClass = 'low';
+  if(score >= 80){ tag = '¡Almas gemelas!'; tagClass = 'high'; }
+  else if(score >= 65){ tag = 'Muy compatibles'; tagClass = 'high'; }
+  else if(score >= 50){ tag = 'Buena química'; tagClass = 'mid'; }
+  else if(score >= 35){ tag = 'Podría funcionar'; tagClass = 'mid'; }
+  else { tag = 'Poco probable'; tagClass = 'low'; }
+
+  pairWrap.innerHTML = `
+    <div class="person-card enter enter-l" id="cardA" style="--accent:${colorFor(a.id)}">
+      <div class="pc-avatar" style="background:linear-gradient(135deg,${colorFor(a.id)},${colorFor(a.id)}99)">${initials(a.name)}</div>
+      <div class="pc-name">${a.name}</div>
+      <div class="pc-age">${a.age} años</div>
+      <div class="pc-loc">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+        ${a.location}
+      </div>
+      <div class="pc-role">${a.role}</div>
+      <div class="pc-bio">"${a.bio}"</div>
+      <div class="pc-interests">
+        ${a.interests.map(i=>{
+          const isCommon = common.includes(i);
+          return `<span class="interest-chip ${isCommon?'common':''}">${i}${isCommon?' ♥':''}</span>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <div class="match-meter">
+      <div class="heart-big">💘</div>
+      <div class="match-pct-big">${score}%</div>
+      <div class="match-tag ${tagClass}">${tag}</div>
+      ${common.length ? `
+        <div class="common-list">
+          ${common.slice(0,3).map(c=>`<div class="common-item">♥ ${c}</div>`).join('')}
+        </div>
+      ` : ''}
+    </div>
+
+    <div class="person-card enter enter-r" id="cardB" style="--accent:${colorFor(b.id)}">
+      <div class="pc-avatar" style="background:linear-gradient(135deg,${colorFor(b.id)},${colorFor(b.id)}99)">${initials(b.name)}</div>
+      <div class="pc-name">${b.name}</div>
+      <div class="pc-age">${b.age} años</div>
+      <div class="pc-loc">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+        ${b.location}
+      </div>
+      <div class="pc-role">${b.role}</div>
+      <div class="pc-bio">"${b.bio}"</div>
+      <div class="pc-interests">
+        ${b.interests.map(i=>{
+          const isCommon = common.includes(i);
+          return `<span class="interest-chip ${isCommon?'common':''}">${i}${isCommon?' ♥':''}</span>`;
+        }).join('')}
+      </div>
+    </div>
+  `;
+
+  // Guardar score para cuando hagan click
+  pairWrap.dataset.score = score;
+  pairWrap.dataset.commonCount = common.length;
+
+  updateProgress();
+}
+
+/* =========================================================
+   ACCIONES
+   ========================================================= */
+function doShip(){
+  const pair = currentPair();
+  if(!pair) return;
+  const score = parseInt(pairWrap.dataset.score);
+  const cardA = document.getElementById('cardA');
+  const cardB = document.getElementById('cardB');
+  cardA.classList.add('exit-l');
+  cardB.classList.add('exit-r');
+
+  ships.push({a: pair.a, b: pair.b, score});
+  history.push({type:'ship', pair, score});
+
+  setTimeout(()=>{
+    round++;
+    renderPair();
+    showMatchModal(pair.a, pair.b, score);
+  }, 320);
+}
+
+function doSkip(){
+  const pair = currentPair();
+  if(!pair) return;
+  const cardA = document.getElementById('cardA');
+  const cardB = document.getElementById('cardB');
+  cardA.classList.add('exit-r');
+  cardB.classList.add('exit-l');
+
+  history.push({type:'skip', pair});
+
+  setTimeout(()=>{
+    round++;
+    renderPair();
+  }, 320);
+}
+
+function doUndo(){
+  if(round === 0) return;
+  const last = history.pop();
+  if(!last) return;
+  if(last.type === 'ship') ships.pop();
+  round--;
+  renderPair();
+}
+
+document.getElementById('shipBtn').addEventListener('click', doShip);
+document.getElementById('skipBtn').addEventListener('click', doSkip);
+document.getElementById('undoBtn').addEventListener('click', doUndo);
+
+document.addEventListener('keydown', e=>{
+  if(modal.classList.contains('show')){
+    if(e.key === 'Enter' || e.key === ' ') document.getElementById('matchContinue').click();
+    return;
+  }
+  if(e.key === 'ArrowRight') doShip();
+  if(e.key === 'ArrowLeft') doSkip();
+  if(e.key === 'Escape' || e.key === 'z') doUndo();
+});
+
+/* =========================================================
+   PROGRESO
+   ========================================================= */
+function updateProgress(){
+  document.getElementById('shipCount').textContent = ships.length;
+  document.getElementById('roundCount').textContent = round + 1;
+  const total = Math.floor(pool.length / 2);
+  document.getElementById('progressFill').style.width = `${(round / total) * 100}%`;
+}
+
+/* =========================================================
+   MODAL DE SHIP
+   ========================================================= */
+function showMatchModal(a, b, score){
+  document.getElementById('matchNames').innerHTML = `
+    <div class="match-name" style="color:${colorFor(a.id)}">${a.name}</div>
+    <div class="match-plus">💘</div>
+    <div class="match-name" style="color:${colorFor(b.id)}">${b.name}</div>
+  `;
+  const tag = score >= 80 ? '¡Almas gemelas!' : score >= 65 ? '¡Muy compatibles!' : score >= 50 ? '¡Buena química!' : '¡Podría funcionar!';
+  document.getElementById('matchSub').innerHTML = `${tag} <strong>${score}%</strong> de compatibilidad. Los declaramos oficialmente shipeados 💖`;
+  modal.classList.add('show');
+  launchConfetti();
+}
+
+document.getElementById('matchContinue').addEventListener('click', ()=>{
+  modal.classList.remove('show');
+  if(round >= Math.floor(pool.length / 2)) setTimeout(showSummary, 300);
+});
+
+function launchConfetti(){
+  const colors = ['#ff66a3','#a78bfa','#22d3ee','#fbbf24','#34d399','#ff4d6d'];
+  const shapes = ['♥','💖','💘','✨','💕'];
+  for(let i = 0; i < 60; i++){
+    setTimeout(()=>{
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.top = '-20px';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      c.style.width = c.style.height = (6 + Math.random()*10) + 'px';
+      c.style.animationDuration = (2 + Math.random()*2) + 's';
+      c.style.animationDelay = '0s';
+      document.body.appendChild(c);
+      setTimeout(()=> c.remove(), 4500);
+    }, i * 25);
+  }
+}
+
+/* =========================================================
+   RESUMEN FINAL
+   ========================================================= */
+function showSummary(){
+  controls.style.display = 'none';
+
+  const avg = ships.length
+    ? Math.round(ships.reduce((a, s)=> a + s.score, 0) / ships.length)
+    : 0;
+
+  const highest = ships.length ? ships.reduce((a, s)=> s.score > a.score ? s : a) : null;
+
+  summary.innerHTML = `
+    <div class="summary-header">
+      <span class="emoji">💒</span>
+      <h2>¡Boda shipeada!</h2>
+      <p>Estos son los ${ships.length} ships que aprobaste como cupido profesional</p>
+    </div>
+
+    <div class="summary-stats">
+      <div class="stat">
+        <div class="stat-num" style="color:#ff66a3">${ships.length}</div>
+        <div class="stat-lbl">Ships 💖</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:#9b93b8">${history.filter(h=>h.type==='skip').length}</div>
+        <div class="stat-lbl">Descartados 💔</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:#a78bfa">${avg}%</div>
+        <div class="stat-lbl">Match promedio</div>
+      </div>
+    </div>
+
+    ${ships.length ? `
+      <div class="ships-list">
+        ${ships.map((s, i) => `
+          <div class="ship-card" style="animation-delay:${i * 0.05}s">
+            <div class="ship-avatar" style="background:linear-gradient(135deg,${colorFor(s.a.id)},${colorFor(s.a.id)}99)">${initials(s.a.name)}</div>
+            <div class="ship-heart">💘</div>
+            <div class="ship-avatar" style="background:linear-gradient(135deg,${colorFor(s.b.id)},${colorFor(s.b.id)}99)">${initials(s.b.name)}</div>
+            <div class="ship-info">
+              <div class="ship-names">${s.a.name.split(' ')[0]} <span>+</span> ${s.b.name.split(' ')[0]}</div>
+              <div class="ship-meta">${s.a.location} · ${s.b.location}</div>
+            </div>
+            <div class="ship-pct">${s.score}%</div>
+          </div>
+        `).join('')}
+      </div>
+    ` : `
+      <div class="no-ships">
+        <span class="icon">💔</span>
+        No shipeaste a nadie.<br>La soltería también es válida.
+      </div>
+    `}
+
+    ${highest ? `
+      <div style="text-align:center;margin-top:34px;padding:20px;background:linear-gradient(135deg,rgba(255,102,163,.1),rgba(167,139,250,.1));border-radius:16px;border:1px solid rgba(255,102,163,.3);max-width:600px;margin-left:auto;margin-right:auto">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:800;margin-bottom:8px">💎 Ship del año</div>
+        <div style="font-size:17px;font-weight:900;color:#fff">
+          ${highest.a.name.split(' ')[0]} <span style="color:#ff66a3">+</span> ${highest.b.name.split(' ')[0]}
+        </div>
+        <div style="font-size:13px;color:#ff66a3;font-weight:800;margin-top:6px">${highest.score}% de compatibilidad</div>
+      </div>
+    ` : ''}
+
+    <button class="restart-btn" onclick="restart()">↺ Volver a shipear</button>
+  `;
+  summary.classList.add('show');
+}
+
+function restart(){
+  pool = [...people].sort(()=>Math.random()-0.5);
+  round = 0;
+  ships = [];
+  history = [];
+  summary.classList.remove('show');
+  controls.style.display = '';
+  renderPair();
+}
+
+/* =========================================================
+   CORAZONES FLOTANTES DE FONDO
+   ========================================================= */
+(function heartBG(){
+  const hearts = ['💖','💘','💕','💗','♥','💞'];
+  for(let i = 0; i < 12; i++){
+    const h = document.createElement('div');
+    h.className = 'heart-float';
+    h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.animationDuration = (18 + Math.random()*20) + 's';
+    h.style.animationDelay = (-Math.random()*20) + 's';
+    h.style.fontSize = (14 + Math.random()*20) + 'px';
+    document.body.appendChild(h);
+  }
+})();
+
+/* =========================================================
+   INIT
+   ========================================================= */
+renderPair();
+</script>
+
+</body>
+</html>
