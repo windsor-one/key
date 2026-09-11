@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organigrama · Key · Fundación Hernández</title>
+<style>
+:root{
+  --key:#a78bfa; --key-glow:rgba(167,139,250,.35);
+  --windsor:#22d3ee; --windsor-glow:rgba(34,211,238,.35);
+  --heliot:#fbbf24; --heliot-glow:rgba(251,191,36,.35);
+  --cosecha:#34d399; --cosecha-glow:rgba(52,211,153,.35);
+  --bg:#08090f; --card:#151823; --card-2:#1a1f2e;
+  --border:#232838; --text:#f1f5f9; --muted:#8892a8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:
+    radial-gradient(ellipse at top,#1a1f3a 0%,transparent 55%),
+    radial-gradient(ellipse at bottom right,#1a1030 0%,transparent 55%),
+    var(--bg);
+  color:var(--text);min-height:100vh;overflow-x:hidden;
+}
+
+/* HEADER */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  padding:14px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  background:rgba(8,9,15,.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.brand-mark{
+  width:40px;height:40px;border-radius:11px;
+  background:linear-gradient(135deg,var(--key),#7c3aed);
+  display:grid;place-items:center;font-weight:800;font-size:18px;color:#fff;
+  box-shadow:0 0 24px var(--key-glow);
+}
+.brand-text h1{font-size:14.5px;font-weight:700;letter-spacing:-.2px}
+.brand-text p{font-size:11px;color:var(--muted);margin-top:1px}
+
+.search-wrap{position:relative;flex:1;max-width:340px;min-width:180px}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.search-wrap input{
+  width:100%;padding:10px 14px 10px 38px;
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-size:13px;outline:none;transition:.2s;
+}
+.search-wrap input:focus{border-color:var(--key);box-shadow:0 0 0 3px var(--key-glow)}
+
+.legend{display:flex;gap:8px;flex-wrap:wrap}
+.legend-item{
+  display:flex;align-items:center;gap:6px;padding:6px 10px;
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  font-size:11px;font-weight:600;cursor:pointer;user-select:none;transition:.2s;
+}
+.legend-item:hover{border-color:var(--muted);transform:translateY(-1px)}
+.legend-dot{width:8px;height:8px;border-radius:50%}
+.legend-item[data-area="key"]{color:var(--key)}
+.legend-item[data-area="windsor"]{color:var(--windsor)}
+.legend-item[data-area="heliot"]{color:var(--heliot)}
+.legend-item[data-area="cosecha"]{color:var(--cosecha)}
+
+/* CANVAS */
+.canvas{padding:36px 24px 140px;overflow-x:auto;overflow-y:visible}
+.hint{
+  text-align:center;font-size:11.5px;color:var(--muted);margin-bottom:28px;
+  display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;
+}
+.hint kbd{
+  background:var(--card);border:1px solid var(--border);padding:2px 8px;
+  border-radius:5px;font-family:inherit;font-size:11px;color:var(--text);
+}
+
+/* ===== TREE ===== */
+.tree{display:flex;justify-content:center;min-width:min-content}
+.tree ul{
+  display:flex;justify-content:center;padding-top:22px;position:relative;
+  list-style:none;gap:0;transition:.3s;
+}
+.tree li{
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;padding:22px 6px 0;list-style:none;
+}
+/* horizontal connectors */
+.tree li::before,.tree li::after{
+  content:'';position:absolute;top:0;right:50%;
+  border-top:1.5px solid var(--border);width:50%;height:22px;
+}
+.tree li::after{right:auto;left:50%;border-left:1.5px solid var(--border)}
+.tree li:only-child::after,.tree li:only-child::before{display:none}
+.tree li:only-child{padding-top:0}
+.tree li:first-child::before,.tree li:last-child::after{border:0 none}
+.tree li:last-child::before{border-right:1.5px solid var(--border);border-radius:0 8px 0 0}
+.tree li:first-child::after{border-radius:8px 0 0 0}
+.tree ul ul::before{
+  content:'';position:absolute;top:0;left:50%;
+  border-left:1.5px solid var(--border);width:0;height:22px;
+}
+
+/* ===== NODE ===== */
+.node{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 13px;background:var(--card);
+  border:1.5px solid var(--border);border-radius:12px;
+  cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);
+  position:relative;min-width:170px;max-width:210px;user-select:none;
+  box-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+.node:hover{
+  transform:translateY(-2px);border-color:var(--muted);
+  box-shadow:0 10px 24px rgba(0,0,0,.5);
+}
+.node.selected{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-glow),0 10px 32px var(--accent-glow);
+  transform:translateY(-2px);
+}
+.node.descendant{
+  border-color:var(--accent);
+  background:linear-gradient(135deg,var(--card) 0%,color-mix(in srgb,var(--accent) 10%,var(--card)) 100%);
+}
+.node.dimmed{opacity:.22;filter:grayscale(.7)}
+
+.node[data-area="key"]{--accent:var(--key);--accent-glow:var(--key-glow)}
+.node[data-area="windsor"]{--accent:var(--windsor);--accent-glow:var(--windsor-glow)}
+.node[data-area="heliot"]{--accent:var(--heliot);--accent-glow:var(--heliot-glow)}
+.node[data-area="cosecha"]{--accent:var(--cosecha);--accent-glow:var(--cosecha-glow)}
+
+.avatar{
+  width:32px;height:32px;border-radius:9px;flex-shrink:0;
+  display:grid;place-items:center;font-weight:700;font-size:12px;color:#fff;
+  background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 55%,#000));
+  box-shadow:0 0 12px var(--accent-glow);
+}
+.node-info{min-width:0;flex:1}
+.node-name{
+  font-size:12px;font-weight:600;letter-spacing:-.1px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.node-role{
+  font-size:10px;color:var(--muted);margin-top:1px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.node-count{
+  position:absolute;top:-6px;right:-6px;
+  background:var(--accent);color:#000;font-size:9.5px;font-weight:800;
+  padding:2px 6px;border-radius:8px;min-width:18px;text-align:center;
+  box-shadow:0 0 10px var(--accent-glow);
+}
+
+/* ROOT */
+.node-root{padding:13px 18px;min-width:210px}
+.node-root .avatar{width:42px;height:42px;font-size:16px;border-radius:11px}
+.node-root .node-name{font-size:14px}
+.node-root .node-role{font-size:10.5px}
+
+/* GROUP NODE (director de área) */
+.node-group{
+  background:linear-gradient(135deg,var(--card-2),color-mix(in srgb,var(--accent) 6%,var(--card-2)));
+}
+
+/* ===== PANEL ===== */
+.panel{
+  position:fixed;top:77px;right:20px;width:340px;
+  max-height:calc(100vh - 100px);
+  background:rgba(15,17,23,.97);backdrop-filter:blur(24px);
+  border:1px solid var(--border);border-radius:16px;
+  padding:20px;overflow-y:auto;
+  transform:translateX(calc(100% + 40px));
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  z-index:40;box-shadow:0 20px 60px rgba(0,0,0,.7);
+}
+.panel.open{transform:translateX(0)}
+.panel-close{
+  position:absolute;top:14px;right:14px;width:26px;height:26px;
+  border-radius:7px;background:var(--card);border:1px solid var(--border);
+  color:var(--muted);cursor:pointer;display:grid;place-items:center;transition:.2s;
+}
+.panel-close:hover{color:var(--text);border-color:var(--muted);background:var(--card-2)}
+
+.panel-header{
+  display:flex;align-items:center;gap:14px;
+  padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:16px;
+  padding-right:30px;
+}
+.panel-avatar{
+  width:52px;height:52px;border-radius:13px;flex-shrink:0;
+  display:grid;place-items:center;font-weight:800;font-size:19px;color:#fff;
+}
+.panel-name{font-size:15px;font-weight:700;letter-spacing:-.3px;line-height:1.2}
+.panel-role{font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.4}
+.panel-area{
+  display:inline-block;padding:3px 9px;border-radius:6px;
+  font-size:9.5px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.6px;margin-top:8px;
+}
+
+.panel-section{margin-bottom:16px}
+.panel-section h3{
+  font-size:10px;text-transform:uppercase;letter-spacing:.9px;
+  color:var(--muted);margin-bottom:10px;font-weight:700;
+}
+.panel-bio{
+  font-size:12px;line-height:1.6;color:#c8cfe0;
+  background:var(--card);padding:12px 14px;border-radius:10px;
+  border-left:2px solid var(--accent,var(--key));
+}
+.panel-bio[data-area="key"]{border-left-color:var(--key)}
+.panel-bio[data-area="windsor"]{border-left-color:var(--windsor)}
+.panel-bio[data-area="heliot"]{border-left-color:var(--heliot)}
+.panel-bio[data-area="cosecha"]{border-left-color:var(--cosecha)}
+
+.total-count{
+  font-size:28px;font-weight:800;letter-spacing:-1px;line-height:1;
+}
+.total-label{font-size:11.5px;color:var(--muted);margin-top:4px}
+
+.report-list{display:flex;flex-direction:column;gap:6px}
+.report-item{
+  display:flex;align-items:center;gap:10px;padding:9px 11px;
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  cursor:pointer;transition:.2s;
+}
+.report-item:hover{border-color:var(--muted);transform:translateX(3px);background:var(--card-2)}
+.report-avatar{
+  width:28px;height:28px;border-radius:8px;flex-shrink:0;
+  display:grid;place-items:center;font-weight:700;font-size:11px;color:#fff;
+}
+.report-info{min-width:0;flex:1}
+.report-name{
+  font-size:12px;font-weight:600;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.report-role{
+  font-size:10px;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.empty{
+  text-align:center;padding:16px;color:var(--muted);
+  font-size:11.5px;font-style:italic;
+  background:var(--card);border-radius:10px;
+}
+
+/* RESPONSIVE */
+@media (max-width:900px){
+  .legend{display:none}
+  .panel{
+    width:calc(100vw - 20px);right:10px;top:auto;bottom:10px;
+    max-height:65vh;
+  }
+  .search-wrap{max-width:none;order:3;width:100%}
+  .topbar{padding:12px 14px;gap:12px}
+}
+
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--muted)}
+
+@keyframes pulse{0%,100%{opacity:.9}50%{opacity:.5}}
+.node.descendant::after{
+  content:'';position:absolute;inset:-2px;border-radius:14px;
+  border:1.5px solid var(--accent);animation:pulse 2.2s ease-in-out infinite;
+  pointer-events:none;
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">K</div>
+    <div class="brand-text">
+      <h1>Key · Fundación Hernández</h1>
+      <p>Organigrama interactivo · 101 colaboradores</p>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
+    </svg>
+    <input type="text" id="search" placeholder="Buscar por nombre o rol...">
+  </div>
+  <div class="legend">
+    <div class="legend-item" data-area="key"><span class="legend-dot" style="background:var(--key)"></span>Key</div>
+    <div class="legend-item" data-area="windsor"><span class="legend-dot" style="background:var(--windsor)"></span>Windsor</div>
+    <div class="legend-item" data-area="heliot"><span class="legend-dot" style="background:var(--heliot)"></span>Heliot</div>
+    <div class="legend-item" data-area="cosecha"><span class="legend-dot" style="background:var(--cosecha)"></span>Cosecha</div>
+  </div>
+</header>
+
+<main class="canvas">
+  <div class="hint">
+    <kbd>Click</kbd> en una persona para ver a quién supervisa &nbsp;·&nbsp; <kbd>Esc</kbd> para limpiar
+  </div>
+  <div class="tree" id="tree"></div>
+</main>
+
+<aside class="panel" id="panel">
+  <button class="panel-close" id="panelClose" aria-label="Cerrar">✕</button>
+  <div id="panelContent"></div>
+</aside>
+
+<script>
+/* ================= DATA ================= */
+const org = {
+  id:'key', name:'Key', role:'Dirección General · Fundación Hernández', area:'key',
+  bio:'Administra toda la fundación y sus cuatro áreas: Dirección Ejecutiva, Windsor, Heliot Media y Cosecha. Define estrategia, coordina alianzas y vela por la misión social.',
+  children:[
+
+    /* ---------- DIRECCIÓN EJECUTIVA ---------- */
+    { id:'dir-ejec', name:'Dirección Ejecutiva', role:'Estrategia y representación', area:'key', group:true,
+      bio:'Define estrategia general, coordina programas y representa a la fundación ante aliados.',
+      children:[
+        {id:'juana', name:'Juana Jule', role:'Dirección General', area:'key', bio:'MBA (Purdue/GISMA). Ex-directora ejecutiva de Fundación Gloria Kriete. Lideró el programa Oportunidades.'},
+        {id:'pineda', name:'José M. Pineda', role:'Dirección de Programas', area:'key', bio:'Ex-Ministro de Educación de El Salvador. Especialista en políticas públicas y PRINCE2.'},
+        {id:'violeta', name:'Violeta Valencia', role:'Programas Sociales', area:'key', bio:'Psicóloga UCA, Máster en Ciencias Sociales (FLACSO). Experta en cooperación internacional.'},
+        {id:'jose-gutierrez', name:'José Gutiérrez', role:'Alianzas Estratégicas', area:'key', bio:'Founder & CEO de Grupo AVALES. +14 años en gestión de capital humano e inversiones.'},
+        {id:'omar', name:'Omar Palacios', role:'Administración y Finanzas', area:'key', bio:'Contador, Lic. Ciencias Jurídicas (UTEC). Representante legal Global Strategy.'},
+        {id:'ivonne', name:'Ivonne Cruz', role:'Gestión de Talento', area:'key', bio:'Especialista en gestión de personas y relaciones laborales.'}
+      ]
+    },
+
+    /* ---------- OPERACIONES ---------- */
+    { id:'ops', name:'Operaciones', role:'Ejecución y capacitación', area:'key', group:true,
+      bio:'Coordina centros de capacitación, logística y ejecución operativa de programas.',
+      children:[
+        {id:'carlos', name:'Carlos Quintanilla', role:'Dir. de Operaciones', area:'key', bio:'Director del Centro de Capacitación FGK San Miguel. +13 años en ONGs.'},
+        {id:'elmer', name:'Elmer Galdámez', role:'Coordinación Académica', area:'key', bio:'Coach de desarrollo profesional. +18 años de docencia universitaria. Moodle admin.'},
+        {id:'felix', name:'Félix Claros', role:'Coordinador de Programa', area:'key', bio:'Coordinador de programas en ITCA-FEPADE.'},
+        {id:'alejandra', name:'Alejandra Santos', role:'Representante de Programas', area:'key', bio:'Representante de Postgrados y Estudios Internacionales UFG.'}
+      ]
+    },
+
+    /* ---------- EDUCACIÓN Y BIENESTAR ---------- */
+    { id:'edu', name:'Educación y Bienestar', role:'Programa de formación', area:'key', group:true,
+      bio:'Acompaña a jóvenes en formación académica, bienestar emocional y orientación vocacional.',
+      children:[
+        {id:'karen', name:'Karen Carreño', role:'Coordinadora', area:'key', bio:'Psicóloga, Maestría en Psicopedagogía Social y Laboral. Diseñadora de experiencias formativas.'},
+        {id:'gabriela-paiz', name:'Gabriela Paiz', role:'Psicóloga de Bienestar', area:'key', bio:'Lic. Psicología (UTEC), analista RRHH y psicoterapeuta.'},
+        {id:'ingrid', name:'Ingrid Vela', role:'Educación Digital', area:'key', bio:'Lic. Computación, Maestría en Docencia Universitaria. Administradora Moodle.'},
+        {id:'zuleima', name:'Zuleima Rivera', role:'Coach de Empleabilidad', area:'key', bio:'Profesora de Inglés y coach de empleabilidad en FGK.'}
+      ]
+    },
+
+    /* ---------- EMPLEABILIDAD ---------- */
+    { id:'empleo', name:'Empleabilidad', role:'Programa de talento', area:'key', group:true,
+      bio:'Prepara a jóvenes para el mercado laboral: selección, coaching y colocación.',
+      children:[
+        {id:'monica', name:'Mónica Gálvez', role:'Directora', area:'key', bio:'Coach ejecutiva, MBA + Coaching. +10 años liderando empleabilidad en FGK.'},
+        {id:'keny', name:'Keny Márquez', role:'Desarrollo Profesional', area:'key', bio:'Coach certificada. +14 años en desarrollo juvenil y consejería de carrera.'},
+        {id:'ernesto', name:'Ernesto Bonilla', role:'Reclutamiento', area:'key', bio:'Psicólogo (U. Dr. José Matías Delgado), Maestría en Dirección de RRHH.'},
+        {id:'daniel', name:'Daniel Miranda', role:'Generalista RRHH', area:'key', bio:'Psicólogo organizacional (U. Dr. José Matías Delgado).'},
+        {id:'wilmer', name:'Wilmer Luna', role:'Reclutamiento', area:'key', bio:'Psicólogo (U. Modular Abierta), especialista en selección por competencias.'},
+        {id:'katherine-g', name:'Katherine Guzmán', role:'Análisis de Talento', area:'key', bio:'Psicóloga (U. Modular Abierta), analista de reclutamiento.'},
+        {id:'abigail', name:'Abigail Sigarán', role:'Reclutamiento', area:'key', bio:'Lic. Psicología (UTEC), especialista en procesos regionales de selección.'},
+        {id:'stephanie', name:'Stephanie Arévalo', role:'Análisis de Impacto', area:'key', bio:'Lic. Psicología (UCA), Maestría en Gestión de RRHH.'},
+        {id:'katherine-p', name:'Katherine Peñate', role:'Auxiliar de Selección', area:'key', bio:'Auxiliar de Reclutamiento y Selección en Test & Recruitment Solutions.'}
+      ]
+    },
+
+    /* ---------- JÓVENES KEY ---------- */
+    { id:'jovenes', name:'Jóvenes Key', role:'Cantera de talento', area:'key', group:true,
+      bio:'Red de jóvenes voluntarios y becarios en formación. Semillero de futuros líderes de la fundación.',
+      children:[
+        {id:'alexander', name:'Alexander Hernández', role:'Asistente de Programas', area:'key', bio:'Fundador de Heliot Media. Interés en Psicología y RRHH.'},
+        {id:'anabel', name:'Anabel Mejía', role:'Joven Key', area:'key', bio:'Estudiante.'},
+        {id:'bessy', name:'Bessy Amaya', role:'Joven Key', area:'key', bio:'Estudiante de Técnico Administrativo Contable.'},
+        {id:'bethzy', name:'Bethzy Luna', role:'Joven Key', area:'key', bio:'Estudiante de Ing. Industrial.'},
+        {id:'cesar', name:'César Meléndez', role:'Joven Key', area:'key', bio:'Técnico en Ingeniería en Computación.'},
+        {id:'david-ch', name:'David Chavarría', role:'Joven Key', area:'key', bio:'Universitario, Ingeniería.'},
+        {id:'esteban', name:'Esteban Romero', role:'Joven Key', area:'key', bio:'Estudiante de Contaduría Pública. Manager de finanzas AIESEC.'},
+        {id:'fidelia', name:'Fidelia González', role:'Joven Key', area:'key', bio:'Estudiante de Técnico Contable.'},
+        {id:'gema', name:'Gema García', role:'Joven Key', area:'key', bio:'Estudiante de Bachillerato en Salud.'},
+        {id:'harry', name:'Harry Brizuela', role:'Joven Key', area:'key', bio:'Estudiante de Economía y Negocios (ESEN).'},
+        {id:'hector', name:'Héctor Chavarría', role:'Joven Key', area:'key', bio:'Estudiante de Ing. Civil.'},
+        {id:'ingri', name:'Ingri Durán', role:'Joven Key', area:'key', bio:'Estudiante de Ing. Civil.'},
+        {id:'jeison-r', name:'Jeison Romero', role:'Joven Key', area:'key', bio:'Estudiante de Ing. Industrial.'},
+        {id:'jose-gaspar', name:'José Eduardo Gaspar', role:'Joven Key', area:'key', bio:'Estudiante de Ing. en Alimentos.'},
+        {id:'juan', name:'Juan Alexis Ventura', role:'Joven Key', area:'key', bio:'Estudiante de Admin. de Empresas y Turismo.'},
+        {id:'leonardo', name:'Leonardo Montesinos', role:'Joven Key', area:'key', bio:'Estudiante de Relaciones y Negocios Internacionales.'},
+        {id:'marcos', name:'Marcos Romero', role:'Joven Key', area:'key', bio:'Estudiante de Administración.'},
+        {id:'maria-jose', name:'María José Turcios', role:'Joven Key', area:'key', bio:'Estudiante de RRII, becaria FGK.'},
+        {id:'maydely', name:'Maydely Santos', role:'Joven Key', area:'key', bio:'Estudiante de Marketing y Publicidad Digital.'},
+        {id:'milagro', name:'Milagro Martínez', role:'Joven Key', area:'key', bio:'Estudiante UGB. Emprendedora.'},
+        {id:'monica-r', name:'Mónica Ruiz', role:'Joven Key', area:'key', bio:'Estudiante de Ing. Civil. AutoCAD.'},
+        {id:'myleen', name:'Myleen Romero', role:'Joven Key', area:'key', bio:'Estudiante de Marketing Digital y Emprendimiento.'},
+        {id:'oscar-r', name:'Oscar Reyes', role:'Joven Key', area:'key', bio:'Estudiante de Ing. Civil. Topógrafo.'},
+        {id:'ruth', name:'Ruth Emeli Amaya', role:'Joven Key', area:'key', bio:'Estudiante universitaria. Interés en finanzas.'},
+        {id:'veronica', name:'Verónica Gómez', role:'Joven Key', area:'key', bio:'Estudiante de Ing. Industrial.'},
+        {id:'yemmy', name:'Yemmy Coca', role:'Joven Key', area:'key', bio:'Estudiante de Ing. Civil.'},
+        {id:'yuridia', name:'Yuridia Claros', role:'Joven Key', area:'key', bio:'Estudiante de Educación Media.'}
+      ]
+    },
+
+    /* ---------- WINDSOR ---------- */
+    { id:'windsor', name:'Windsor', role:'Tecnología · Diseño · Estrategia', area:'windsor', group:true,
+      bio:'División de tecnología, diseño y estrategia. Construye productos digitales para la fundación y aliados.',
+      children:[
+
+        { id:'w-tech', name:'Tecnología', role:'Desarrollo de software', area:'windsor', group:true,
+          bio:'Equipo de desarrollo full stack, IA, blockchain y cloud.',
+          children:[
+            {id:'josue', name:'Josué Aguilar', role:'Arquitecto de Software', area:'windsor', bio:'Full Stack & Cloud (Azure/AWS). Microsoft Certified Trainer.'},
+            {id:'cristian', name:'Cristian Escalante', role:'Backend · Blockchain', area:'windsor', bio:'Ing. Software. Especialista en Blockchain, IA y ML.'},
+            {id:'bryan-c', name:'Bryan Cornejo', role:'Full Stack Dev', area:'windsor', bio:'Java, React, Node.js. Estudiante de Ing. en Ciencias de la Computación (UDB).'},
+            {id:'gerson', name:'Gerson Franco', role:'Full Stack Dev', area:'windsor', bio:'Flutter, Node.js, Laravel. Especialista en DTE (Hacienda).'},
+            {id:'diego-l', name:'Diego López', role:'Full Stack Jr', area:'windsor', bio:'PHP, Python, Java, SQL. Estudiante de Ing. en Software.'},
+            {id:'david-r', name:'David Rivera', role:'Frontend Dev', area:'windsor', bio:'Vue.js, TypeScript, Vite. Técnico en Ing. de Software.'},
+            {id:'victor', name:'Víctor Polanco', role:'Soporte / Dev', area:'windsor', bio:'Software developer & IT support.'},
+            {id:'briant', name:'Briant Hernández', role:'Dev en formación', area:'windsor', bio:'Estudiante de desarrollo. Python, Java, HTML/CSS.'},
+            {id:'ariel', name:'Ariel Díaz', role:'Android Junior', area:'windsor', bio:'Python, Java, C#, MySQL. Entusiasta de robótica.'},
+            {id:'levi', name:'Levi Palacios', role:'IA · Automatizaciones', area:'windsor', bio:'Junior Developer, AI Automations y Bitcoin.'},
+            {id:'jose-p', name:'José Palacios', role:'IA · Automatizaciones', area:'windsor', bio:'Junior Developer, AI Automations y gamificación.'},
+            {id:'rutvik', name:'Rutvik Talaviya', role:'Full Stack Senior', area:'windsor', bio:'.NET, Angular, React. +6 años de experiencia internacional.'},
+            {id:'diego-v', name:'Diego Valenzuela', role:'IA · Computer Vision', area:'windsor', bio:'Ing. Software, especialista en Computer Vision (YOLOv8) y ML.'},
+            {id:'roberto', name:'Roberto Vásquez', role:'Mecatrónica', area:'windsor', bio:'Ing. Mecatrónica en ITESM. Robótica y automatización.'},
+            {id:'eduardo-b', name:'Eduardo Borjas', role:'Innovación IA', area:'windsor', bio:'CEO & Founder de Korvex. AI-native operations.'}
+          ]
+        },
+
+        { id:'w-ciber', name:'Ciberseguridad y Redes', role:'Infraestructura segura', area:'windsor', group:true,
+          bio:'Protección de datos, redes e infraestructura TI.',
+          children:[
+            {id:'michael', name:'Michael Barrientos', role:'Ciberseguridad', area:'windsor', bio:'Ciberseguridad, forense digital y OSINT.'},
+            {id:'steven', name:'Steven Cáceres', role:'Redes', area:'windsor', bio:'Técnico en Infraestructura de Redes Informáticas (ITCA).'},
+            {id:'brandon', name:'Brandom Sánchez', role:'Soporte y Redes', area:'windsor', bio:'Ing. Sistemas. Soporte técnico, CCTV y redes.'},
+            {id:'wilber', name:'Wilber Reyes', role:'Redes (formación)', area:'windsor', bio:'Estudiante de Ing. en Sistemas y Redes Informáticas.'},
+            {id:'erick', name:'Erick Cerritos', role:'Soporte Refrigeración', area:'windsor', bio:'Técnico en aire acondicionado y refrigeración.'}
+          ]
+        },
+
+        { id:'w-diseno', name:'Diseño y Arte', role:'Identidad visual', area:'windsor', group:true,
+          bio:'Diseño gráfico, ilustración, branding y dirección de arte.',
+          children:[
+            {id:'bryan-m', name:'Bryan Molina', role:'Director de Arte', area:'windsor', bio:'Diseñador gráfico e ilustrador. +10 años de trayectoria.'},
+            {id:'otoniel', name:'Otoniel Cañenguez', role:'Diseñador Gráfico', area:'windsor', bio:'Diseñador gráfico freelance y practicante en FGK.'},
+            {id:'gisela', name:'Gisela Juárez', role:'Diseño Publicitario', area:'windsor', bio:'Estudiante de Diseño Gráfico Publicitario.'}
+          ]
+        },
+
+        { id:'w-estrategia', name:'Análisis y Estrategia', role:'Negocio y crecimiento', area:'windsor', group:true,
+          bio:'Análisis de negocio, QA, crecimiento digital y SEO.',
+          children:[
+            {id:'rodrigo', name:'Rodrigo Romero', role:'Business Analyst · QA', area:'windsor', bio:'Ing. Civil, Business Analyst & QA. +6 años.'},
+            {id:'william', name:'William Panameño', role:'Growth Specialist', area:'windsor', bio:'Estratega digital, UX/UI Designer.'},
+            {id:'hafiz', name:'Hafiz Waqas', role:'SEO · Marketing', area:'windsor', bio:'Founder de HumTech. Especialista en SEO local.'},
+            {id:'luisa', name:'Luisa Taveras', role:'Consultoría e-learning', area:'windsor', bio:'Co-founder de OPEX Solutions. MBA. Capacitación corporativa.'},
+            {id:'martin', name:'Martin Cruz', role:'Estrategia Internacional', area:'windsor', bio:'CEO de EQUITTY. Tokenización RWA. Kira Learning LatAm.'},
+            {id:'sofia', name:'Sofía Pereira', role:'Business Analysis', area:'windsor', bio:'Estudiante de Ing. Sistemas. Business Analysis (Google).'}
+          ]
+        }
+      ]
+    },
+
+    /* ---------- HELIOT MEDIA ---------- */
+    { id:'heliot', name:'Heliot Media', role:'Editorial · Cultura · Academia', area:'heliot', group:true,
+      bio:'Proyecto editorial independiente enfocado en información, cultura, academia y sociedad.',
+      children:[
+        { id:'h-editorial', name:'Dirección Editorial', role:'Contenido y noticias', area:'heliot', group:true,
+          bio:'Producción de contenido editorial, noticias y piezas informativas.',
+          children:[
+            {id:'fernando-ch', name:'Fernando Chávez', role:'Editor General', area:'heliot', bio:'Lic. Comunicaciones. Coordinador de UNIVO News. Docente universitario.'},
+            {id:'oscar', name:'Oscar Magaña', role:'Coordinador de Medios', area:'heliot', bio:'Lic. Ciencias de la Comunicación (en proceso). Asistente en Compassion.'}
+          ]
+        },
+        { id:'h-av', name:'Audiovisual', role:'Producción y streaming', area:'heliot', group:true,
+          bio:'Producción audiovisual, video, streaming y eventos.',
+          children:[
+            {id:'francisco', name:'Francisco Rivas', role:'Productor Audiovisual', area:'heliot', bio:'Filmmaker (New York Film Academy). Líder de audiovisuales en FGK.'}
+          ]
+        },
+        { id:'h-marketing', name:'Marketing y Diseño', role:'Marca y comunicación', area:'heliot', group:true,
+          bio:'Estrategia de marca, redes sociales y diseño.',
+          children:[
+            {id:'karol', name:'Karol Alfaro', role:'Estratega Digital', area:'heliot', bio:'Estrategia digital, UX/UI, marketing. Analista en FGK.'},
+            {id:'sara', name:'Sara Judith Flores', role:'Relaciones Públicas', area:'heliot', bio:'Estudiante de RRPP y Marketing (UEES).'},
+            {id:'fernando-r', name:'Fernando Romero', role:'Marketing Digital', area:'heliot', bio:'Estudiante de Marketing y Publicidad Digital (UGB).'}
+          ]
+        },
+        { id:'h-columnas', name:'Columnistas y Colaboradores', role:'Voces invitadas', area:'heliot', group:true,
+          bio:'Analistas, investigadores y colaboradores externos.',
+          children:[
+            {id:'nelson', name:'Nelson Inno', role:'Columnista Innovación', area:'heliot', bio:'CEO WeSpark. Innovación, IA y Bitcoin. Autor.'},
+            {id:'somesh', name:'Somesh Sharma', role:'Colaborador Internacional', area:'heliot', bio:'Innovación, salud y tecnología. Jamaica. UWI.'},
+            {id:'eduardo-r', name:'Eduardo Romero', role:'Analista de Tecnología', area:'heliot', bio:'Investigador en ética de IA y educación. C2 inglés.'}
+          ]
+        }
+      ]
+    },
+
+    /* ---------- COSECHA ---------- */
+    { id:'cosecha', name:'Cosecha', role:'Programa Social · Adultos Mayores', area:'cosecha', group:true,
+      bio:'Apoyo económico a adultos mayores de Oriente a cambio de sus historias de vida.',
+      children:[
+        {id:'gabriela-q', name:'Gabriela Quintanilla', role:'Coordinadora', area:'cosecha', bio:'Psicóloga. Experta en niñez, adolescencia y educación socioemocional.'},
+        {id:'jeison', name:'Jeison Paz', role:'Psicólogo', area:'cosecha', bio:'Psicólogo, Maestría en Docencia. Experto en niñez, migración y primera infancia.'},
+        {id:'marcela', name:'Marcela Cruz', role:'Psicóloga', area:'cosecha', bio:'Psicóloga UES. +15 años en niñez, adolescencia, violencia y DDHH.'},
+        {id:'katherine-s', name:'Katherine Sorto', role:'Psicóloga de Campo', area:'cosecha', bio:'Psicóloga (Universidad de Oriente). Acompañamiento psicosocial y orientación vocacional.'},
+        {id:'nataly', name:'Nataly Rivera', role:'Coord. Voluntariado', area:'cosecha', bio:'Lic. Psicología (UPED), RRHH y desarrollo organizacional.'},
+        {id:'alfredo', name:'Alfredo Martínez', role:'Asistente Psicosocial', area:'cosecha', bio:'Estudiante de Psicología de la Salud (IEPROES). Promotor comunitario.'},
+        {id:'yoselin', name:'Yoselin Cartagena', role:'Evaluadora', area:'cosecha', bio:'Poligrafista con formación en neuropsicología y peritaje forense.'}
+      ]
+    }
+  ]
+};
+
+/* ================= STATE ================= */
+let selectedId = null;
+
+/* ================= HELPERS ================= */
+const areaColors = {
+  key:      {main:'var(--key)',     glow:'var(--key-glow)'},
+  windsor:  {main:'var(--windsor)', glow:'var(--windsor-glow)'},
+  heliot:   {main:'var(--heliot)',  glow:'var(--heliot-glow)'},
+  cosecha:  {main:'var(--cosecha)', glow:'var(--cosecha-glow)'}
+};
+const areaNames = {
+  key:'Key · Fundación', windsor:'Windsor',
+  heliot:'Heliot Media', cosecha:'Cosecha'
+};
+
+function initials(name){
+  return name.split(' ').filter(w=>w.length>1).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+}
+function descendants(node){
+  const ids=[];
+  (function walk(n){ (n.children||[]).forEach(c=>{ids.push(c.id);walk(c)}); })(node);
+  return ids;
+}
+function findNode(node,id){
+  if(node.id===id) return node;
+  if(node.children){ for(const c of node.children){const f=findNode(c,id); if(f) return f;} }
+  return null;
+}
+
+/* ================= RENDER ================= */
+function renderNode(node, isRoot=false, isGroup=false){
+  const li = document.createElement('li');
+  const el = document.createElement('div');
+  el.className = 'node' + (isRoot?' node-root':'') + (isGroup?' node-group':'');
+  el.dataset.id = node.id;
+  el.dataset.area = node.area || 'key';
+
+  const count = node.children ? descendants(node).length : 0;
+
+  el.innerHTML = `
+    <div class="avatar">${initials(node.name)}</div>
+    <div class="node-info">
+      <div class="node-name">${node.name}</div>
+      <div class="node-role">${node.role}</div>
+    </div>
+    ${count>0?`<div class="node-count">${count}</div>`:''}
+  `;
+  el.addEventListener('click', e=>{ e.stopPropagation(); selectNode(node.id); });
+  li.appendChild(el);
+
+  if(node.children && node.children.length){
+    const ul = document.createElement('ul');
+    node.children.forEach(c=> ul.appendChild(renderNode(c, false, c.group)));
+    li.appendChild(ul);
+  }
+  return li;
+}
+
+function renderAll(){
+  const tree = document.getElementById('tree');
+  tree.innerHTML = '';
+  const ul = document.createElement('ul');
+  ul.appendChild(renderNode(org, true));
+  tree.appendChild(ul);
+}
+
+/* ================= SELECT ================= */
+function selectNode(id){
+  selectedId = id;
+  const node = findNode(org, id);
+  if(!node) return;
+  const descIds = descendants(node);
+
+  document.querySelectorAll('.node').forEach(el=>{
+    const elId = el.dataset.id;
+    el.classList.remove('selected','descendant','dimmed');
+    if(elId===id) el.classList.add('selected');
+    else if(descIds.includes(elId)) el.classList.add('descendant');
+    else el.classList.add('dimmed');
+  });
+  showPanel(node, descIds);
+}
+
+/* ================= PANEL ================= */
+function showPanel(node, descIds){
+  const panel = document.getElementById('panel');
+  const content = document.getElementById('panelContent');
+  const area = node.area || 'key';
+  const color = areaColors[area];
+  const direct = node.children || [];
+
+  const reportsHTML = direct.length
+    ? `<div class="panel-section">
+         <h3>Supervisa directamente a ${direct.length}</h3>
+         <div class="report-list">
+           ${direct.map(r=>{
+             const rc = areaColors[r.area || 'key'];
+             return `<div class="report-item" data-id="${r.id}">
+               <div class="report-avatar" style="background:linear-gradient(135deg,${rc.main},color-mix(in srgb,${rc.main} 55%,#000));box-shadow:0 0 10px ${rc.glow}">${initials(r.name)}</div>
+               <div class="report-info">
+                 <div class="report-name">${r.name}</div>
+                 <div class="report-role">${r.role}</div>
+               </div>
+             </div>`;
+           }).join('')}
+         </div>
+       </div>`
+    : `<div class="panel-section">
+         <h3>Equipo</h3>
+         <div class="empty">No tiene personas a su cargo.</div>
+       </div>`;
+
+  const totalHTML = descIds.length>0
+    ? `<div class="panel-section">
+         <h3>Alcance total del equipo</h3>
+         <div class="total-count" style="color:${color.main}">${descIds.length}</div>
+         <div class="total-label">${descIds.length===1?'persona en su equipo':'personas en su equipo'}</div>
+       </div>`
+    : '';
+
+  content.innerHTML = `
+    <div class="panel-header">
+      <div class="panel-avatar" style="background:linear-gradient(135deg,${color.main},color-mix(in srgb,${color.main} 55%,#000));box-shadow:0 0 22px ${color.glow}">${initials(node.name)}</div>
+      <div style="min-width:0;flex:1">
+        <div class="panel-name">${node.name}</div>
+        <div class="panel-role">${node.role}</div>
+        <span class="panel-area" style="background:${color.glow};color:${color.main}">${areaNames[area]}</span>
+      </div>
+    </div>
+    ${node.bio ? `<div class="panel-section"><h3>Sobre su rol</h3><div class="panel-bio" data-area="${area}">${node.bio}</div></div>` : ''}
+    ${totalHTML}
+    ${reportsHTML}
+  `;
+
+  content.querySelectorAll('.report-item').forEach(el=>{
+    el.addEventListener('click', ()=> selectNode(el.dataset.id));
+  });
+
+  panel.classList.add('open');
+}
+
+function clearSelection(){
+  selectedId = null;
+  document.querySelectorAll('.node').forEach(el=> el.classList.remove('selected','descendant','dimmed'));
+  document.getElementById('panel').classList.remove('open');
+}
+
+/* ================= EVENTS ================= */
+document.getElementById('panelClose').addEventListener('click', clearSelection);
+
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') clearSelection(); });
+
+document.getElementById('search').addEventListener('input', e=>{
+  const q = e.target.value.toLowerCase().trim();
+  if(!q){ clearSelection(); return; }
+  let found = null;
+  (function walk(n){
+    if(found) return;
+    if(n.name.toLowerCase().includes(q) || n.role.toLowerCase().includes(q)){ found = n; return; }
+    (n.children||[]).forEach(walk);
+  })(org);
+  if(found){
+    selectNode(found.id);
+    setTimeout(()=>{
+      const el = document.querySelector(`.node[data-id="${found.id}"]`);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'center', inline:'center'});
+    }, 80);
+  }
+});
+
+document.querySelectorAll('.legend-item').forEach(item=>{
+  item.addEventListener('click', ()=>{
+    const area = item.dataset.area;
+    const firstInArea = document.querySelector(`.node[data-area="${area}"]:not(.node-root)`);
+    if(firstInArea) selectNode(firstInArea.dataset.id);
+  });
+});
+
+/* ================= INIT ================= */
+renderAll();
+</script>
+
+</body>
+</html>
