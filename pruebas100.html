@@ -3,350 +3,758 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>ShipGrindr 💘 · Encuentra tu match</title>
+<title>SHIPGRINDR 🔥 · Match Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0d0618; --card:#1c1030; --card-2:#251640;
-  --border:#382556; --text:#f6f0ff; --muted:#a494c8;
-  --pink:#ff5fa2; --purple:#a78bfa; --red:#ff4d6d;
+  --bg:#08000a;
+  --card:#12001a;
+  --card-2:#1c0327;
+  --border:#2a0840;
+  --text:#fff0ff;
+  --muted:#9a6fb0;
+  --hot:#ff0066;
+  --neon:#b026ff;
+  --fire:#ff2e88;
+  --acid:#00ffd5;
+  --gold:#ffb300;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);-webkit-tap-highlight-color:transparent}
+html,body{
+  height:100%;overflow:hidden;
+  font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);color:var(--text);-webkit-tap-highlight-color:transparent;
+  letter-spacing:-.2px;
+}
+
+/* ============ BACKGROUND ============ */
 body::before{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background:
-    radial-gradient(circle at 12% 15%, rgba(255,95,162,.24) 0%, transparent 45%),
-    radial-gradient(circle at 88% 85%, rgba(167,139,250,.24) 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(255,77,109,.08) 0%, transparent 65%);
+    radial-gradient(ellipse at 15% 10%, rgba(255,0,102,.35) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 90%, rgba(176,38,255,.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255,46,136,.08) 0%, transparent 70%);
 }
-.heart-bg{position:fixed;pointer-events:none;z-index:1;opacity:.1;animation:floatUp linear infinite;font-size:18px}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:
+    linear-gradient(rgba(255,0,102,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(176,38,255,.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+}
+
+/* Floating words */
+.floaty{
+  position:fixed;pointer-events:none;z-index:1;
+  font-family:'Bebas Neue',sans-serif;letter-spacing:3px;
+  color:var(--hot);opacity:.08;
+  animation:floatUp linear infinite;
+  text-shadow: 0 0 30px var(--hot);
+}
 @keyframes floatUp{
-  0%{transform:translateY(100vh) rotate(0);opacity:0}
-  10%{opacity:.22}
-  90%{opacity:.12}
-  100%{transform:translateY(-10vh) rotate(360deg);opacity:0}
+  0%{transform:translateY(100vh) rotate(-8deg);opacity:0}
+  10%{opacity:.12}
+  90%{opacity:.06}
+  100%{transform:translateY(-10vh) rotate(8deg);opacity:0}
 }
 
 /* ============ TOPBAR ============ */
 .topbar{
-  position:fixed;top:0;left:0;right:0;z-index:50;height:64px;
-  padding:0 18px;display:flex;align-items:center;gap:12px;
-  background:rgba(13,6,24,.85);backdrop-filter:blur(20px);
+  position:fixed;top:0;left:0;right:0;z-index:50;height:66px;
+  padding:0 18px;display:flex;align-items:center;gap:14px;
+  background:rgba(8,0,10,.88);backdrop-filter:blur(24px);
   border-bottom:1px solid var(--border);
+  box-shadow: 0 4px 30px rgba(255,0,102,.15);
 }
-.brand{display:flex;align-items:center;gap:11px;cursor:pointer}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer}
 .brand-mark{
-  width:40px;height:40px;border-radius:50%;
-  background:linear-gradient(135deg,#ff5fa2,#a78bfa);
-  display:grid;place-items:center;font-size:20px;
-  box-shadow:0 0 26px rgba(255,95,162,.55);
-  animation:beat 2.4s ease-in-out infinite;
+  width:44px;height:44px;border-radius:14px;
+  background:linear-gradient(135deg,var(--hot),var(--neon));
+  display:grid;place-items:center;
+  font-family:'Bebas Neue',sans-serif;font-size:26px;color:#fff;
+  letter-spacing:-1px;
+  box-shadow:
+    0 0 24px rgba(255,0,102,.7),
+    0 0 60px rgba(176,38,255,.35),
+    inset 0 0 20px rgba(255,255,255,.2);
+  animation:pulseGlow 2.4s ease-in-out infinite;
+  position:relative;
 }
-@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
-.brand-text h1{font-size:14.5px;font-weight:900;letter-spacing:-.3px}
-.brand-text p{font-size:10px;color:var(--muted);margin-top:1px;font-weight:600;letter-spacing:.3px}
+.brand-mark::after{
+  content:'';position:absolute;inset:0;border-radius:14px;
+  border:1.5px solid rgba(255,255,255,.3);
+}
+@keyframes pulseGlow{
+  0%,100%{transform:scale(1);filter:brightness(1)}
+  50%{transform:scale(1.06);filter:brightness(1.25)}
+}
+.brand-text h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;font-weight:400;letter-spacing:1.5px;
+  background:linear-gradient(135deg,#fff 0%,var(--hot) 50%,var(--neon) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;
+}
+.brand-text p{
+  font-size:9.5px;color:var(--muted);
+  margin-top:3px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+}
 
 .my-user{
   margin-left:auto;display:flex;align-items:center;gap:10px;
-  padding:6px 12px 6px 6px;background:var(--card);
-  border:1px solid var(--border);border-radius:30px;
-  cursor:pointer;transition:.2s;
+  padding:5px 14px 5px 5px;background:var(--card);
+  border:1.5px solid var(--border);border-radius:30px;
+  cursor:pointer;transition:.25s;
 }
-.my-user:hover{border-color:var(--pink)}
+.my-user:hover{border-color:var(--hot);box-shadow:0 0 20px rgba(255,0,102,.4)}
 .my-user-avatar{
-  width:32px;height:32px;border-radius:50%;
+  width:34px;height:34px;border-radius:50%;
   display:grid;place-items:center;font-weight:800;font-size:12px;color:#fff;
-  background:linear-gradient(135deg,#ff5fa2,#a78bfa);
+  background:linear-gradient(135deg,var(--hot),var(--neon));
+  box-shadow:0 0 14px rgba(255,0,102,.6);
 }
-.my-user-name{font-size:11.5px;font-weight:700;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.my-user-name{font-size:12px;font-weight:800;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-.3px}
 
 /* ============ SELECTOR ============ */
 .selector{
-  position:fixed;inset:64px 0 0 0;z-index:20;
+  position:fixed;inset:66px 0 0 0;z-index:20;
   display:flex;flex-direction:column;
   background:var(--bg);overflow-y:auto;
-  padding:28px 20px 40px;
-  transition:transform .5s cubic-bezier(.4,0,.2,1);
+  padding:30px 20px 60px;
+  transition:transform .55s cubic-bezier(.7,0,.2,1);
 }
-.selector.hidden{transform:translateY(-100%);pointer-events:none}
-.selector-header{text-align:center;margin-bottom:22px}
+.selector.hidden{transform:translateY(-102%);pointer-events:none}
+.selector-header{text-align:center;margin-bottom:26px}
 .selector-header h2{
-  font-size:28px;font-weight:900;letter-spacing:-.8px;
-  background:linear-gradient(135deg,#ff5fa2,#a78bfa);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:52px;line-height:.9;letter-spacing:2px;
+  background:linear-gradient(180deg,#fff 0%,var(--hot) 60%,var(--neon) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-shadow:0 0 40px rgba(255,0,102,.3);
+  margin-bottom:10px;
 }
-.selector-header p{font-size:12.5px;color:var(--muted);margin-top:8px;font-weight:500}
+.selector-header p{
+  font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.5px;
+  text-transform:uppercase;
+}
+.selector-header p::before{content:'✦ ';color:var(--hot)}
+.selector-header p::after{content:' ✦';color:var(--hot)}
 
-.selector-search{
-  position:relative;max-width:520px;margin:0 auto 20px;width:100%;
-}
-.selector-search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.selector-search{position:relative;max-width:520px;margin:0 auto 22px;width:100%}
+.selector-search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--hot)}
 .selector-search input{
-  width:100%;padding:13px 16px 13px 42px;
-  background:var(--card);border:1px solid var(--border);border-radius:14px;
-  color:var(--text);font-size:13.5px;outline:none;font-family:inherit;
-  transition:.2s;
+  width:100%;padding:15px 18px 15px 46px;
+  background:var(--card);border:1.5px solid var(--border);border-radius:14px;
+  color:var(--text);font-size:14px;outline:none;font-family:inherit;
+  transition:.25s;font-weight:600;
 }
-.selector-search input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,95,162,.2)}
+.selector-search input:focus{
+  border-color:var(--hot);
+  box-shadow:0 0 0 3px rgba(255,0,102,.2), 0 0 30px rgba(255,0,102,.2);
+}
+.selector-search input::placeholder{color:var(--muted);letter-spacing:.3px}
 
 .people-grid{
-  max-width:900px;margin:0 auto;width:100%;
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  max-width:960px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
   gap:10px;
 }
 .person-tile{
   padding:14px 10px;background:var(--card);
-  border:1px solid var(--border);border-radius:14px;
-  cursor:pointer;text-align:center;transition:.2s;
+  border:1.5px solid var(--border);border-radius:16px;
+  cursor:pointer;text-align:center;transition:.25s;
+  position:relative;overflow:hidden;
+}
+.person-tile::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,0,102,.15),rgba(176,38,255,.1));
+  opacity:0;transition:opacity .25s;
 }
 .person-tile:hover{
-  transform:translateY(-3px);border-color:var(--pink);
-  background:var(--card-2);
-  box-shadow:0 10px 24px rgba(255,95,162,.15);
+  transform:translateY(-4px) scale(1.02);
+  border-color:var(--hot);
+  box-shadow:0 12px 30px rgba(255,0,102,.3), 0 0 20px rgba(176,38,255,.2);
 }
+.person-tile:hover::before{opacity:1}
 .person-tile .pt-avatar{
-  width:52px;height:52px;border-radius:50%;margin:0 auto 8px;
-  display:grid;place-items:center;font-weight:800;font-size:16px;color:#fff;
-  border:2px solid rgba(255,255,255,.1);
+  width:56px;height:56px;border-radius:50%;margin:0 auto 10px;
+  display:grid;place-items:center;font-family:'Bebas Neue',sans-serif;
+  font-size:22px;color:#fff;letter-spacing:-1px;
+  border:2px solid rgba(255,255,255,.15);
+  position:relative;z-index:1;
 }
-.person-tile .pt-name{font-size:11.5px;font-weight:700;line-height:1.2;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.person-tile .pt-meta{font-size:9.5px;color:var(--muted);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.person-tile .pt-name{
+  font-size:11.5px;font-weight:800;line-height:1.2;margin-bottom:3px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  position:relative;z-index:1;
+}
+.person-tile .pt-meta{
+  font-size:9.5px;color:var(--muted);font-weight:700;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-transform:uppercase;letter-spacing:.5px;
+  position:relative;z-index:1;
+}
 
-/* ============ STAGE SWIPE ============ */
+/* ============ STAGE ============ */
 .stage{
-  position:fixed;inset:64px 0 0 0;z-index:10;
+  position:fixed;inset:66px 0 0 0;z-index:10;
   display:flex;align-items:center;justify-content:center;
-  padding:16px 16px 130px;
-  opacity:0;pointer-events:none;transition:opacity .4s;
+  padding:14px 14px 130px;
+  opacity:0;pointer-events:none;transition:opacity .45s;
 }
 .stage.active{opacity:1;pointer-events:auto}
 
-.deck{
-  position:relative;width:100%;max-width:400px;height:100%;max-height:680px;
-}
+.deck{position:relative;width:100%;max-width:420px;height:100%;max-height:680px}
+
 .card{
   position:absolute;inset:0;
-  background:linear-gradient(165deg,#1f1235 0%,#160a24 100%);
-  border:1.5px solid var(--border);border-radius:26px;
+  background:linear-gradient(170deg,#1a0028 0%,#0a0010 100%);
+  border:1.5px solid rgba(255,0,102,.35);border-radius:28px;
   overflow:hidden;display:flex;flex-direction:column;
-  box-shadow:0 24px 60px rgba(0,0,0,.7);
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.9),
+    0 0 60px rgba(255,0,102,.25),
+    inset 0 0 40px rgba(176,38,255,.08);
   cursor:grab;
   transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .4s;
   will-change:transform;
+}
+.card::before{
+  content:'';position:absolute;inset:0;border-radius:28px;
+  padding:1.5px;
+  background:linear-gradient(135deg,var(--hot),var(--neon),var(--acid));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  opacity:.5;pointer-events:none;
+  animation:borderShift 6s linear infinite;
+}
+@keyframes borderShift{
+  0%,100%{opacity:.4}
+  50%{opacity:.85}
 }
 .card.dragging{cursor:grabbing;transition:none}
 .card.exit-left{transform:translateX(-160%) rotate(-28deg) !important;opacity:0}
 .card.exit-right{transform:translateX(160%) rotate(28deg) !important;opacity:0}
 
+/* ============ CARD COVER ============ */
 .card-cover{
-  position:relative;height:38%;min-height:210px;
-  background:linear-gradient(135deg,var(--accent,#ff5fa2),color-mix(in srgb,var(--accent) 40%,#000));
+  position:relative;height:44%;min-height:250px;
+  background:linear-gradient(160deg,var(--accent,#ff0066),color-mix(in srgb,var(--accent) 30%,#000));
   display:grid;place-items:center;overflow:hidden;
 }
 .card-cover::before{
   content:'';position:absolute;inset:0;
   background:
-    radial-gradient(circle at 30% 20%, rgba(255,255,255,.3), transparent 50%),
-    radial-gradient(circle at 75% 80%, rgba(0,0,0,.35), transparent 55%);
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,.35), transparent 50%),
+    radial-gradient(circle at 75% 80%, rgba(0,0,0,.5), transparent 55%),
+    repeating-linear-gradient(45deg, transparent 0, transparent 12px, rgba(255,255,255,.03) 12px, rgba(255,255,255,.03) 24px);
 }
+/* Huge number watermark */
+.card-cover::after{
+  content:attr(data-pct);
+  position:absolute;
+  right:-20px;bottom:-60px;
+  font-family:'Bebas Neue',sans-serif;font-size:220px;line-height:.75;
+  color:rgba(255,255,255,.06);
+  letter-spacing:-10px;
+  pointer-events:none;
+}
+
 .card-avatar{
-  position:relative;z-index:1;
-  width:130px;height:130px;border-radius:50%;
-  background:rgba(13,6,24,.85);backdrop-filter:blur(10px);
+  position:relative;z-index:2;
+  width:150px;height:150px;border-radius:50%;
+  background:rgba(8,0,10,.9);backdrop-filter:blur(20px);
   display:grid;place-items:center;
-  font-size:44px;font-weight:900;color:var(--accent,#ff5fa2);
-  border:4px solid rgba(255,255,255,.4);
-  box-shadow:0 12px 40px rgba(0,0,0,.6);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:64px;line-height:1;color:#fff;letter-spacing:-2px;
+  border:4px solid rgba(255,255,255,.9);
+  box-shadow:
+    0 0 0 8px rgba(255,0,102,.3),
+    0 20px 50px rgba(0,0,0,.6),
+    0 0 60px var(--accent,#ff0066);
+  text-shadow:0 0 20px rgba(255,255,255,.5);
 }
-.card-match-badge{
-  position:absolute;top:16px;right:16px;z-index:2;
-  padding:8px 14px;border-radius:20px;
-  background:rgba(13,6,24,.92);backdrop-filter:blur(12px);
-  border:1.5px solid var(--accent,#ff5fa2);
-  font-size:12px;font-weight:900;color:var(--accent,#ff5fa2);
+.card-cover .card-online{
+  position:absolute;top:16px;left:16px;z-index:3;
+  padding:7px 13px;border-radius:20px;
+  background:rgba(8,0,10,.9);backdrop-filter:blur(12px);
+  font-size:10px;font-weight:900;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--acid);
   display:flex;align-items:center;gap:6px;
-  box-shadow:0 0 24px color-mix(in srgb,var(--accent) 40%,transparent);
+  border:1px solid rgba(0,255,213,.4);
 }
-.match-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 1.8s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.online-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--acid);
+  box-shadow:0 0 10px var(--acid);
+  animation:pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.card-cover .card-match-badge{
+  position:absolute;top:16px;right:16px;z-index:3;
+  padding:9px 15px;border-radius:20px;
+  background:rgba(8,0,10,.92);backdrop-filter:blur(12px);
+  border:1.5px solid var(--hot);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;letter-spacing:.5px;
+  color:var(--hot);
+  display:flex;align-items:baseline;gap:3px;
+  box-shadow:0 0 24px rgba(255,0,102,.6);
+  text-shadow:0 0 12px rgba(255,0,102,.8);
+}
+.card-match-badge small{font-size:12px;opacity:.7}
 
-.card-body{padding:20px 22px;flex:1;display:flex;flex-direction:column;overflow-y:auto}
-.card-name{font-size:22px;font-weight:900;letter-spacing:-.5px;line-height:1.15}
-.card-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;font-size:11px;color:var(--muted);font-weight:600}
-.card-meta span{display:flex;align-items:center;gap:4px}
-.card-role{font-size:12.5px;color:#c8bfdd;margin-top:10px;font-weight:600}
-.card-bio{font-size:12px;color:#c8bfdd;line-height:1.55;margin-top:10px;font-style:italic;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.03)}
+/* ============ CARD BODY ============ */
+.card-body{
+  padding:20px 22px;flex:1;display:flex;flex-direction:column;overflow-y:auto;
+}
+.card-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:34px;font-weight:400;letter-spacing:1.5px;line-height:.95;
+  color:#fff;
+  text-shadow:0 0 30px rgba(255,0,102,.4);
+  margin-bottom:6px;
+}
+.card-meta{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;
+}
+.meta-chip{
+  font-size:10.5px;font-weight:800;
+  padding:4px 10px;border-radius:14px;
+  background:rgba(255,0,102,.12);
+  border:1px solid rgba(255,0,102,.3);
+  color:#ff8fc0;letter-spacing:.4px;
+  text-transform:uppercase;
+}
+.meta-chip.loc{
+  background:rgba(176,38,255,.12);
+  border-color:rgba(176,38,255,.3);
+  color:#d8a6ff;
+}
+.card-role{
+  font-size:11px;color:var(--hot);font-weight:800;
+  text-transform:uppercase;letter-spacing:1.2px;
+  margin-bottom:10px;
+}
+.card-bio{
+  font-size:12.5px;color:#d0b8e0;line-height:1.55;
+  font-style:italic;
+  padding:10px 12px;border-radius:10px;
+  background:rgba(255,255,255,.03);
+  border-left:2px solid var(--hot);
+}
 
-.match-section{margin-top:16px}
-.match-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;color:var(--muted);margin-bottom:8px}
-.match-bar{height:9px;border-radius:6px;background:rgba(255,255,255,.06);overflow:hidden}
-.match-fill{height:100%;background:linear-gradient(90deg,var(--accent,#ff5fa2),#a78bfa);box-shadow:0 0 12px var(--accent);transition:width .6s}
+.match-section{margin-top:14px}
+.match-label{
+  font-size:9.5px;font-weight:900;
+  text-transform:uppercase;letter-spacing:1.5px;
+  color:var(--muted);margin-bottom:7px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.match-label span{color:var(--hot)}
+.match-bar{
+  height:8px;border-radius:6px;
+  background:rgba(255,255,255,.05);overflow:hidden;
+  border:1px solid rgba(255,255,255,.05);
+}
+.match-fill{
+  height:100%;border-radius:6px;
+  background:linear-gradient(90deg,var(--hot),var(--neon),var(--acid));
+  background-size:200% 100%;
+  box-shadow:0 0 14px var(--hot);
+  transition:width .6s;
+  animation:shimmer 3s linear infinite;
+}
+@keyframes shimmer{0%{background-position:0% 0}100%{background-position:200% 0}}
 
-.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px}
-.chip{font-size:10px;padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#d6ccec;font-weight:600}
+.chips{
+  display:flex;flex-wrap:wrap;gap:5px;margin-top:14px;
+}
+.chip{
+  font-size:10px;padding:5px 11px;border-radius:20px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  color:#c8b0d8;font-weight:700;letter-spacing:.2px;
+}
 .chip.common{
-  background:linear-gradient(135deg,rgba(255,95,162,.25),rgba(167,139,250,.25));
-  border-color:rgba(255,95,162,.55);color:#fff;
-  box-shadow:0 0 14px rgba(255,95,162,.35);
+  background:linear-gradient(135deg,rgba(255,0,102,.25),rgba(176,38,255,.25));
+  border-color:var(--hot);color:#fff;
+  box-shadow:0 0 14px rgba(255,0,102,.5);
+  font-weight:800;
 }
 
 .drag-label{
-  position:absolute;top:44px;z-index:10;
-  padding:8px 16px;border-radius:12px;
-  font-size:22px;font-weight:900;letter-spacing:2px;
+  position:absolute;top:52px;z-index:10;
+  padding:10px 18px;border-radius:14px;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:32px;letter-spacing:3px;
   opacity:0;transition:opacity .15s;pointer-events:none;
   border:3px solid;
 }
-.drag-label.like{left:24px;color:var(--pink);border-color:var(--pink);background:rgba(255,95,162,.15);transform:rotate(-12deg);text-shadow:0 0 10px var(--pink)}
-.drag-label.nope{right:24px;color:var(--red);border-color:var(--red);background:rgba(255,77,109,.15);transform:rotate(12deg);text-shadow:0 0 10px var(--red)}
+.drag-label.like{
+  left:24px;color:var(--hot);border-color:var(--hot);
+  background:rgba(255,0,102,.2);
+  transform:rotate(-14deg);
+  text-shadow:0 0 16px var(--hot);
+  box-shadow:0 0 30px rgba(255,0,102,.5);
+}
+.drag-label.nope{
+  right:24px;color:#666;border-color:#666;
+  background:rgba(255,255,255,.08);
+  transform:rotate(14deg);
+}
 
+/* ============ CONTROLS ============ */
 .controls{
-  position:fixed;bottom:20px;left:0;right:0;z-index:30;
-  display:flex;justify-content:center;gap:22px;
+  position:fixed;bottom:22px;left:0;right:0;z-index:30;
+  display:flex;justify-content:center;gap:24px;
 }
 .ctrl{
-  width:68px;height:68px;border-radius:50%;
+  width:74px;height:74px;border-radius:50%;
   display:grid;place-items:center;cursor:pointer;
-  border:2.5px solid;background:rgba(13,6,24,.9);
-  backdrop-filter:blur(20px);
-  transition:.25s cubic-bezier(.34,1.56,.64,1);
-  font-size:30px;
+  background:rgba(8,0,10,.9);backdrop-filter:blur(24px);
+  transition:.3s cubic-bezier(.34,1.56,.64,1);
+  font-size:32px;border:2.5px solid;
+  position:relative;
 }
-.ctrl:hover{transform:scale(1.12) rotate(-3deg)}
+.ctrl::before{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:1.5px dashed currentColor;opacity:.3;
+  animation:spin 20s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ctrl:hover{transform:scale(1.14) rotate(-4deg)}
 .ctrl:active{transform:scale(.94)}
-.ctrl.skip{color:var(--red);border-color:var(--red);box-shadow:0 0 26px rgba(255,77,109,.35)}
-.ctrl.ship{color:var(--pink);border-color:var(--pink);box-shadow:0 0 26px rgba(255,95,162,.35)}
+.ctrl.skip{
+  color:#666;border-color:#666;
+}
+.ctrl.skip:hover{
+  color:#fff;border-color:#888;
+  box-shadow:0 0 30px rgba(255,255,255,.15);
+}
+.ctrl.ship{
+  color:var(--hot);border-color:var(--hot);
+  box-shadow:
+    0 0 30px rgba(255,0,102,.6),
+    inset 0 0 20px rgba(255,0,102,.15);
+  animation:pulseBtn 2s ease-in-out infinite;
+}
+.ctrl.ship:hover{
+  background:rgba(255,0,102,.15);
+  box-shadow:
+    0 0 50px rgba(255,0,102,.9),
+    0 0 100px rgba(176,38,255,.4);
+  animation:none;
+}
+@keyframes pulseBtn{
+  0%,100%{box-shadow:0 0 24px rgba(255,0,102,.5), inset 0 0 16px rgba(255,0,102,.1)}
+  50%{box-shadow:0 0 44px rgba(255,0,102,.85), inset 0 0 24px rgba(255,0,102,.2)}
+}
 
+/* ============ MATCH MODAL ============ */
 .match-modal{
   position:fixed;inset:0;z-index:100;
   display:flex;align-items:center;justify-content:center;
-  background:rgba(13,6,24,.92);backdrop-filter:blur(20px);
-  opacity:0;pointer-events:none;transition:opacity .35s;padding:20px;
+  background:radial-gradient(ellipse at center, rgba(255,0,102,.25) 0%, rgba(8,0,10,.97) 60%);
+  backdrop-filter:blur(30px);
+  opacity:0;pointer-events:none;transition:opacity .4s;padding:20px;
 }
 .match-modal.show{opacity:1;pointer-events:auto}
 .match-card{
-  text-align:center;padding:36px 28px;max-width:440px;
-  background:linear-gradient(165deg,#241538 0%,#180a26 100%);
-  border:1.5px solid rgba(255,95,162,.4);border-radius:26px;
-  transform:scale(.7);transition:transform .5s cubic-bezier(.34,1.56,.64,1);
-  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(255,95,162,.25);
+  text-align:center;padding:44px 32px 36px;max-width:460px;width:100%;
+  background:linear-gradient(160deg,#1a0028 0%,#0a0010 100%);
+  border:2px solid var(--hot);border-radius:32px;
+  transform:scale(.6) rotate(-4deg);
+  transition:transform .55s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:
+    0 30px 90px rgba(0,0,0,.85),
+    0 0 100px rgba(255,0,102,.6),
+    inset 0 0 60px rgba(176,38,255,.15);
+  position:relative;
+  overflow:hidden;
 }
-.match-modal.show .match-card{transform:scale(1)}
-.match-icon{font-size:72px;margin-bottom:12px;animation:beat 1.2s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(255,95,162,.85))}
-.match-title{
-  font-size:26px;font-weight:900;letter-spacing:-.8px;
-  background:linear-gradient(135deg,#ff5fa2,#a78bfa);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+.match-card::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,0,102,.4), transparent 60%),
+    repeating-linear-gradient(45deg, transparent 0, transparent 20px, rgba(255,0,102,.03) 20px, rgba(255,0,102,.03) 40px);
+  pointer-events:none;
 }
-.match-names{margin-top:18px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
-.match-name{font-size:14px;font-weight:800;padding:8px 14px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}
-.match-plus{font-size:20px;color:var(--pink);font-weight:900}
-.match-sub{font-size:12.5px;color:#c8c0dc;margin-top:16px;line-height:1.6}
-.match-sub strong{color:var(--pink);font-weight:800}
-.match-continue{
-  margin-top:24px;padding:14px 36px;border-radius:14px;
-  background:linear-gradient(135deg,#ff5fa2,#a78bfa);
-  border:none;color:#fff;font-size:14px;font-weight:800;
-  cursor:pointer;font-family:inherit;letter-spacing:.3px;
-  box-shadow:0 8px 30px rgba(255,95,162,.45);transition:.2s;
-}
-.match-continue:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,95,162,.6)}
+.match-modal.show .match-card{transform:scale(1) rotate(0)}
 
-.confetti{position:fixed;width:10px;height:10px;z-index:99;pointer-events:none;animation:fall linear forwards}
-@keyframes fall{0%{transform:translateY(-10vh) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.match-icon{
+  font-size:90px;line-height:1;margin-bottom:6px;
+  filter:drop-shadow(0 0 40px var(--hot));
+  animation:heartBeat 1s ease-in-out infinite;
+  position:relative;z-index:1;
+}
+@keyframes heartBeat{
+  0%,100%{transform:scale(1)}
+  20%{transform:scale(1.25)}
+  40%{transform:scale(1)}
+  60%{transform:scale(1.15)}
+}
+.match-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:52px;line-height:.95;letter-spacing:3px;
+  background:linear-gradient(180deg,#fff 0%,var(--hot) 60%,var(--neon) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:4px;position:relative;z-index:1;
+  text-shadow:0 0 40px rgba(255,0,102,.5);
+}
+.match-names{
+  margin-top:20px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
+  position:relative;z-index:1;
+}
+.match-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;letter-spacing:1.5px;
+  padding:10px 18px;border-radius:16px;
+  background:rgba(255,255,255,.06);
+  border:1.5px solid rgba(255,0,102,.4);
+  box-shadow:0 0 20px rgba(255,0,102,.3);
+}
+.match-plus{
+  font-size:28px;color:var(--hot);font-weight:900;
+  filter:drop-shadow(0 0 10px var(--hot));
+}
+.match-sub{
+  font-size:13.5px;color:#d0b8e0;margin-top:20px;line-height:1.55;
+  position:relative;z-index:1;
+}
+.match-sub strong{color:var(--hot);font-weight:900;font-size:16px}
+.match-continue{
+  margin-top:26px;padding:16px 44px;border-radius:16px;
+  background:linear-gradient(135deg,var(--hot),var(--neon));
+  border:none;color:#fff;font-size:14.5px;font-weight:900;
+  cursor:pointer;font-family:inherit;letter-spacing:2px;
+  text-transform:uppercase;
+  box-shadow:
+    0 10px 40px rgba(255,0,102,.6),
+    0 0 60px rgba(176,38,255,.3);
+  transition:.25s;
+  position:relative;z-index:1;
+}
+.match-continue:hover{
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:
+    0 15px 50px rgba(255,0,102,.8),
+    0 0 80px rgba(176,38,255,.5);
+}
+
+.confetti{
+  position:fixed;width:10px;height:10px;z-index:99;pointer-events:none;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  0%{transform:translateY(-10vh) rotate(0);opacity:1}
+  100%{transform:translateY(110vh) rotate(720deg);opacity:0}
+}
 
 /* ============ SUMMARY ============ */
 .summary{
-  position:fixed;inset:64px 0 0 0;z-index:60;
-  background:var(--bg);overflow-y:auto;padding:28px 20px 100px;
-  transform:translateY(100%);transition:transform .55s cubic-bezier(.4,0,.2,1);
+  position:fixed;inset:66px 0 0 0;z-index:60;
+  background:var(--bg);overflow-y:auto;padding:30px 20px 100px;
+  transform:translateY(100%);transition:transform .6s cubic-bezier(.7,0,.2,1);
 }
 .summary.show{transform:translateY(0)}
 .summary::before{
-  content:'';position:fixed;inset:64px 0 0 0;pointer-events:none;z-index:-1;
+  content:'';position:fixed;inset:66px 0 0 0;pointer-events:none;z-index:-1;
   background:
-    radial-gradient(circle at 25% 20%, rgba(255,95,162,.18), transparent 50%),
-    radial-gradient(circle at 75% 80%, rgba(167,139,250,.18), transparent 50%);
+    radial-gradient(circle at 25% 20%, rgba(255,0,102,.25), transparent 55%),
+    radial-gradient(circle at 75% 80%, rgba(176,38,255,.22), transparent 55%);
 }
-.summary-header{text-align:center;margin-bottom:24px}
-.summary-header .emoji{font-size:52px;display:block;margin-bottom:8px}
+.summary-header{text-align:center;margin-bottom:26px}
+.summary-header .emoji{
+  font-size:60px;display:block;margin-bottom:8px;
+  filter:drop-shadow(0 0 30px var(--hot));
+  animation:heartBeat 1.6s ease-in-out infinite;
+}
 .summary-header h2{
-  font-size:26px;font-weight:900;letter-spacing:-.8px;
-  background:linear-gradient(135deg,#ff5fa2,#a78bfa,#22d3ee);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:56px;line-height:.9;letter-spacing:2px;
+  background:linear-gradient(180deg,#fff 0%,var(--hot) 55%,var(--neon) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-shadow:0 0 50px rgba(255,0,102,.4);
 }
-.summary-header p{color:var(--muted);margin-top:8px;font-size:13px;font-weight:500}
-.summary-header p strong{color:var(--pink);font-weight:800}
+.summary-header p{
+  color:var(--muted);margin-top:12px;font-size:13px;font-weight:700;
+  letter-spacing:.5px;
+}
+.summary-header p strong{color:var(--hot);font-weight:900}
 
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:520px;margin:20px auto 28px}
-.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 10px;text-align:center}
-.stat-num{font-size:26px;font-weight:900;letter-spacing:-1px;line-height:1}
-.stat-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;font-weight:700;margin-top:6px}
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  max-width:540px;margin:22px auto 30px;
+}
+.stat{
+  background:linear-gradient(160deg,#1a0028,#0a0010);
+  border:1.5px solid var(--border);border-radius:16px;
+  padding:16px 10px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.stat::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--hot),transparent);
+}
+.stat-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:34px;letter-spacing:-1px;line-height:1;color:var(--hot);
+  text-shadow:0 0 20px rgba(255,0,102,.5);
+}
+.stat-num.purple{color:var(--neon);text-shadow:0 0 20px rgba(176,38,255,.5)}
+.stat-num.muted{color:var(--muted);text-shadow:none}
+.stat-lbl{
+  font-size:9.5px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:1.2px;
+  font-weight:800;margin-top:6px;
+}
 
-.ships-list{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.ships-list{max-width:580px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
 .ship-card{
-  display:flex;align-items:center;gap:12px;
-  background:var(--card);border:1px solid var(--border);
-  border-radius:14px;padding:12px 14px;
-  animation:shipIn .4s cubic-bezier(.34,1.56,.64,1) backwards;
+  display:flex;align-items:center;gap:14px;
+  background:linear-gradient(160deg,#1a0028,#0a0010);
+  border:1.5px solid var(--border);
+  border-radius:16px;padding:14px 16px;
+  animation:shipIn .5s cubic-bezier(.34,1.56,.64,1) backwards;
+  transition:.25s;
+  position:relative;overflow:hidden;
+}
+.ship-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--hot),var(--neon));
+  box-shadow:0 0 12px var(--hot);
+}
+.ship-card:hover{
+  border-color:var(--hot);
+  transform:translateX(4px);
+  box-shadow:0 0 24px rgba(255,0,102,.3);
 }
 @keyframes shipIn{0%{transform:translateY(20px);opacity:0}100%{transform:translateY(0);opacity:1}}
-.ship-avatar{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:14px;color:#fff;border:2px solid rgba(255,255,255,.15);flex-shrink:0}
-.ship-info{flex:1;min-width:0}
-.ship-name{font-size:13.5px;font-weight:800;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ship-meta{font-size:10.5px;color:var(--muted);margin-top:3px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ship-avatar{
+  width:48px;height:48px;border-radius:50%;flex-shrink:0;
+  display:grid;place-items:center;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;color:#fff;letter-spacing:-1px;
+  border:2px solid rgba(255,255,255,.15);
+  position:relative;z-index:1;
+}
+.ship-info{flex:1;min-width:0;position:relative;z-index:1}
+.ship-name{
+  font-size:14.5px;font-weight:800;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  letter-spacing:-.3px;
+}
+.ship-meta{
+  font-size:10.5px;color:var(--muted);margin-top:3px;font-weight:700;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-transform:uppercase;letter-spacing:.6px;
+}
 .ship-pct{
-  font-size:17px;font-weight:900;letter-spacing:-.5px;flex-shrink:0;
-  background:linear-gradient(135deg,#ff5fa2,#a78bfa);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:24px;letter-spacing:.5px;flex-shrink:0;
+  color:var(--hot);
+  text-shadow:0 0 14px rgba(255,0,102,.7);
+  position:relative;z-index:1;
 }
-.no-ships{text-align:center;padding:50px 20px;color:var(--muted);font-size:14px;line-height:1.7;max-width:520px;margin:0 auto}
-.no-ships .icon{font-size:52px;display:block;margin-bottom:14px;opacity:.4}
+.ship-pct small{font-size:13px;opacity:.7}
+
+.no-ships{
+  text-align:center;padding:60px 20px;color:var(--muted);
+  font-size:14px;line-height:1.7;max-width:520px;margin:0 auto;
+}
+.no-ships .icon{font-size:60px;display:block;margin-bottom:14px;opacity:.4}
+
 .top-pick{
-  max-width:560px;margin:28px auto 0;padding:20px;
-  background:linear-gradient(135deg,rgba(255,95,162,.1),rgba(167,139,250,.1));
-  border:1px solid rgba(255,95,162,.3);border-radius:16px;text-align:center;
+  max-width:580px;margin:30px auto 0;padding:26px 22px;
+  background:
+    linear-gradient(160deg,rgba(255,0,102,.12),rgba(176,38,255,.08));
+  border:2px solid var(--hot);border-radius:20px;text-align:center;
+  position:relative;overflow:hidden;
+  box-shadow:
+    0 0 60px rgba(255,0,102,.3),
+    inset 0 0 40px rgba(255,0,102,.06);
 }
-.top-pick-label{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:800;margin-bottom:8px}
-.top-pick-name{font-size:17px;font-weight:900;color:#fff}
-.top-pick-pct{font-size:13px;color:var(--pink);font-weight:800;margin-top:6px}
-.bottom-actions{display:flex;justify-content:center;gap:12px;margin-top:30px;flex-wrap:wrap}
+.top-pick::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg, transparent 0, transparent 15px, rgba(255,0,102,.05) 15px, rgba(255,0,102,.05) 30px);
+  pointer-events:none;
+}
+.top-pick-label{
+  font-size:10.5px;color:var(--hot);
+  text-transform:uppercase;letter-spacing:2.5px;
+  font-weight:900;margin-bottom:10px;
+  position:relative;z-index:1;
+}
+.top-pick-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:32px;letter-spacing:2px;color:#fff;
+  position:relative;z-index:1;
+  text-shadow:0 0 30px rgba(255,0,102,.6);
+}
+.top-pick-pct{
+  font-size:14px;color:var(--hot);font-weight:900;margin-top:8px;
+  letter-spacing:1px;position:relative;z-index:1;
+}
+
+.bottom-actions{
+  display:flex;justify-content:center;gap:12px;
+  margin-top:34px;flex-wrap:wrap;
+}
 .action-btn{
-  padding:13px 26px;background:linear-gradient(135deg,#ff5fa2,#a78bfa);
-  border:none;border-radius:14px;color:#fff;font-size:13.5px;font-weight:800;
-  cursor:pointer;font-family:inherit;box-shadow:0 8px 30px rgba(255,95,162,.4);transition:.2s;
+  padding:15px 30px;
+  background:linear-gradient(135deg,var(--hot),var(--neon));
+  border:none;border-radius:14px;color:#fff;
+  font-size:12.5px;font-weight:900;letter-spacing:1.5px;
+  text-transform:uppercase;cursor:pointer;font-family:inherit;
+  box-shadow:0 10px 30px rgba(255,0,102,.5);transition:.25s;
+}
+.action-btn:hover{
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 15px 45px rgba(255,0,102,.7);
 }
 .action-btn.ghost{
-  background:var(--card);border:1px solid var(--border);
+  background:transparent;border:1.5px solid var(--border);
   box-shadow:none;color:var(--text);
 }
-.action-btn:hover{transform:translateY(-2px)}
-.action-btn.ghost:hover{border-color:var(--muted)}
+.action-btn.ghost:hover{
+  border-color:var(--hot);color:var(--hot);
+  box-shadow:0 0 20px rgba(255,0,102,.3);
+}
 
 @media (max-width:600px){
   .deck{max-height:none}
-  .card-cover{height:34%;min-height:180px}
-  .card-avatar{width:100px;height:100px;font-size:34px}
-  .card-name{font-size:19px}
-  .ctrl{width:58px;height:58px;font-size:26px}
-  .selector{padding:20px 14px 30px}
+  .card-cover{height:40%;min-height:220px}
+  .card-avatar{width:120px;height:120px;font-size:50px}
+  .card-name{font-size:28px}
+  .ctrl{width:64px;height:64px;font-size:28px}
+  .selector{padding:22px 14px 40px}
+  .selector-header h2{font-size:42px}
   .people-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
   .my-user-name{display:none}
   .stats{grid-template-columns:1fr 1fr}
   .stats .stat:last-child{grid-column:span 2}
+  .match-title{font-size:42px}
+  .match-icon{font-size:72px}
+  .brand-text h1{font-size:18px}
+  .brand-text p{font-size:8.5px}
 }
 ::-webkit-scrollbar{width:8px}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--hot)}
 </style>
 </head>
 <body>
 
 <header class="topbar">
   <div class="brand" id="brandHome">
-    <div class="brand-mark">💘</div>
+    <div class="brand-mark">S</div>
     <div class="brand-text">
-      <h1>ShipGrindr</h1>
-      <p>Encuentra tu match</p>
+      <h1>SHIPGRINDR</h1>
+      <p>· Encuentra tu presa ·</p>
     </div>
   </div>
   <div class="my-user" id="myUserBtn" style="display:none">
@@ -358,14 +766,14 @@ body::before{
 <!-- SELECTOR -->
 <div class="selector" id="selector">
   <div class="selector-header">
-    <h2>¿Quién eres? 💫</h2>
-    <p>Elige tu perfil para encontrar tus mejores matches</p>
+    <h2>¿QUIÉN ERES?</h2>
+    <p>Elige tu perfil y empieza la cacería</p>
   </div>
   <div class="selector-search">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
       <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
     </svg>
-    <input type="text" id="searchUser" placeholder="Buscar tu nombre...">
+    <input type="text" id="searchUser" placeholder="Busca tu nombre...">
   </div>
   <div class="people-grid" id="peopleGrid"></div>
 </div>
@@ -376,18 +784,18 @@ body::before{
 </div>
 
 <div class="controls" id="controls" style="display:none">
-  <button class="ctrl skip" id="skipBtn" title="No pegan (←)">💔</button>
-  <button class="ctrl ship" id="shipBtn" title="¡Match! (→)">💖</button>
+  <button class="ctrl skip" id="skipBtn" title="Next (←)">✕</button>
+  <button class="ctrl ship" id="shipBtn" title="Match (→)">🔥</button>
 </div>
 
 <!-- MODAL -->
 <div class="match-modal" id="matchModal">
   <div class="match-card">
-    <div class="match-icon">💘</div>
-    <div class="match-title">¡Es un match!</div>
+    <div class="match-icon">🔥</div>
+    <div class="match-title">¡SE VAN A<br>COMER!</div>
     <div class="match-names" id="matchNames"></div>
     <div class="match-sub" id="matchSub"></div>
-    <button class="match-continue" id="matchContinue">Continuar</button>
+    <button class="match-continue" id="matchContinue">Seguir 🔥</button>
   </div>
 </div>
 
@@ -396,148 +804,152 @@ body::before{
 
 <script>
 /* =========================================================
-   DATOS · 98 personas
+   DATOS · 98 personas con VIBE
    ========================================================= */
+const VIBES = ['🌶️ Intenso','💋 Coqueto','🌙 Nocturno','🥵 Peligroso','✨ Misterioso','🔥 Fogoso','🍸 Elegante','🎧 Fiestero','📚 Intelectual','🎬 Cinéfilo'];
+const TAGS = ['TOP','BOTTOM','SWITCH','NOCTURNO','FOGOSO','INTENSO','COQUETO','MISTERIOSO','ROMÁNTICO','PICANTE'];
+
 const PEOPLE = [
-  {id:'alfredo', n:'Alfredo Martínez', a:22, l:'Santa Ana', r:'Estudiante de Psicología', b:'Promotor comunitario y voluntario en DDHH.', i:['Voluntariado','Café','Niñez','DDHH']},
-  {id:'leonardo', n:'Leonardo Montesinos', a:20, l:'La Unión', r:'Estudiante de RRII', b:'Becario FGK con interés en negocios internacionales.', i:['Lectura','Viajes','Café','Política']},
-  {id:'maria-jose', n:'María José Turcios', a:20, l:'San Miguel', r:'Estudiante de RRII', b:'Analítica y curiosa. Le gusta entender el mundo.', i:['Lectura','Café','Viajes','Política']},
-  {id:'myleen', n:'Myleen Romero', a:19, l:'San Miguel', r:'Estudiante de Marketing', b:'Emprendedora y soñadora. Ama el turismo.', i:['Marketing','Viajes','Café','Música']},
-  {id:'bryan-m', n:'Bryan Molina', a:30, l:'Santa Tecla', r:'Ilustrador & Diseñador', b:'Dibuja desde los 12. Busca silencio compartido.', i:['Arte','Ilustración','Café','Cine','Gatos']},
-  {id:'ivonne', n:'Ivonne Cruz', a:36, l:'San Salvador', r:'Gestión de Talento', b:'Cree en el poder de las personas.', i:['Lectura','Café','Vino','Yoga']},
-  {id:'bessy', n:'Bessy Amaya', a:18, l:'Morazán', r:'Estudiante', b:'Técnica contable con muchas ganas.', i:['Música','Café','Lectura']},
-  {id:'felix', n:'Félix Claros', a:45, l:'San Salvador', r:'Coordinador de Programas', b:'+20 años en educación. Le encanta enseñar.', i:['Docencia','Café','Lectura','Senderismo']},
-  {id:'diego-l', n:'Diego López', a:21, l:'San Miguel', r:'Full Stack Jr', b:'Le apasiona el código limpio y los videojuegos.', i:['Programación','Videojuegos','Café','Anime']},
-  {id:'wilmer', n:'Wilmer Luna', a:28, l:'Sonsonate', r:'Psicólogo', b:'Psicólogo por vocación. Música y conversaciones sin prisa.', i:['Psicología','Música','Café','Lectura','Cine']},
-  {id:'erick', n:'Erick Cerritos', a:26, l:'San Salvador', r:'Técnico en Refrigeración', b:'Manos hábiles y mentalidad práctica.', i:['Mecánica','Café','Deportes','Música']},
-  {id:'katherine-g', n:'Katherine Guzmán', a:27, l:'Sonsonate', r:'Analista de Talento', b:'Psicóloga y headhunter. Sorpréndela con planes.', i:['Psicología','Café','Viajes','Cine','Conciertos']},
-  {id:'abigail', n:'Abigail Sigarán', a:26, l:'San Salvador', r:'Analista de Reclutamiento', b:'Reclutamiento con empatía. Gym y planes tranquilos.', i:['RRHH','Gym','Café','Cine','Brunch']},
-  {id:'omar', n:'Omar Palacios', a:30, l:'San Salvador', r:'Asesor Financiero', b:'Emprendedor y lector. Le gusta construir.', i:['Emprendimiento','Lectura','Café','Finanzas']},
-  {id:'cristian', n:'Cristian Escalante', a:28, l:'San Salvador', r:'Backend & Blockchain', b:'Programa de día, minería de noche. Curioso y noctámbulo.', i:['Blockchain','Programación','Café','Cripto','Ciencia ficción']},
-  {id:'nataly', n:'Nataly Rivera', a:28, l:'San Salvador', r:'HR & OD Specialist', b:'Apasionada por la humanidad y las personas.', i:['RRHH','Yoga','Café','Lectura','Vino']},
-  {id:'jose-gutierrez', n:'José Gutiérrez', a:40, l:'San Salvador', r:'CEO & Consultor', b:'+14 años liderando capital humano.', i:['Estrategia','Café','Vino','Lectura','Viajes']},
-  {id:'josue', n:'Josué Aguilar', a:38, l:'San Salvador', r:'Arquitecto de Software', b:'Cloud, Azure y café. Ciclista de fin de semana.', i:['Tecnología','Café','Ciclismo','Videojuegos','Cerveza artesanal']},
-  {id:'bryan-c', n:'Bryan Cornejo', a:24, l:'San Salvador', r:'Full Stack Dev', b:'Java, React y buenas vibras.', i:['Programación','Tecnología','Café','Música','Anime']},
-  {id:'harry', n:'Harry Brizuela', a:20, l:'Santa Tecla', r:'Estudiante de Economía', b:'Datos, café y buenas conversaciones.', i:['Economía','Datos','Café','Deportes','Lectura']},
-  {id:'victor', n:'Víctor Polanco', a:24, l:'San Salvador', r:'Software Developer', b:'IT support de día, dev de noche.', i:['Programación','Café','Música','Videojuegos']},
-  {id:'katherine-p', n:'Katherine Peñate', a:25, l:'San Salvador', r:'Reclutamiento', b:'Administración con enfoque humano.', i:['RRHH','Café','Cine','Brunch']},
-  {id:'gabriela-paiz', n:'Gabriela Paiz', a:28, l:'San Salvador', r:'Psicóloga & Psicoterapeuta', b:'Organizacional de día, clínica de tarde.', i:['Psicología','Café','Cine','Gatos','Lectura']},
-  {id:'stephanie', n:'Stephanie Arévalo', a:28, l:'San Salvador', r:'Psicóloga Organizacional', b:'Maestría en RRHH. Libros, vino y lluvia.', i:['Lectura','Vino','Café','Cine','Yoga']},
-  {id:'sara', n:'Sara Judith Flores', a:20, l:'Mejicanos', r:'Estudiante de RRPP', b:'Comunicación con propósito y empatía.', i:['RRPP','Marketing','Café','Cine','Arte']},
-  {id:'juana', n:'Juana Jule', a:50, l:'San Salvador', r:'Directora Ejecutiva', b:'MBA viajera. Café y buenas historias.', i:['Café','Viajes','Libros','Estrategia','Vino']},
-  {id:'zuleima', n:'Zuleima Rivera', a:38, l:'San Salvador', r:'Youth Coach', b:'Profesora de inglés y coach. Le encanta enseñar.', i:['Idiomas','Docencia','Café','Lectura','Yoga']},
-  {id:'nelson', n:'Nelson Inno', a:36, l:'San Salvador', r:'Innovador & Autor', b:'TEDx speaker. Bitcoin, IA y libros raros.', i:['Innovación','Bitcoin','IA','Lectura','Viajes']},
-  {id:'katherine-s', n:'Katherine Sorto', a:28, l:'San Miguel', r:'Psicóloga', b:'Vocacional y sistémica. Le encanta la gente.', i:['Psicología','Café','Lectura','Cine','Viajes']},
-  {id:'levi', n:'Levi Palacios', a:22, l:'San Salvador', r:'Dev IA & Bitcoin', b:'Curioso empedernido. Japonés básico.', i:['Tecnología','Bitcoin','Programación','Anime','Café']},
-  {id:'anabel', n:'Anabel Mejía', a:18, l:'Usulután', r:'Estudiante', b:'Descubriendo su camino.', i:['Música','Café','Lectura']},
-  {id:'jose-p', n:'José Palacios', a:24, l:'San Salvador', r:'Dev IA', b:'Gamificación y aprendizaje visual.', i:['Programación','Videojuegos','Café','Anime']},
-  {id:'william', n:'William Panameño', a:25, l:'Mejicanos', r:'Growth Specialist', b:'Creativo multidisciplinario y digital.', i:['Marketing','Diseño','Café','Instagram','Música']},
-  {id:'pineda', n:'José M. Pineda', a:58, l:'San Salvador', r:'Ex-Ministro de Educación', b:'Lee el periódico entero cada mañana.', i:['Política','Lectura','Café','Senderismo','Historia']},
-  {id:'jose-gaspar', n:'José Eduardo Gaspar', a:20, l:'Sonsonate', r:'Estudiante Ing. Alimentos', b:'Curioso y responsable.', i:['Ciencia','Café','Deportes','Lectura']},
-  {id:'somesh', n:'Somesh Sharma', a:22, l:'Kingston (Jamaica)', r:'Innovador en Salud', b:'Físico, emprendedor y soñador.', i:['Ciencia','Innovación','Café','Lectura','Tecnología']},
-  {id:'ingrid', n:'Ingrid Vela', a:40, l:'Chalatenango', r:'Especialista en Educación Digital', b:'Maestra, tecnóloga y emprendedora.', i:['Tecnología','Educación','Café','Lectura','Yoga']},
-  {id:'cesar', n:'César Meléndez', a:22, l:'San Salvador', r:'Técnico en Computación', b:'Apasionado por la tecnología.', i:['Tecnología','Café','Música','Videojuegos']},
-  {id:'martin', n:'Martin Cruz', a:42, l:'San Salvador', r:'CEO & Founder', b:'Emprendedor y visionario internacional.', i:['Emprendimiento','Viajes','Café','Vino','Lectura']},
-  {id:'esteban', n:'Esteban Romero', a:20, l:'San Miguel', r:'Estudiante de Contaduría', b:'Manager de finanzas AIESEC.', i:['Finanzas','Café','Lectura','Deportes']},
-  {id:'rutvik', n:'Rutvik Talaviya', a:28, l:'Surat (India)', r:'Full Stack Senior', b:'Ingeniero con +6 años de experiencia global.', i:['Tecnología','Programación','Café','Cine','Viajes']},
-  {id:'hafiz', n:'Hafiz Waqas', a:28, l:'Punjab (Pakistán)', r:'Fundador HumTech', b:'SEO, marketing y emprendimiento.', i:['Marketing','Emprendimiento','Café','Lectura','Tecnología']},
-  {id:'jeison-r', n:'Jeison Romero', a:20, l:'San Miguel', r:'Estudiante Ing. Industrial', b:'Mente polímata y curiosa.', i:['Ingeniería','Café','Música','Lectura']},
-  {id:'milagro', n:'Milagro Martínez', a:19, l:'La Unión', r:'Emprendedora', b:'Maneja redes sociales de su emprendimiento.', i:['Emprendimiento','Instagram','Café','Música']},
-  {id:'fernando-ch', n:'Fernando Chávez', a:32, l:'San Miguel', r:'Periodista & Docente', b:'Locutor de corazón, radio y conciertos.', i:['Música','Radio','Periodismo','Conciertos','Café']},
-  {id:'yoselin', n:'Yoselin Cartagena', a:38, l:'San Salvador', r:'Poligrafista & Neuropsicología', b:'Especialista en credibilidad y análisis.', i:['Psicología','Lectura','Café','Cine','Vino']},
-  {id:'alejandra', n:'Alejandra Santos', a:28, l:'San Salvador', r:'Rep. de Programas', b:'Postgrados y estudios internacionales.', i:['Educación','Café','Viajes','Lectura']},
-  {id:'luisa', n:'Luisa Taveras', a:40, l:'Santo Domingo (RD)', r:'Co-founder OPEX', b:'MBA. Capacitación corporativa y e-learning.', i:['Educación','Emprendimiento','Café','Vino','Viajes']},
-  {id:'oscar-r', n:'Oscar Reyes', a:20, l:'Morazán', r:'Estudiante Ing. Civil', b:'Topógrafo y calculista en formación.', i:['Ingeniería','Café','Deportes','Música']},
-  {id:'gerson', n:'Gerson Franco', a:23, l:'San Miguel', r:'Full Stack Dev', b:'Flutter, Node y DTE. Videojuegos y anime.', i:['Videojuegos','Anime','Café','Programación','Música']},
-  {id:'rodrigo', n:'Rodrigo Romero', a:30, l:'San Salvador', r:'Business Analyst & QA', b:'Ing. Civil con +6 años en análisis.', i:['Análisis','Tecnología','Café','Ciclismo','Lectura']},
-  {id:'briant', n:'Briant Hernández', a:19, l:'Santa Ana', r:'Dev en Formación', b:'Python, Java y muchas ganas.', i:['Programación','Café','Videojuegos','Anime']},
-  {id:'violeta', n:'Violeta Valencia', a:42, l:'San Salvador', r:'Psicóloga Social', b:'Escucha mejor que nadie. Cine y atardeceres.', i:['Cine','Senderismo','Café','Fotografía','Yoga']},
-  {id:'steven', n:'Steven Cáceres', a:22, l:'Usulután', r:'Técnico en Redes', b:'ITCA grad. Redes y cloud.', i:['Tecnología','Café','Deportes','Música']},
-  {id:'monica', n:'Mónica Gálvez', a:45, l:'San Salvador', r:'Directora Empleabilidad', b:'+20 años en comunicación. Vino y playa.', i:['Vino','Playa','Marketing','Viajes','Cine']},
-  {id:'carlos', n:'Carlos Quintanilla', a:45, l:'San Miguel', r:'Director de Capacitación', b:'+13 años en ONGs. Cocina y conversaciones profundas.', i:['Docencia','Cocina','Café','Lectura','Senderismo']},
-  {id:'otoniel', n:'Otoniel Cañenguez', a:24, l:'San Salvador', r:'Diseñador Gráfico', b:'Gestión creativa de proyectos.', i:['Diseño','Arte','Café','Cine','Música']},
-  {id:'yemmy', n:'Yemmy Coca', a:20, l:'San Miguel', r:'Estudiante Ing. Civil', b:'AutoCAD y emprendimiento.', i:['Ingeniería','Diseño','Café','Lectura']},
-  {id:'hector', n:'Héctor Chavarría', a:20, l:'San Miguel', r:'Estudiante Ing. Civil', b:'Teamwork y liderazgo.', i:['Ingeniería','Deportes','Café','Música']},
-  {id:'roberto', n:'Roberto Vásquez', a:20, l:'Monterrey (MX)', r:'Estudiante Mecatrónica', b:'Robótica y automatización. ITESM.', i:['Tecnología','Robótica','Café','Videojuegos','Ciencia ficción']},
-  {id:'eduardo-b', n:'Eduardo Borjas', a:24, l:'San Salvador', r:'CEO Korvex', b:'AI-native, código y visión.', i:['IA','Emprendimiento','Tecnología','Café','Lectura']},
-  {id:'juan', n:'Juan Alexis Ventura', a:20, l:'La Unión', r:'Estudiante Admin. Turismo', b:'Turismo sostenible en isla.', i:['Turismo','Playa','Café','Deportes']},
-  {id:'fernando-r', n:'Fernando Romero', a:20, l:'San Miguel', r:'Estudiante Marketing', b:'Marketing digital y Power BI.', i:['Marketing','Datos','Café','Música']},
-  {id:'yuridia', n:'Yuridia Claros', a:18, l:'Morazán', r:'Estudiante', b:'Creativa y pensadora crítica.', i:['Arte','Música','Café','Lectura']},
-  {id:'brandon', n:'Brandom Sánchez', a:22, l:'Morazán', r:'Ing. Sistemas', b:'Soporte técnico y redes.', i:['Tecnología','Café','Videojuegos','Música']},
-  {id:'gabriela-q', n:'Gabriela Quintanilla', a:30, l:'San Miguel', r:'Psicóloga', b:'Trabaja con niñez y adolescencia.', i:['Niñez','Lectura','Café','Senderismo','Cine']},
-  {id:'ingri', n:'Ingri Durán', a:19, l:'Morazán', r:'Estudiante Ing. Civil', b:'Aprendiendo y creciendo.', i:['Ingeniería','Café','Música','Lectura']},
+  {id:'alfredo', n:'Alfredo Martínez', a:22, l:'Santa Ana', r:'Psicólogo en formación', b:'Voluntario, comunitario y con una sonrisa que mata.', i:['Voluntariado','Café','Niñez','DDHH']},
+  {id:'leonardo', n:'Leonardo Montesinos', a:20, l:'La Unión', r:'Estudiante de RRII', b:'Becario con ambición. Le gustan los retos y los planes largos.', i:['Lectura','Viajes','Café','Política']},
+  {id:'maria-jose', n:'María José Turcios', a:20, l:'San Miguel', r:'Estudiante de RRII', b:'Analítica, curiosa, y con mirada que desarma.', i:['Lectura','Café','Viajes','Política']},
+  {id:'myleen', n:'Myleen Romero', a:19, l:'San Miguel', r:'Marketing & turismo', b:'Emprendedora. Ama el mar y las noches largas.', i:['Marketing','Viajes','Café','Música']},
+  {id:'bryan-m', n:'Bryan Molina', a:30, l:'Santa Tecla', r:'Ilustrador', b:'Dibuja desde los 12. Manos hábiles, mente sucia.', i:['Arte','Ilustración','Café','Cine','Gatos']},
+  {id:'ivonne', n:'Ivonne Cruz', a:36, l:'San Salvador', r:'Gestión de Talento', b:'Lee personas como libros abiertos. Leal y directa.', i:['Lectura','Café','Vino','Yoga']},
+  {id:'bessy', n:'Bessy Amaya', a:18, l:'Morazán', r:'Estudiante', b:'Tímida al principio, fiera cuando agarra confianza.', i:['Música','Café','Lectura']},
+  {id:'felix', n:'Félix Claros', a:45, l:'San Salvador', r:'Coordinador de Programas', b:'+20 años formando gente. Papá oso con carácter.', i:['Docencia','Café','Lectura','Senderismo']},
+  {id:'diego-l', n:'Diego López', a:21, l:'San Miguel', r:'Full Stack Jr', b:'Código limpio, mente sucia. Gamer de closet.', i:['Programación','Videojuegos','Café','Anime']},
+  {id:'wilmer', n:'Wilmer Luna', a:28, l:'Sonsonate', r:'Psicólogo', b:'Te lee el alma antes del primer café. Cuidado.', i:['Psicología','Música','Café','Lectura','Cine']},
+  {id:'erick', n:'Erick Cerritos', a:26, l:'San Salvador', r:'Técnico', b:'Manos rudas, corazón blando. De los que arreglan todo.', i:['Mecánica','Café','Deportes','Música']},
+  {id:'katherine-g', n:'Katherine Guzmán', a:27, l:'Sonsonate', r:'Analista de Talento', b:'Psicóloga y headhunter. Te caza antes de que corras.', i:['Psicología','Café','Viajes','Cine','Conciertos']},
+  {id:'abigail', n:'Abigail Sigarán', a:26, l:'San Salvador', r:'Analista', b:'Cuerpo de gym, mente estratégica. Pura disciplina.', i:['RRHH','Gym','Café','Cine','Brunch']},
+  {id:'omar', n:'Omar Palacios', a:30, l:'San Salvador', r:'Asesor Financiero', b:'Emprendedor y lector. Le gusta construir imperios.', i:['Emprendimiento','Lectura','Café','Finanzas']},
+  {id:'cristian', n:'Cristian Escalante', a:28, l:'San Salvador', r:'Backend & Blockchain', b:'Vive de noche. Solo se ilumina con neón y cafeína.', i:['Blockchain','Programación','Café','Cripto','Ciencia ficción']},
+  {id:'nataly', n:'Nataly Rivera', a:28, l:'San Salvador', r:'HR & OD', b:'Apasionada por las personas. Y por el vino tinto.', i:['RRHH','Yoga','Café','Lectura','Vino']},
+  {id:'jose-gutierrez', n:'José Gutiérrez', a:40, l:'San Salvador', r:'CEO & Consultor', b:'+14 años moviendo capital humano. Papaíto con agenda.', i:['Estrategia','Café','Vino','Lectura','Viajes']},
+  {id:'josue', n:'Josué Aguilar', a:38, l:'San Salvador', r:'Arquitecto de Software', b:'Cloud, Azure y ciclismo. Silencioso pero intenso.', i:['Tecnología','Café','Ciclismo','Videojuegos','Cerveza artesanal']},
+  {id:'bryan-c', n:'Bryan Cornejo', a:24, l:'San Salvador', r:'Full Stack Dev', b:'Java, React y buenas vibras. Geek y coqueto.', i:['Programación','Tecnología','Café','Música','Anime']},
+  {id:'harry', n:'Harry Brizuela', a:20, l:'Santa Tecla', r:'Estudiante de Economía', b:'Datos, café y planes largos. Mente brillante.', i:['Economía','Datos','Café','Deportes','Lectura']},
+  {id:'victor', n:'Víctor Polanco', a:24, l:'San Salvador', r:'Software Developer', b:'IT support de día, dev de noche. Inquieto.', i:['Programación','Café','Música','Videojuegos']},
+  {id:'katherine-p', n:'Katherine Peñate', a:25, l:'San Salvador', r:'Reclutamiento', b:'Administración con enfoque humano. Cálida.', i:['RRHH','Café','Cine','Brunch']},
+  {id:'gabriela-paiz', n:'Gabriela Paiz', a:28, l:'San Salvador', r:'Psicóloga & Psicoterapeuta', b:'Organizacional de día, clínica de tarde. Misteriosa.', i:['Psicología','Café','Cine','Gatos','Lectura']},
+  {id:'stephanie', n:'Stephanie Arévalo', a:28, l:'San Salvador', r:'Psicóloga Organizacional', b:'Maestría en RRHH. Libros, vino y lluvia. Perfecta.', i:['Lectura','Vino','Café','Cine','Yoga']},
+  {id:'sara', n:'Sara Judith Flores', a:20, l:'Mejicanos', r:'Estudiante de RRPP', b:'Comunicación con propósito y una sonrisa peligrosa.', i:['RRPP','Marketing','Café','Cine','Arte']},
+  {id:'juana', n:'Juana Jule', a:50, l:'San Salvador', r:'Directora Ejecutiva', b:'MBA viajera. Milf ejecutiva que intimida y enamora.', i:['Café','Viajes','Libros','Estrategia','Vino']},
+  {id:'zuleima', n:'Zuleima Rivera', a:38, l:'San Salvador', r:'Youth Coach', b:'Profesora de inglés y coach. Sabe cómo hablarle a un hombre.', i:['Idiomas','Docencia','Café','Lectura','Yoga']},
+  {id:'nelson', n:'Nelson Inno', a:36, l:'San Salvador', r:'Innovador & Autor', b:'TEDx speaker. Bitcoin, IA y libros raros. Peligroso.', i:['Innovación','Bitcoin','IA','Lectura','Viajes']},
+  {id:'katherine-s', n:'Katherine Sorto', a:28, l:'San Miguel', r:'Psicóloga', b:'Vocacional y sistémica. Te desarma sin que sientas.', i:['Psicología','Café','Lectura','Cine','Viajes']},
+  {id:'levi', n:'Levi Palacios', a:22, l:'San Salvador', r:'Dev IA & Bitcoin', b:'Curioso empedernido. Japonés básico y sonrisa boba.', i:['Tecnología','Bitcoin','Programación','Anime','Café']},
+  {id:'anabel', n:'Anabel Mejía', a:18, l:'Usulután', r:'Estudiante', b:'Descubriendo su camino. Mirada curiosa.', i:['Música','Café','Lectura']},
+  {id:'jose-p', n:'José Palacios', a:24, l:'San Salvador', r:'Dev IA', b:'Gamificación y aprendizaje visual. Nerd hot.', i:['Programación','Videojuegos','Café','Anime']},
+  {id:'william', n:'William Panameño', a:25, l:'Mejicanos', r:'Growth Specialist', b:'Creativo y digital. Instagram no se llena solo.', i:['Marketing','Diseño','Café','Instagram','Música']},
+  {id:'pineda', n:'José M. Pineda', a:58, l:'San Salvador', r:'Ex-Ministro', b:'Poder político y experiencia. Daddy de verdad.', i:['Política','Lectura','Café','Senderismo','Historia']},
+  {id:'jose-gaspar', n:'José Eduardo Gaspar', a:20, l:'Sonsonate', r:'Estudiante Ing.', b:'Curioso y responsable. Novio ideal.', i:['Ciencia','Café','Deportes','Lectura']},
+  {id:'somesh', n:'Somesh Sharma', a:22, l:'Kingston · Jamaica', r:'Innovador en Salud', b:'Físico, emprendedor y exótico. Acento incluido.', i:['Ciencia','Innovación','Café','Lectura','Tecnología']},
+  {id:'ingrid', n:'Ingrid Vela', a:40, l:'Chalatenango', r:'Educadora Digital', b:'Maestra, tecnóloga y emprendedora. Mamá profesional.', i:['Tecnología','Educación','Café','Lectura','Yoga']},
+  {id:'cesar', n:'César Meléndez', a:22, l:'San Salvador', r:'Técnico en Computación', b:'Tecnología y buena conversación. Todo-terreno.', i:['Tecnología','Café','Música','Videojuegos']},
+  {id:'martin', n:'Martin Cruz', a:42, l:'San Salvador', r:'CEO & Founder', b:'Emprendedor internacional. Elegante y peligroso.', i:['Emprendimiento','Viajes','Café','Vino','Lectura']},
+  {id:'esteban', n:'Esteban Romero', a:20, l:'San Miguel', r:'Estudiante Contaduría', b:'Manager de finanzas AIESEC. Promesa joven.', i:['Finanzas','Café','Lectura','Deportes']},
+  {id:'rutvik', n:'Rutvik Talaviya', a:28, l:'Surat · India', r:'Full Stack Senior', b:'Ingeniero con acento sexy. Bollywood vibes.', i:['Tecnología','Programación','Café','Cine','Viajes']},
+  {id:'hafiz', n:'Hafiz Waqas', a:28, l:'Punjab · Pakistán', r:'Fundador HumTech', b:'SEO, marketing y cejas perfectas. Exótico.', i:['Marketing','Emprendimiento','Café','Lectura','Tecnología']},
+  {id:'jeison-r', n:'Jeison Romero', a:20, l:'San Miguel', r:'Ing. Industrial', b:'Mente polímata y curiosa. Callado pero efectivo.', i:['Ingeniería','Café','Música','Lectura']},
+  {id:'milagro', n:'Milagro Martínez', a:19, l:'La Unión', r:'Emprendedora', b:'Maneja su negocio y sus redes. Boss girl.', i:['Emprendimiento','Instagram','Café','Música']},
+  {id:'fernando-ch', n:'Fernando Chávez', a:32, l:'San Miguel', r:'Periodista & Locutor', b:'Voz de radio que eriza. Locutor y docente.', i:['Música','Radio','Periodismo','Conciertos','Café']},
+  {id:'yoselin', n:'Yoselin Cartagena', a:38, l:'San Salvador', r:'Poligrafista', b:'Te lee si mientes. Especialista en credibilidad.', i:['Psicología','Lectura','Café','Cine','Vino']},
+  {id:'alejandra', n:'Alejandra Santos', a:28, l:'San Salvador', r:'Rep. de Programas', b:'Postgrados e internacional. Elegante y culta.', i:['Educación','Café','Viajes','Lectura']},
+  {id:'luisa', n:'Luisa Taveras', a:40, l:'Santo Domingo · RD', r:'Co-founder OPEX', b:'MBA dominicana. Salsa en las venas.', i:['Educación','Emprendimiento','Café','Vino','Viajes']},
+  {id:'oscar-r', n:'Oscar Reyes', a:20, l:'Morazán', r:'Estudiante Ing.', b:'Topógrafo en formación. Cuerpo de campo.', i:['Ingeniería','Café','Deportes','Música']},
+  {id:'gerson', n:'Gerson Franco', a:23, l:'San Miguel', r:'Full Stack Dev', b:'Flutter y DTE. Gamer, otaku y hot.', i:['Videojuegos','Anime','Café','Programación','Música']},
+  {id:'rodrigo', n:'Rodrigo Romero', a:30, l:'San Salvador', r:'Business Analyst & QA', b:'Ing. Civil con +6 años. De los que sí resuelven.', i:['Análisis','Tecnología','Café','Ciclismo','Lectura']},
+  {id:'briant', n:'Briant Hernández', a:19, l:'Santa Ana', r:'Dev en Formación', b:'Python, Java y muchas ganas. Cachorro hot.', i:['Programación','Café','Videojuegos','Anime']},
+  {id:'violeta', n:'Violeta Valencia', a:42, l:'San Salvador', r:'Psicóloga Social', b:'Escucha mejor que nadie. Y lo usa a tu favor.', i:['Cine','Senderismo','Café','Fotografía','Yoga']},
+  {id:'steven', n:'Steven Cáceres', a:22, l:'Usulután', r:'Técnico en Redes', b:'ITCA grad. Cuerpo de playa, mente de hacker.', i:['Tecnología','Café','Deportes','Música']},
+  {id:'monica', n:'Mónica Gálvez', a:45, l:'San Salvador', r:'Directora Empleabilidad', b:'+20 años en comunicación. Milf que manda.', i:['Vino','Playa','Marketing','Viajes','Cine']},
+  {id:'carlos', n:'Carlos Quintanilla', a:45, l:'San Miguel', r:'Director de Capacitación', b:'+13 años en ONGs. Papá oso con buena cocina.', i:['Docencia','Cocina','Café','Lectura','Senderismo']},
+  {id:'otoniel', n:'Otoniel Cañenguez', a:24, l:'San Salvador', r:'Diseñador Gráfico', b:'Diseño y creatividad. Manos y mente ágiles.', i:['Diseño','Arte','Café','Cine','Música']},
+  {id:'yemmy', n:'Yemmy Coca', a:20, l:'San Miguel', r:'Ing. Civil', b:'AutoCAD y emprendimiento. Cerebro y belleza.', i:['Ingeniería','Diseño','Café','Lectura']},
+  {id:'hector', n:'Héctor Chavarría', a:20, l:'San Miguel', r:'Ing. Civil', b:'Teamwork y liderazgo. Cuerpo de gym.', i:['Ingeniería','Deportes','Café','Música']},
+  {id:'roberto', n:'Roberto Vásquez', a:20, l:'Monterrey · México', r:'Mecatrónica ITESM', b:'Robótica y automatización. Regio con flow.', i:['Tecnología','Robótica','Café','Videojuegos','Ciencia ficción']},
+  {id:'eduardo-b', n:'Eduardo Borjas', a:24, l:'San Salvador', r:'CEO Korvex', b:'AI-native, código y ambición. Peligroso.', i:['IA','Emprendimiento','Tecnología','Café','Lectura']},
+  {id:'juan', n:'Juan Alexis Ventura', a:20, l:'La Unión', r:'Admin. Turismo', b:'Vive en isla. Piel de playa y buena vibra.', i:['Turismo','Playa','Café','Deportes']},
+  {id:'fernando-r', n:'Fernando Romero', a:20, l:'San Miguel', r:'Marketing', b:'Marketing digital y Power BI. Análisis y flow.', i:['Marketing','Datos','Café','Música']},
+  {id:'yuridia', n:'Yuridia Claros', a:18, l:'Morazán', r:'Estudiante', b:'Creativa y pensadora crítica. Joven promesa.', i:['Arte','Música','Café','Lectura']},
+  {id:'brandon', n:'Brandom Sánchez', a:22, l:'Morazán', r:'Ing. Sistemas', b:'Soporte técnico y redes. Todo-terreno.', i:['Tecnología','Café','Videojuegos','Música']},
+  {id:'gabriela-q', n:'Gabriela Quintanilla', a:30, l:'San Miguel', r:'Psicóloga', b:'Trabaja con niñez. Sensible, fuerte y leal.', i:['Niñez','Lectura','Café','Senderismo','Cine']},
+  {id:'ingri', n:'Ingri Durán', a:19, l:'Morazán', r:'Ing. Civil', b:'Aprendiendo y creciendo. Mirada intensa.', i:['Ingeniería','Café','Música','Lectura']},
   {id:'ernesto', n:'Ernesto Bonilla', a:35, l:'Santa Tecla', r:'Especialista en Talento', b:'Psicólogo organizacional. Deportes y autenticidad.', i:['RRHH','Café','Deportes','Lectura','Cerveza artesanal']},
-  {id:'jeison', n:'Jeison Paz', a:33, l:'Usulután', r:'Psicólogo & Docente', b:'Aldeas SOS. Segundas oportunidades.', i:['Psicología','Café','Lectura','Senderismo','Cine']},
-  {id:'daniel', n:'Daniel Miranda', a:29, l:'San Juan Opico', r:'Generalista RRHH', b:'Fútbol, cerveza y buenas vibras.', i:['Fútbol','Cerveza','Café','Música','Viajes']},
-  {id:'fidelia', n:'Fidelia González', a:18, l:'San Miguel', r:'Estudiante', b:'Técnica contable.', i:['Música','Café','Lectura']},
-  {id:'eduardo-r', n:'Eduardo Romero', a:19, l:'San Miguel', r:'Investigador IA & Ética', b:'Knowledge is power. C2 inglés.', i:['IA','Filosofía','Educación','Café','Lectura']},
-  {id:'monica-r', n:'Mónica Ruiz', a:20, l:'San Miguel', r:'Estudiante Ing. Civil', b:'AutoCAD y diseño estructural.', i:['Ingeniería','Diseño','Café','Lectura']},
-  {id:'karen', n:'Karen Carreño', a:30, l:'Sonsonate', r:'Psicóloga & Coach', b:'Diseñadora de experiencias formativas.', i:['Yoga','Café','Viajes','Lectura','Arte']},
-  {id:'francisco', n:'Francisco Rivas', a:30, l:'San Salvador', r:'Productor Audiovisual', b:'Filmmaker. Historias en cada frame.', i:['Cine','Fotografía','Café','Música','Viajes']},
-  {id:'marcela', n:'Marcela Cruz', a:42, l:'San Miguel', r:'Psicóloga Humanitaria', b:'DDHH, niñez y causas. Sentido del humor.', i:['DDHH','Café','Lectura','Viajes','Arte']},
-  {id:'keny', n:'Keny Márquez', a:40, l:'San Salvador', r:'Directora Desarrollo Profesional', b:'Coach. Todo se resuelve con café y buena charla.', i:['Coaching','Café','Viajes','Lectura','Yoga']},
-  {id:'karol', n:'Karol Alfaro', a:24, l:'San Salvador', r:'Estratega Digital', b:'Cine, atardeceres y natación.', i:['Cine','Natación','Café','Diseño','Instagram']},
-  {id:'genesis', n:'Genesis Domínguez', a:20, l:'San Salvador', r:'Estudiante Administración', b:'Organizada y honesta.', i:['Administración','Café','Lectura','Cine']},
-  {id:'gisela', n:'Gisela Juárez', a:21, l:'Santa Ana', r:'Estudiante Diseño Gráfico', b:'Detalle y soluciones creativas.', i:['Diseño','Arte','Café','Cine','Música']},
-  {id:'ruth', n:'Ruth Emeli Amaya', a:20, l:'San Miguel', r:'Estudiante', b:'Ventas y persuasión. Finanzas e innovación.', i:['Finanzas','Ventas','Café','Música']},
-  {id:'david-ch', n:'David Chavarría', a:20, l:'San Miguel', r:'Estudiante', b:'Universitario con intereses variados.', i:['Ingeniería','Café','Deportes','Música']},
-  {id:'maydely', n:'Maydely Santos', a:19, l:'Morazán', r:'Estudiante Marketing', b:'Marketing y publicidad digital.', i:['Marketing','Café','Música','Lectura']},
-  {id:'ariel', n:'Ariel Díaz', a:21, l:'Morazán', r:'Dev Android', b:'Python, Java y robótica.', i:['Programación','Robótica','Café','Videojuegos','Anime']},
-  {id:'elmer', n:'Elmer Galdámez', a:48, l:'Sonsonate', r:'Coach & Docente', b:'+18 años enseñando. Buena sobremesa.', i:['Docencia','Tecnología','Café','Cocina','Música']},
-  {id:'michael', n:'Michael Barrientos', a:26, l:'Santa Ana', r:'Ciberseguridad', b:'OSINT, forense digital y ética hacker.', i:['Ciberseguridad','Tecnología','Café','Lectura','Ciencia ficción']},
-  {id:'david-r', n:'David Rivera', a:23, l:'San Miguel', r:'Frontend Dev', b:'Vue.js, TypeScript. Pixel-perfect.', i:['Programación','Diseño','Café','Gatos','Música']},
-  {id:'diego-v', n:'Diego Valenzuela', a:28, l:'Santiago (Chile)', r:'Ing. Software & IA', b:'Computer Vision y Machine Learning.', i:['IA','Tecnología','Café','Deportes','Ciencia ficción']},
-  {id:'brayan', n:'Brayan Chavarría', a:20, l:'San Miguel', r:'Ing. Sistemas', b:'Investigación en salud mental y tecnología.', i:['Tecnología','Investigación','Café','Música','Lectura']},
-  {id:'gema', n:'Gema García', a:18, l:'Usulután', r:'Estudiante Técnico en Salud', b:'Interesada en el área de la salud.', i:['Salud','Café','Música','Lectura']},
-  {id:'oscar', n:'Oscar Magaña', a:26, l:'San Salvador', r:'Comunicador', b:'Community manager y editor. Creativo.', i:['Fotografía','Café','Diseño','Música','Cine']},
-  {id:'veronica', n:'Verónica Gómez', a:20, l:'San Salvador', r:'Estudiante Ing. Industrial', b:'Eficiencia operativa y gestión.', i:['Ingeniería','Café','Lectura','Deportes']},
-  {id:'wilber', n:'Wilber Reyes', a:20, l:'La Unión', r:'Estudiante Ing. Sistemas', b:'Tecnología y contabilidad.', i:['Tecnología','Contabilidad','Café','Música']},
-  {id:'alejandro', n:'Alejandro Barrera', a:20, l:'Antiguo Cuscatlán', r:'Estudiante Economía', b:'Análisis financiero e innovación.', i:['Economía','Finanzas','Café','Lectura','Deportes']},
-  {id:'marcos', n:'Marcos Romero', a:19, l:'San Miguel', r:'Estudiante Administración', b:'Aprendiendo el camino.', i:['Administración','Café','Música','Deportes']},
-  {id:'bethzy', n:'Bethzy Luna', a:19, l:'Morazán', r:'Estudiante Ing. Industrial', b:'Matemáticas, biología y mejora continua.', i:['Ingeniería','Ciencia','Café','Lectura']},
-  {id:'sofia', n:'Sofía Pereira', a:20, l:'San Miguel', r:'Estudiante Ing. Sistemas', b:'Tecnología e innovación. B1 inglés.', i:['Tecnología','Programación','Café','Lectura','Música']},
-  {id:'alexander', n:'Alexander Hernández', a:20, l:'Morazán', r:'Emprendedor & Estudiante', b:'Fundó Heliot Media a los 19.', i:['Emprendimiento','Marketing','Café','Tecnología','Música']},
-  {id:'nelson-j', n:'Nelson Jule', a:45, l:'San Salvador', r:'Consultor', b:'Estrategia y educación.', i:['Estrategia','Café','Lectura','Viajes']}
+  {id:'jeison', n:'Jeison Paz', a:33, l:'Usulután', r:'Psicólogo & Docente', b:'Aldeas SOS. Segundas oportunidades y buen corazón.', i:['Psicología','Café','Lectura','Senderismo','Cine']},
+  {id:'daniel', n:'Daniel Miranda', a:29, l:'San Juan Opico', r:'Generalista RRHH', b:'Fútbol, cerveza y buenas vibras. Amigo y algo más.', i:['Fútbol','Cerveza','Café','Música','Viajes']},
+  {id:'fidelia', n:'Fidelia González', a:18, l:'San Miguel', r:'Estudiante', b:'Técnica contable. Tímida pero intensa.', i:['Música','Café','Lectura']},
+  {id:'eduardo-r', n:'Eduardo Romero', a:19, l:'San Miguel', r:'Investigador IA', b:'Knowledge is power. C2 inglés. Cerebro hot.', i:['IA','Filosofía','Educación','Café','Lectura']},
+  {id:'monica-r', n:'Mónica Ruiz', a:20, l:'San Miguel', r:'Ing. Civil', b:'AutoCAD y diseño estructural. Mente brillante.', i:['Ingeniería','Diseño','Café','Lectura']},
+  {id:'karen', n:'Karen Carreño', a:30, l:'Sonsonate', r:'Psicóloga & Coach', b:'Diseñadora de experiencias. Sabe cómo tocarte las fibras.', i:['Yoga','Café','Viajes','Lectura','Arte']},
+  {id:'francisco', n:'Francisco Rivas', a:30, l:'San Salvador', r:'Productor Audiovisual', b:'Filmmaker. Cuenta historias con la cámara y con la boca.', i:['Cine','Fotografía','Café','Música','Viajes']},
+  {id:'marcela', n:'Marcela Cruz', a:42, l:'San Miguel', r:'Psicóloga Humanitaria', b:'DDHH, niñez y causas. Fuerte, sensible y divertida.', i:['DDHH','Café','Lectura','Viajes','Arte']},
+  {id:'keny', n:'Keny Márquez', a:40, l:'San Salvador', r:'Directora Desarrollo', b:'Coach. Te cambia la vida con una conversación.', i:['Coaching','Café','Viajes','Lectura','Yoga']},
+  {id:'karol', n:'Karol Alfaro', a:24, l:'San Salvador', r:'Estratega Digital', b:'Cine, atardeceres y natación. Cuerpo de verano.', i:['Cine','Natación','Café','Diseño','Instagram']},
+  {id:'genesis', n:'Genesis Domínguez', a:20, l:'San Salvador', r:'Estudiante Admin.', b:'Organizada y honesta. La que sí contesta.', i:['Administración','Café','Lectura','Cine']},
+  {id:'gisela', n:'Gisela Juárez', a:21, l:'Santa Ana', r:'Diseño Gráfico', b:'Detalle y soluciones creativas. Manos talentosas.', i:['Diseño','Arte','Café','Cine','Música']},
+  {id:'ruth', n:'Ruth Emeli Amaya', a:20, l:'San Miguel', r:'Estudiante', b:'Ventas y persuasión. Sabe lo que quiere.', i:['Finanzas','Ventas','Café','Música']},
+  {id:'david-ch', n:'David Chavarría', a:20, l:'San Miguel', r:'Estudiante', b:'Universitario con intereses variados. Callado, observa.', i:['Ingeniería','Café','Deportes','Música']},
+  {id:'maydely', n:'Maydely Santos', a:19, l:'Morazán', r:'Marketing', b:'Marketing y publicidad. Creativa y coqueta.', i:['Marketing','Café','Música','Lectura']},
+  {id:'ariel', n:'Ariel Díaz', a:21, l:'Morazán', r:'Dev Android', b:'Python, Java y robótica. Geek con flow.', i:['Programación','Robótica','Café','Videojuegos','Anime']},
+  {id:'elmer', n:'Elmer Galdámez', a:48, l:'Sonsonate', r:'Coach & Docente', b:'+18 años enseñando. Papá experimentado.', i:['Docencia','Tecnología','Café','Cocina','Música']},
+  {id:'michael', n:'Michael Barrientos', a:26, l:'Santa Ana', r:'Ciberseguridad', b:'OSINT, forense y ética hacker. Misterioso.', i:['Ciberseguridad','Tecnología','Café','Lectura','Ciencia ficción']},
+  {id:'david-r', n:'David Rivera', a:23, l:'San Miguel', r:'Frontend Dev', b:'Vue.js y TypeScript. Pixel-perfect en todo.', i:['Programación','Diseño','Café','Gatos','Música']},
+  {id:'diego-v', n:'Diego Valenzuela', a:28, l:'Santiago · Chile', r:'Ing. Software & IA', b:'Computer Vision y Machine Learning. Chileno caliente.', i:['IA','Tecnología','Café','Deportes','Ciencia ficción']},
+  {id:'brayan', n:'Brayan Chavarría', a:20, l:'San Miguel', r:'Ing. Sistemas', b:'Investigación en salud mental. Mente profunda.', i:['Tecnología','Investigación','Café','Música','Lectura']},
+  {id:'gema', n:'Gema García', a:18, l:'Usulután', r:'Técnico en Salud', b:'Interesada en el área de la salud. Tierna.', i:['Salud','Café','Música','Lectura']},
+  {id:'oscar', n:'Oscar Magaña', a:26, l:'San Salvador', r:'Comunicador', b:'Community manager y editor. Creativo y sociable.', i:['Fotografía','Café','Diseño','Música','Cine']},
+  {id:'veronica', n:'Verónica Gómez', a:20, l:'San Salvador', r:'Ing. Industrial', b:'Eficiencia operativa y gestión. Cerebro y flow.', i:['Ingeniería','Café','Lectura','Deportes']},
+  {id:'wilber', n:'Wilber Reyes', a:20, l:'La Unión', r:'Ing. Sistemas', b:'Tecnología y contabilidad. Números y flow.', i:['Tecnología','Contabilidad','Café','Música']},
+  {id:'alejandro', n:'Alejandro Barrera', a:20, l:'Antiguo Cuscatlán', r:'Economía', b:'Análisis financiero e innovación. Promesa ejecutiva.', i:['Economía','Finanzas','Café','Lectura','Deportes']},
+  {id:'marcos', n:'Marcos Romero', a:19, l:'San Miguel', r:'Administración', b:'Aprendiendo el camino. Cachorro tierno.', i:['Administración','Café','Música','Deportes']},
+  {id:'bethzy', n:'Bethzy Luna', a:19, l:'Morazán', r:'Ing. Industrial', b:'Matemáticas, biología y mejora continua. Nerd linda.', i:['Ingeniería','Ciencia','Café','Lectura']},
+  {id:'sofia', n:'Sofía Pereira', a:20, l:'San Miguel', r:'Ing. Sistemas', b:'Tecnología e innovación. B1 inglés y actitud.', i:['Tecnología','Programación','Café','Lectura','Música']},
+  {id:'alexander', n:'Alexander Hernández', a:20, l:'Morazán', r:'Emprendedor', b:'Fundó Heliot Media a los 19. Ambición pura.', i:['Emprendimiento','Marketing','Café','Tecnología','Música']},
+  {id:'nelson-j', n:'Nelson Jule', a:45, l:'San Salvador', r:'Consultor', b:'Estrategia y educación. Daddy con agenda.', i:['Estrategia','Café','Lectura','Viajes']}
 ];
 
 /* =========================================================
-   CÁLCULO DE COMPATIBILIDAD
+   HASH & HELPERS
    ========================================================= */
-function compatibility(a, b){
-  let score = 22;
-  const common = a.i.filter(x => b.i.includes(x));
-  score += common.length * 12;
-  if(a.l === b.l) score += 16;
-  const ageDiff = Math.abs(a.a - b.a);
-  if(ageDiff <= 3) score += 16;
-  else if(ageDiff <= 7) score += 10;
-  else if(ageDiff <= 12) score += 4;
-  else if(ageDiff > 20) score -= 4;
-  // Ruido determinístico por par (siempre da lo mismo)
-  const seed = (a.id + b.id).split('').reduce((h,c)=>(h*31+c.charCodeAt(0))>>>0, 7);
-  score += (seed % 9);
-  return {score: Math.max(15, Math.min(98, score)), common};
+function hash(str){
+  let h = 7;
+  for(let i=0;i<str.length;i++) h = ((h*31) + str.charCodeAt(i)) >>> 0;
+  return h;
 }
-
-function initials(name){
-  return name.split(' ').filter(w=>w.length>1).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+function vibeFor(id){
+  return VIBES[hash(id) % VIBES.length];
 }
-const palette = ['#ff5fa2','#a78bfa','#22d3ee','#fbbf24','#34d399','#f472b6','#818cf8','#fb7185','#facc15','#c084fc'];
+function tagFor(id){
+  return TAGS[hash(id+'x') % TAGS.length];
+}
 function colorFor(id){
-  let h = 0;
-  for(let i=0;i<id.length;i++) h = (h*31 + id.charCodeAt(i)) >>> 0;
-  return palette[h % palette.length];
+  const pal = ['#ff0066','#b026ff','#ff2e88','#ff5fa2','#c026d3','#e11d74','#7c3aed','#db2777'];
+  return pal[hash(id) % pal.length];
+}
+function initials(n){
+  return n.split(' ').filter(w=>w.length>1).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+}
+function compatibility(a, b){
+  let s = 22;
+  const common = a.i.filter(x => b.i.includes(x));
+  s += common.length * 12;
+  if(a.l === b.l) s += 16;
+  const d = Math.abs(a.a - b.a);
+  if(d <= 3) s += 16;
+  else if(d <= 7) s += 10;
+  else if(d <= 12) s += 4;
+  else if(d > 20) s -= 4;
+  s += hash(a.id + b.id) % 9;
+  return {score: Math.max(15, Math.min(98, s)), common};
 }
 
 /* =========================================================
    ESTADO
    ========================================================= */
-let me = null;
-let deck = [];
-let currentIndex = 0;
-let matches = [];
-let history = [];
-
+let me = null, deck = [], currentIndex = 0, matches = [], history = [];
 const selector = document.getElementById('selector');
 const stage = document.getElementById('stage');
 const controls = document.getElementById('controls');
@@ -546,7 +958,7 @@ const summary = document.getElementById('summary');
 const matchModal = document.getElementById('matchModal');
 
 /* =========================================================
-   RENDER SELECTOR
+   SELECTOR
    ========================================================= */
 function renderSelector(filter=''){
   const grid = document.getElementById('peopleGrid');
@@ -555,33 +967,24 @@ function renderSelector(filter=''){
   grid.innerHTML = filtered.map(p=>`
     <div class="person-tile" data-id="${p.id}">
       <div class="pt-avatar" style="background:linear-gradient(135deg,${colorFor(p.id)},${colorFor(p.id)}99)">${initials(p.n)}</div>
-      <div class="pt-name">${p.n.split(' ')[0]} ${p.n.split(' ')[1] || ''}</div>
-      <div class="pt-meta">${p.l}</div>
+      <div class="pt-name">${p.n.split(' ')[0]}</div>
+      <div class="pt-meta">${p.l.split(' ')[0]}</div>
     </div>
   `).join('');
-  grid.querySelectorAll('.person-tile').forEach(tile=>{
-    tile.addEventListener('click', ()=> selectMe(tile.dataset.id));
+  grid.querySelectorAll('.person-tile').forEach(t=>{
+    t.addEventListener('click', ()=> selectMe(t.dataset.id));
   });
 }
+document.getElementById('searchUser').addEventListener('input', e => renderSelector(e.target.value));
 
-document.getElementById('searchUser').addEventListener('input', e=>{
-  renderSelector(e.target.value);
-});
-
-/* =========================================================
-   SELECCIONAR "YO"
-   ========================================================= */
 function selectMe(id){
   me = PEOPLE.find(p => p.id === id);
   if(!me) return;
-
-  // Actualizar header
   document.getElementById('myUserBtn').style.display = 'flex';
   document.getElementById('myUserAvatar').textContent = initials(me.n);
   document.getElementById('myUserAvatar').style.background = `linear-gradient(135deg,${colorFor(me.id)},${colorFor(me.id)}99)`;
   document.getElementById('myUserName').textContent = me.n.split(' ')[0];
 
-  // Construir deck: los demás, ordenados por compatibilidad descendente
   const others = PEOPLE.filter(p => p.id !== me.id).map(p=>{
     const c = compatibility(me, p);
     return {...p, score: c.score, common: c.common};
@@ -592,28 +995,25 @@ function selectMe(id){
   matches = [];
   history = [];
 
-  // Ocultar selector, mostrar stage
   selector.classList.add('hidden');
   stage.classList.add('active');
   controls.style.display = 'flex';
   matchModal.classList.remove('show');
-
   renderNext();
 }
 
 /* =========================================================
-   RENDER DECK
+   RENDER
    ========================================================= */
 function renderNext(){
   deckEl.innerHTML = '';
   if(currentIndex >= deck.length){ showSummary(); return; }
-
   const remaining = deck.slice(currentIndex, currentIndex + 2);
   remaining.reverse().forEach((p, i)=>{
     const card = buildCard(p);
     if(i === 0){
       card.style.transform = 'scale(0.94) translateY(-12px)';
-      card.style.opacity = '0.5';
+      card.style.opacity = '0.4';
       card.style.pointerEvents = 'none';
     } else {
       attachDrag(card, p);
@@ -629,75 +1029,67 @@ function buildCard(p){
   card.className = 'card';
   card.style.setProperty('--accent', color);
 
-  const ageLabel = `${p.a} años`;
-
   card.innerHTML = `
-    <div class="card-cover">
-      <div class="card-match-badge">
-        <span class="match-dot"></span>
-        ${p.score}%
-      </div>
+    <div class="card-cover" data-pct="${p.score}">
+      <div class="card-online"><span class="online-dot"></span>EN LÍNEA</div>
+      <div class="card-match-badge">${p.score}<small>%</small></div>
       <div class="card-avatar">${initials(p.n)}</div>
     </div>
     <div class="card-body">
       <div class="card-name">${p.n}</div>
       <div class="card-meta">
-        <span>🎂 ${ageLabel}</span>
-        <span>📍 ${p.l}</span>
+        <span class="meta-chip">${p.a} años</span>
+        <span class="meta-chip loc">📍 ${p.l}</span>
+        <span class="meta-chip">${tagFor(p.id)}</span>
       </div>
-      <div class="card-role">${p.r}</div>
+      <div class="card-role">${vibeFor(p.id)} · ${p.r}</div>
       <div class="card-bio">"${p.b}"</div>
       <div class="match-section">
-        <div class="match-label">Compatibilidad contigo</div>
-        <div class="match-bar">
-          <div class="match-fill" style="width:${p.score}%"></div>
-        </div>
+        <div class="match-label">Conexión <span>${p.score >= 80 ? '🔥 BRUTAL' : p.score >= 65 ? '💋 FUERTE' : p.score >= 50 ? '✨ BUENA' : '👀 REGULAR'}</span></div>
+        <div class="match-bar"><div class="match-fill" style="width:${p.score}%"></div></div>
       </div>
       <div class="chips">
         ${p.i.map(int => `<span class="chip ${commonSet.has(int)?'common':''}">${commonSet.has(int)?'♥ ':''}${int}</span>`).join('')}
       </div>
     </div>
     <div class="drag-label like">MATCH</div>
-    <div class="drag-label nope">NOPE</div>
+    <div class="drag-label nope">NEXT</div>
   `;
   return card;
 }
 
 /* =========================================================
-   DRAG / SWIPE
+   DRAG
    ========================================================= */
 function attachDrag(card, p){
-  let startX=0, startY=0, curX=0, curY=0, dragging=false;
+  let sx=0, sy=0, cx=0, cy=0, dragging=false;
   const likeL = card.querySelector('.drag-label.like');
   const nopeL = card.querySelector('.drag-label.nope');
-
   function down(e){
     dragging = true;
     card.classList.add('dragging');
     const pt = e.touches ? e.touches[0] : e;
-    startX = pt.clientX; startY = pt.clientY;
+    sx = pt.clientX; sy = pt.clientY;
   }
   function move(e){
     if(!dragging) return;
     const pt = e.touches ? e.touches[0] : e;
-    curX = pt.clientX - startX;
-    curY = pt.clientY - startY;
-    card.style.transform = `translate(${curX}px, ${curY}px) rotate(${curX/22}deg)`;
-    likeL.style.opacity = Math.max(0, Math.min(1, curX / 100));
-    nopeL.style.opacity = Math.max(0, Math.min(1, -curX / 100));
+    cx = pt.clientX - sx; cy = pt.clientY - sy;
+    card.style.transform = `translate(${cx}px, ${cy}px) rotate(${cx/22}deg)`;
+    likeL.style.opacity = Math.max(0, Math.min(1, cx / 90));
+    nopeL.style.opacity = Math.max(0, Math.min(1, -cx / 90));
   }
   function up(){
     if(!dragging) return;
     dragging = false;
     card.classList.remove('dragging');
-    if(curX > 90) swipe('right', card, p);
-    else if(curX < -90) swipe('left', card, p);
+    if(cx > 85) swipe('right', card, p);
+    else if(cx < -85) swipe('left', card, p);
     else {
       card.style.transform = '';
-      likeL.style.opacity = 0;
-      nopeL.style.opacity = 0;
+      likeL.style.opacity = 0; nopeL.style.opacity = 0;
     }
-    curX = 0; curY = 0;
+    cx = 0; cy = 0;
   }
   card.addEventListener('mousedown', down);
   document.addEventListener('mousemove', move);
@@ -708,39 +1100,32 @@ function attachDrag(card, p){
 }
 
 /* =========================================================
-   ACCIONES
+   SWIPE
    ========================================================= */
-function swipe(direction, card, p){
-  card.classList.add(direction === 'right' ? 'exit-right' : 'exit-left');
-  if(direction === 'right'){
+function swipe(dir, card, p){
+  card.classList.add(dir === 'right' ? 'exit-right' : 'exit-left');
+  if(dir === 'right'){
     matches.push(p);
-    history.push({type:'match', person:p});
+    history.push({type:'match', p});
     setTimeout(()=>{
       currentIndex++;
       renderNext();
       if(currentIndex <= deck.length) showMatchModal(p);
     }, 300);
   } else {
-    history.push({type:'pass', person:p});
-    setTimeout(()=>{
-      currentIndex++;
-      renderNext();
-    }, 300);
+    history.push({type:'pass', p});
+    setTimeout(()=>{ currentIndex++; renderNext(); }, 300);
   }
 }
 
-function getTopCard(){
-  return deckEl.querySelector('.card:not([style*="scale(0.94)"])');
-}
+function topCard(){ return deckEl.querySelector('.card:not([style*="scale(0.94)"])'); }
 
 document.getElementById('shipBtn').addEventListener('click', ()=>{
-  const p = deck[currentIndex];
-  const c = getTopCard();
+  const p = deck[currentIndex], c = topCard();
   if(p && c) swipe('right', c, p);
 });
 document.getElementById('skipBtn').addEventListener('click', ()=>{
-  const p = deck[currentIndex];
-  const c = getTopCard();
+  const p = deck[currentIndex], c = topCard();
   if(p && c) swipe('left', c, p);
 });
 
@@ -755,16 +1140,16 @@ document.addEventListener('keydown', e=>{
 });
 
 /* =========================================================
-   MODAL DE MATCH
+   MODAL
    ========================================================= */
 function showMatchModal(p){
   document.getElementById('matchNames').innerHTML = `
-    <div class="match-name" style="color:${colorFor(me.id)}">${me.n.split(' ')[0]}</div>
-    <div class="match-plus">💘</div>
-    <div class="match-name" style="color:${colorFor(p.id)}">${p.n.split(' ')[0]}</div>
+    <div class="match-name" style="color:${colorFor(me.id)}">${me.n.split(' ')[0].toUpperCase()}</div>
+    <div class="match-plus">+</div>
+    <div class="match-name" style="color:${colorFor(p.id)}">${p.n.split(' ')[0].toUpperCase()}</div>
   `;
-  const tag = p.score >= 80 ? '¡Almas gemelas!' : p.score >= 65 ? '¡Muy compatibles!' : p.score >= 50 ? '¡Buena química!' : '¡Podría funcionar!';
-  document.getElementById('matchSub').innerHTML = `${tag} <strong>${p.score}%</strong> de compatibilidad. ¡Se shipean! 💖`;
+  const tag = p.score >= 80 ? '¡Se van a comer!' : p.score >= 65 ? '¡Fuego puro!' : p.score >= 50 ? '¡Hay química!' : '¡Podría arder!';
+  document.getElementById('matchSub').innerHTML = `${tag}<br><strong>${p.score}%</strong> de compatibilidad · ${vibeFor(p.id)}`;
   matchModal.classList.add('show');
   confetti();
 }
@@ -775,8 +1160,8 @@ document.getElementById('matchContinue').addEventListener('click', ()=>{
 });
 
 function confetti(){
-  const colors = ['#ff5fa2','#a78bfa','#22d3ee','#fbbf24','#34d399','#ff4d6d'];
-  for(let i=0; i<50; i++){
+  const colors = ['#ff0066','#b026ff','#ff2e88','#00ffd5','#ffb300','#fff'];
+  for(let i=0; i<60; i++){
     setTimeout(()=>{
       const c = document.createElement('div');
       c.className = 'confetti';
@@ -788,7 +1173,7 @@ function confetti(){
       c.style.animationDuration = (2 + Math.random()*2) + 's';
       document.body.appendChild(c);
       setTimeout(()=> c.remove(), 4500);
-    }, i * 22);
+    }, i * 20);
   }
 }
 
@@ -803,57 +1188,44 @@ function showSummary(){
 
   summary.innerHTML = `
     <div class="summary-header">
-      <span class="emoji">💒</span>
-      <h2>Tus matches</h2>
-      <p>Soy <strong>${me.n}</strong> y shipeé a ${matches.length} ${matches.length === 1 ? 'persona' : 'personas'}</p>
+      <span class="emoji">🔥</span>
+      <h2>TU CACERÍA</h2>
+      <p>Soy <strong>${me.n}</strong> y me comí a ${matches.length} ${matches.length === 1 ? 'presa' : 'presas'}</p>
     </div>
-
     <div class="stats">
-      <div class="stat">
-        <div class="stat-num" style="color:#ff5fa2">${matches.length}</div>
-        <div class="stat-lbl">Matches 💖</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num" style="color:#9b93b8">${history.filter(h=>h.type==='pass').length}</div>
-        <div class="stat-lbl">Descartados</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num" style="color:#a78bfa">${avg}%</div>
-        <div class="stat-lbl">Promedio</div>
-      </div>
+      <div class="stat"><div class="stat-num">${matches.length}</div><div class="stat-lbl">Matches 🔥</div></div>
+      <div class="stat"><div class="stat-num muted">${history.filter(h=>h.type==='pass').length}</div><div class="stat-lbl">Descartados</div></div>
+      <div class="stat"><div class="stat-num purple">${avg}%</div><div class="stat-lbl">Promedio</div></div>
     </div>
-
     ${sorted.length ? `
       <div class="ships-list">
         ${sorted.map((p, i) => `
-          <div class="ship-card" style="animation-delay:${i * 0.04}s">
+          <div class="ship-card" style="animation-delay:${i*0.04}s">
             <div class="ship-avatar" style="background:linear-gradient(135deg,${colorFor(p.id)},${colorFor(p.id)}99)">${initials(p.n)}</div>
             <div class="ship-info">
               <div class="ship-name">${p.n}</div>
-              <div class="ship-meta">${p.r} · ${p.l}</div>
+              <div class="ship-meta">${vibeFor(p.id)} · ${p.l}</div>
             </div>
-            <div class="ship-pct">${p.score}%</div>
+            <div class="ship-pct">${p.score}<small>%</small></div>
           </div>
         `).join('')}
       </div>
     ` : `
       <div class="no-ships">
         <span class="icon">💔</span>
-        No shipeaste a nadie.<br>La soltería también es válida.
+        No te comiste a nadie.<br>La abstinencia también es válida.
       </div>
     `}
-
     ${top ? `
       <div class="top-pick">
-        <div class="top-pick-label">💎 Match del año</div>
+        <div class="top-pick-label">💎 LA PRESA DEL AÑO</div>
         <div class="top-pick-name">${top.n}</div>
-        <div class="top-pick-pct">${top.score}% de compatibilidad</div>
+        <div class="top-pick-pct">${top.score}% · ${vibeFor(top.id)}</div>
       </div>
     ` : ''}
-
     <div class="bottom-actions">
-      <button class="action-btn" onclick="changeUser()">🔄 Cambiar de usuario</button>
-      <button class="action-btn ghost" onclick="restart()">↺ Volver a shipear</button>
+      <button class="action-btn" onclick="changeUser()">🔄 Cambiar</button>
+      <button class="action-btn ghost" onclick="restart()">↺ Otra ronda</button>
     </div>
   `;
   summary.classList.add('show');
@@ -868,39 +1240,34 @@ function changeUser(){
   renderSelector('');
   me = null;
 }
-
 function restart(){
   if(!me) return;
   const others = PEOPLE.filter(p => p.id !== me.id).map(p=>{
     const c = compatibility(me, p);
     return {...p, score: c.score, common: c.common};
   }).sort((a,b)=> b.score - a.score);
-  deck = others;
-  currentIndex = 0;
-  matches = [];
-  history = [];
+  deck = others; currentIndex = 0; matches = []; history = [];
   summary.classList.remove('show');
   controls.style.display = 'flex';
   renderNext();
 }
 
-/* Botón "mi usuario" → cambiar
 document.getElementById('myUserBtn').addEventListener('click', changeUser);
 
 /* =========================================================
-   CORAZONES DE FONDO
+   FLOATING WORDS
    ========================================================= */
 (function(){
-  const hearts = ['💖','💘','💕','💗','♥','💞'];
-  for(let i=0; i<12; i++){
-    const h = document.createElement('div');
-    h.className = 'heart-bg';
-    h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
-    h.style.left = Math.random()*100 + 'vw';
-    h.style.animationDuration = (18 + Math.random()*20) + 's';
-    h.style.animationDelay = (-Math.random()*20) + 's';
-    h.style.fontSize = (14 + Math.random()*20) + 'px';
-    document.body.appendChild(h);
+  const words = ['HOT','🔥','SEXY','SHIP','💋','FIERCE','NIGHT','CRUSH','💕','MATCH','BAD','🥵'];
+  for(let i=0; i<14; i++){
+    const w = document.createElement('div');
+    w.className = 'floaty';
+    w.textContent = words[Math.floor(Math.random()*words.length)];
+    w.style.left = Math.random()*100 + 'vw';
+    w.style.animationDuration = (20 + Math.random()*25) + 's';
+    w.style.animationDelay = (-Math.random()*25) + 's';
+    w.style.fontSize = (24 + Math.random()*40) + 'px';
+    document.body.appendChild(w);
   }
 })();
 
