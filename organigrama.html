@@ -2,185 +2,357 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Organigrama Radial · Key</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Key Match · Encuentra al mejor candidato</title>
 <style>
 :root{
   --key:#a78bfa; --windsor:#22d3ee; --heliot:#fbbf24; --cosecha:#34d399;
-  --bg:#05060d; --card:#141721; --card-2:#1a1f2e;
-  --border:#242838; --text:#f1f5f9; --muted:#8892a8;
+  --bg:#0a0612; --card:#171226; --card-2:#1f1932;
+  --border:#2a2340; --text:#f4f1fa; --muted:#9b93b8;
+  --pass:#ff4d6d; --match:#ff66a3;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text)}
+html,body{height:100%;overflow:hidden;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);user-select:none}
 
+/* Fondo con gradientes tipo app de citas */
 body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
-  background-image:
-    radial-gradient(1px 1px at 8% 15%, #fff, transparent),
-    radial-gradient(1px 1px at 22% 55%, #fff, transparent),
-    radial-gradient(1px 1px at 42% 28%, #fff, transparent),
-    radial-gradient(1px 1px at 68% 72%, #fff, transparent),
-    radial-gradient(1px 1px at 82% 18%, #fff, transparent),
-    radial-gradient(1px 1px at 92% 48%, #fff, transparent),
-    radial-gradient(1px 1px at 15% 82%, #fff, transparent),
-    radial-gradient(1px 1px at 55% 92%, #fff, transparent),
-    radial-gradient(1px 1px at 72% 8%, #fff, transparent),
-    radial-gradient(1px 1px at 33% 68%, #fff, transparent);
-  animation:twinkle 6s ease-in-out infinite alternate;
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,102,163,.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(167,139,250,.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(34,211,238,.08) 0%, transparent 60%);
 }
-@keyframes twinkle{0%{opacity:.3}100%{opacity:.6}}
 
+/* ============ TOPBAR ============ */
 .topbar{
   position:fixed;top:0;left:0;right:0;z-index:50;height:60px;
   padding:0 18px;display:flex;align-items:center;gap:12px;
-  background:rgba(5,6,13,.8);backdrop-filter:blur(18px);
+  background:rgba(10,6,18,.85);backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);
 }
 .brand{display:flex;align-items:center;gap:11px}
 .brand-mark{
-  width:34px;height:34px;border-radius:10px;
-  background:linear-gradient(135deg,var(--key),#7c3aed);
-  display:grid;place-items:center;font-weight:800;font-size:15px;color:#fff;
-  box-shadow:0 0 18px rgba(167,139,250,.4);
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,#ff66a3,#a78bfa);
+  display:grid;place-items:center;font-size:20px;
+  box-shadow:0 0 24px rgba(255,102,163,.5);
 }
-.brand-text h1{font-size:13px;font-weight:700;letter-spacing:-.2px}
+.brand-text h1{font-size:14px;font-weight:800;letter-spacing:-.2px}
 .brand-text p{font-size:10.5px;color:var(--muted);margin-top:1px}
 
-.legend{display:flex;gap:6px;margin-left:auto}
-.legend-item{
-  display:flex;align-items:center;gap:5px;padding:5px 9px;
-  background:var(--card);border:1px solid var(--border);border-radius:7px;
-  font-size:10.5px;font-weight:600;
+.progress-wrap{margin-left:auto;display:flex;align-items:center;gap:12px}
+.progress-text{font-size:11.5px;color:var(--muted);font-weight:600}
+.progress-bar{
+  width:140px;height:5px;border-radius:5px;
+  background:rgba(255,255,255,.08);overflow:hidden;
 }
-.legend-dot{width:7px;height:7px;border-radius:50%}
+.progress-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#ff66a3,#a78bfa);
+  transition:width .35s cubic-bezier(.4,0,.2,1);
+}
 
-.controls{
-  position:fixed;bottom:16px;right:16px;z-index:30;
-  display:flex;flex-direction:column;gap:6px;
-}
-.ctrl-btn{
-  width:40px;height:40px;border-radius:10px;
-  background:var(--card);border:1px solid var(--border);
-  color:var(--text);font-size:18px;font-weight:700;
-  cursor:pointer;display:grid;place-items:center;transition:.2s;
-  backdrop-filter:blur(12px);
-}
-.ctrl-btn:hover{background:var(--card-2);border-color:var(--muted);transform:translateY(-1px)}
-
+/* ============ STAGE ============ */
 .stage{
   position:fixed;inset:60px 0 0 0;z-index:1;
-  overflow:hidden;cursor:grab;
+  display:flex;align-items:center;justify-content:center;
+  padding:16px;
 }
-.stage.grabbing{cursor:grabbing}
-.stage.with-panel{right:380px}
-svg.map{display:block;user-select:none;transform-origin:0 0}
 
-.link{fill:none;transition:.3s}
-.link.dimmed{opacity:.15}
-.link.highlight{stroke-width:2.5}
+.deck{
+  position:relative;width:100%;max-width:400px;height:100%;max-height:720px;
+}
 
-.node-body{cursor:pointer;transition:.25s}
-.node-body .halo{opacity:.15;transition:opacity .3s}
-.node-body:hover .halo{opacity:.5}
-.node-body.dimmed{opacity:.12}
-.node-body.selected .halo{opacity:.7}
-.node-body.descendant .halo{opacity:.35}
-.node-body text{pointer-events:none;font-family:'Inter',sans-serif;text-anchor:middle;dominant-baseline:central;font-weight:700}
+/* ============ CARD ============ */
+.card{
+  position:absolute;inset:0;
+  background:linear-gradient(165deg,#1f1932 0%,#171226 100%);
+  border:1px solid var(--border);border-radius:26px;
+  overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.7);
+  display:flex;flex-direction:column;
+  cursor:grab;
+  transition:transform .5s cubic-bezier(.4,0,.2,1), opacity .4s;
+  will-change:transform;
+}
+.card.dragging{cursor:grabbing;transition:none}
+.card.exit-left{transform:translateX(-150%) rotate(-30deg) !important;opacity:0}
+.card.exit-right{transform:translateX(150%) rotate(30deg) !important;opacity:0}
 
-.sun-glow{animation:sunPulse 3.5s ease-out infinite;transform-origin:center}
-@keyframes sunPulse{0%{opacity:.7;transform:scale(1)}100%{opacity:0;transform:scale(1.8)}}
-.sun-core{transform-origin:center}
+/* Card cover — gradient per area */
+.card-cover{
+  position:relative;height:38%;min-height:200px;
+  background:linear-gradient(135deg, var(--accent, #a78bfa) 0%, color-mix(in srgb, var(--accent) 40%, #000) 100%);
+  display:grid;place-items:center;
+  overflow:hidden;
+}
+.card-cover::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,.3) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(0,0,0,.3) 0%, transparent 50%);
+}
+.card-avatar{
+  position:relative;z-index:1;
+  width:130px;height:130px;border-radius:50%;
+  background:rgba(10,6,18,.85);backdrop-filter:blur(10px);
+  display:grid;place-items:center;
+  font-size:44px;font-weight:800;color:var(--accent,#a78bfa);
+  border:4px solid rgba(255,255,255,.4);
+  box-shadow:0 12px 40px rgba(0,0,0,.6);
+  letter-spacing:-1px;
+}
+.card-cover .card-badge{
+  position:absolute;top:16px;left:16px;z-index:2;
+  padding:6px 12px;border-radius:20px;
+  background:rgba(10,6,18,.85);backdrop-filter:blur(10px);
+  font-size:10.5px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.8px;color:var(--accent,#a78bfa);
+}
+.card-cover .card-match{
+  position:absolute;top:16px;right:16px;z-index:2;
+  padding:8px 14px;border-radius:20px;
+  background:rgba(10,6,18,.9);backdrop-filter:blur(10px);
+  border:1.5px solid var(--accent,#a78bfa);
+  font-size:11px;font-weight:800;
+  display:flex;align-items:center;gap:6px;
+}
+.match-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--accent,#a78bfa);
+  box-shadow:0 0 8px var(--accent,#a78bfa);
+  animation:pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-.tooltip{
-  position:fixed;z-index:100;pointer-events:none;
-  background:rgba(10,12,20,.98);backdrop-filter:blur(14px);
-  border:1px solid var(--border);border-radius:10px;
-  padding:10px 14px;max-width:260px;
-  transform:translate(-50%,-100%);
-  opacity:0;transition:opacity .15s;
-  box-shadow:0 12px 32px rgba(0,0,0,.7);
+.card-body{
+  padding:22px;flex:1;display:flex;flex-direction:column;overflow:hidden;
 }
-.tooltip.show{opacity:1}
-.tooltip-name{font-size:12.5px;font-weight:700}
-.tooltip-role{font-size:11px;color:var(--muted);margin-top:3px}
+.card-name{
+  font-size:22px;font-weight:800;letter-spacing:-.5px;line-height:1.15;
+}
+.card-role{
+  font-size:13px;color:var(--muted);margin-top:5px;font-weight:500;
+}
+.card-bio{
+  font-size:12.5px;color:#c8c5d6;line-height:1.55;margin-top:14px;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
+  overflow:hidden;
+}
 
-.panel{
-  position:fixed;top:60px;right:0;bottom:0;width:380px;z-index:40;
-  background:rgba(8,10,16,.97);backdrop-filter:blur(24px);
-  border-left:1px solid var(--border);padding:22px;overflow-y:auto;
-  transform:translateX(100%);
-  transition:transform .35s cubic-bezier(.4,0,.2,1);
+.match-section{margin-top:18px}
+.match-label{
+  font-size:10.5px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.9px;color:var(--muted);margin-bottom:9px;
 }
-.panel.open{transform:translateX(0)}
-.panel-close{
-  position:absolute;top:14px;right:14px;width:28px;height:28px;
-  border-radius:8px;background:var(--card);border:1px solid var(--border);
-  color:var(--muted);cursor:pointer;display:grid;place-items:center;
-  font-size:12px;transition:.2s;
+.match-bar{
+  height:9px;border-radius:6px;background:rgba(255,255,255,.06);
+  overflow:hidden;margin-bottom:7px;
 }
-.panel-close:hover{color:var(--text);border-color:var(--muted)}
-.panel-header{
-  display:flex;align-items:center;gap:14px;
-  padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:18px;
-  padding-right:28px;
+.match-fill{
+  height:100%;border-radius:6px;
+  background:linear-gradient(90deg,var(--accent,#a78bfa),#ff66a3);
+  transition:width .6s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 0 12px var(--accent,#a78bfa);
 }
-.panel-avatar{
-  width:54px;height:54px;border-radius:50%;flex-shrink:0;
-  display:grid;place-items:center;font-weight:800;font-size:19px;color:#fff;
+.match-pct{
+  font-size:11.5px;color:var(--muted);
+  display:flex;justify-content:space-between;
 }
-.panel-name{font-size:15.5px;font-weight:700;letter-spacing:-.3px;line-height:1.2}
-.panel-role{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.4}
-.panel-area{
-  display:inline-block;padding:3px 9px;border-radius:6px;
-  font-size:9.5px;font-weight:800;text-transform:uppercase;
-  letter-spacing:.6px;margin-top:8px;
+.match-pct strong{color:var(--accent,#a78bfa);font-weight:800;font-size:13px}
+
+.chips{
+  display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;
 }
-.section{margin-bottom:18px}
-.section h3{
-  font-size:10px;text-transform:uppercase;letter-spacing:.9px;
-  color:var(--muted);margin-bottom:10px;font-weight:700;
+.chip{
+  font-size:10.5px;padding:5px 10px;border-radius:20px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  color:#d6d1e8;font-weight:600;
 }
-.bio{
-  font-size:12.5px;line-height:1.65;color:#c8cfe0;
-  background:var(--card);padding:13px 15px;border-radius:10px;
-  border-left:3px solid var(--key);
+.chip.accent{
+  background:color-mix(in srgb,var(--accent,#a78bfa) 15%,transparent);
+  border-color:color-mix(in srgb,var(--accent,#a78bfa) 35%,transparent);
+  color:var(--accent,#a78bfa);
 }
-.total-box{
-  background:var(--card);border-radius:12px;padding:16px;
-  border:1px solid var(--border);text-align:center;
+
+.other-matches{
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--border);
 }
-.total-number{font-size:36px;font-weight:800;letter-spacing:-1.5px;line-height:1}
-.total-label{font-size:11.5px;color:var(--muted);margin-top:6px}
-.report-list{display:flex;flex-direction:column;gap:6px;max-height:280px;overflow-y:auto;padding-right:4px}
-.report-item{
-  display:flex;align-items:center;gap:10px;padding:8px 10px;
-  background:var(--card);border:1px solid var(--border);border-radius:9px;
+.other-label{
+  font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;color:var(--muted);margin-bottom:8px;
+}
+.other-row{display:flex;flex-direction:column;gap:5px}
+.other-item{
+  display:flex;justify-content:space-between;font-size:11px;
+  color:var(--muted);
+}
+.other-item strong{color:#d6d1e8;font-weight:600}
+.other-item .other-pct{color:#8b85a3;font-weight:700}
+
+/* Card labels al arrastrar */
+.drag-label{
+  position:absolute;top:36px;z-index:10;
+  padding:8px 16px;border-radius:12px;
+  font-size:22px;font-weight:900;letter-spacing:2px;
+  opacity:0;transition:opacity .15s;pointer-events:none;
+  border:3px solid;
+  transform:rotate(-12deg);
+}
+.drag-label.like{
+  left:24px;color:var(--match);border-color:var(--match);
+  background:rgba(255,102,163,.15);text-shadow:0 0 10px var(--match);
+}
+.drag-label.nope{
+  right:24px;color:var(--pass);border-color:var(--pass);
+  background:rgba(255,77,109,.15);text-shadow:0 0 10px var(--pass);
+  transform:rotate(12deg);
+}
+
+/* ============ CONTROLS ============ */
+.controls{
+  position:fixed;bottom:20px;left:0;right:0;z-index:30;
+  display:flex;justify-content:center;gap:20px;pointer-events:none;
+}
+.ctrl{
+  width:64px;height:64px;border-radius:50%;
+  display:grid;place-items:center;
+  cursor:pointer;pointer-events:auto;
+  border:2px solid;background:rgba(10,6,18,.85);
+  backdrop-filter:blur(20px);
+  transition:.25s cubic-bezier(.4,0,.2,1);
+  font-size:26px;
+}
+.ctrl:hover{transform:scale(1.1)}
+.ctrl:active{transform:scale(.95)}
+.ctrl.pass{color:var(--pass);border-color:var(--pass);box-shadow:0 0 24px rgba(255,77,109,.3)}
+.ctrl.pass:hover{background:rgba(255,77,109,.15);box-shadow:0 0 32px rgba(255,77,109,.5)}
+.ctrl.match{color:var(--match);border-color:var(--match);box-shadow:0 0 24px rgba(255,102,163,.3)}
+.ctrl.match:hover{background:rgba(255,102,163,.15);box-shadow:0 0 32px rgba(255,102,163,.5)}
+.ctrl.undo{width:48px;height:48px;font-size:20px;color:var(--muted);border-color:var(--border);align-self:center}
+.ctrl.undo:hover{color:#fff;border-color:var(--muted)}
+
+/* ============ MATCH MODAL ============ */
+.match-modal{
+  position:fixed;inset:0;z-index:100;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(10,6,18,.9);backdrop-filter:blur(20px);
+  opacity:0;pointer-events:none;transition:opacity .35s;
+}
+.match-modal.show{opacity:1;pointer-events:auto}
+.match-card{
+  text-align:center;padding:40px 30px;max-width:420px;
+  transform:scale(.7);transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+}
+.match-modal.show .match-card{transform:scale(1)}
+.match-icon{
+  font-size:80px;margin-bottom:20px;
+  animation:heartbeat 1.2s ease-in-out infinite;
+  filter:drop-shadow(0 0 30px rgba(255,102,163,.8));
+}
+@keyframes heartbeat{
+  0%,100%{transform:scale(1)}
+  25%{transform:scale(1.15)}
+  50%{transform:scale(1)}
+  75%{transform:scale(1.1)}
+}
+.match-title{
+  font-size:32px;font-weight:900;letter-spacing:-1px;
+  background:linear-gradient(135deg,#ff66a3,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.match-sub{
+  font-size:13.5px;color:#c8c5d6;margin-top:10px;line-height:1.6;
+}
+.match-sub strong{color:var(--accent);font-weight:800}
+.match-continue{
+  margin-top:26px;padding:14px 32px;border-radius:14px;
+  background:linear-gradient(135deg,#ff66a3,#a78bfa);
+  border:none;color:#fff;font-size:14px;font-weight:800;
+  cursor:pointer;font-family:inherit;
+  box-shadow:0 8px 30px rgba(255,102,163,.4);
+  transition:.2s;
+}
+.match-continue:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,102,163,.5)}
+
+.confetti{
+  position:fixed;width:10px;height:10px;z-index:99;pointer-events:none;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  0%{transform:translateY(0) rotate(0);opacity:1}
+  100%{transform:translateY(110vh) rotate(720deg);opacity:0}
+}
+
+/* ============ SUMMARY ============ */
+.summary{
+  position:fixed;inset:60px 0 0 0;z-index:60;
+  background:var(--bg);overflow-y:auto;
+  padding:30px 20px 120px;
+  transform:translateY(100%);transition:transform .5s cubic-bezier(.4,0,.2,1);
+}
+.summary.show{transform:translateY(0)}
+.summary-header{text-align:center;margin-bottom:30px}
+.summary-header h2{
+  font-size:28px;font-weight:900;letter-spacing:-.8px;
+  background:linear-gradient(135deg,#ff66a3,#a78bfa,#22d3ee);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.summary-header p{color:var(--muted);margin-top:8px;font-size:13px}
+.summary-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  max-width:520px;margin:20px auto 30px;
+}
+.stat{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:14px 10px;text-align:center;
+}
+.stat-num{font-size:26px;font-weight:900;letter-spacing:-1px}
+.stat-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-top:4px}
+.program-section{max-width:560px;margin:0 auto 22px}
+.program-title{
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.9px;margin-bottom:10px;
+}
+.program-dot{width:12px;height:12px;border-radius:50%}
+.program-list{display:flex;flex-direction:column;gap:6px}
+.match-row{
+  display:flex;align-items:center;gap:11px;padding:10px 14px;
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
   cursor:pointer;transition:.2s;
 }
-.report-item:hover{border-color:var(--muted);background:var(--card-2);transform:translateX(3px)}
-.report-avatar{
-  width:28px;height:28px;border-radius:50%;flex-shrink:0;
-  display:grid;place-items:center;font-weight:700;font-size:10px;color:#fff;
+.match-row:hover{background:var(--card-2);transform:translateX(3px)}
+.match-row .mr-avatar{
+  width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;font-weight:800;font-size:12px;color:#fff;
 }
-.report-info{min-width:0;flex:1}
-.report-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.report-role{font-size:10px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.empty-state{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  height:100%;text-align:center;gap:14px;padding:30px;
-}
-.empty-state svg{opacity:.2}
-.empty-state h3{font-size:14px;font-weight:600;color:var(--muted)}
-.empty-state p{font-size:12px;color:var(--muted);opacity:.7;line-height:1.6;max-width:260px}
+.match-row .mr-info{flex:1;min-width:0}
+.match-row .mr-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.match-row .mr-role{font-size:11px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.match-row .mr-pct{font-size:12px;font-weight:800}
 
-@media (max-width:900px){
-  .stage.with-panel{right:0}
-  .panel{width:100%;top:auto;bottom:0;max-height:70vh;border-left:none;border-top:1px solid var(--border);border-radius:20px 20px 0 0;transform:translateY(100%)}
-  .panel.open{transform:translateY(0)}
-  .legend{display:none}
+.restart-btn{
+  display:block;margin:30px auto 0;
+  padding:12px 26px;background:var(--card);border:1px solid var(--border);
+  border-radius:12px;color:var(--text);font-size:13px;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:.2s;
+}
+.restart-btn:hover{background:var(--card-2);border-color:var(--muted)}
+
+@media (max-width:600px){
+  .deck{max-width:100%}
+  .card-cover{height:34%;min-height:180px}
+  .card-avatar{width:100px;height:100px;font-size:34px}
+  .card-name{font-size:19px}
+  .ctrl{width:58px;height:58px;font-size:24px}
+  .progress-bar{width:80px}
+  .brand-text h1{font-size:12.5px}
 }
 ::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 </style>
 </head>
@@ -188,683 +360,485 @@ svg.map{display:block;user-select:none;transform-origin:0 0}
 
 <header class="topbar">
   <div class="brand">
-    <div class="brand-mark">K</div>
+    <div class="brand-mark">💖</div>
     <div class="brand-text">
-      <h1>Organigrama Radial</h1>
-      <p>Key · Fundación Hernández · 101 personas</p>
+      <h1>Key Match</h1>
+      <p>Encuentra al mejor candidato</p>
     </div>
   </div>
-  <div class="legend">
-    <div class="legend-item"><span class="legend-dot" style="background:var(--key)"></span>Key</div>
-    <div class="legend-item"><span class="legend-dot" style="background:var(--windsor)"></span>Windsor</div>
-    <div class="legend-item"><span class="legend-dot" style="background:var(--heliot)"></span>Heliot</div>
-    <div class="legend-item"><span class="legend-dot" style="background:var(--cosecha)"></span>Cosecha</div>
+  <div class="progress-wrap">
+    <span class="progress-text" id="progressText">0 / 0</span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   </div>
 </header>
 
-<div class="stage" id="stage">
-  <svg class="map" id="map" width="100%" height="100%"></svg>
+<div class="stage">
+  <div class="deck" id="deck"></div>
 </div>
 
-<div class="controls">
-  <button class="ctrl-btn" id="zoomIn">+</button>
-  <button class="ctrl-btn" id="zoomOut">−</button>
-  <button class="ctrl-btn" id="zoomReset" title="Reset">⟲</button>
+<div class="controls" id="controls">
+  <button class="ctrl undo" id="undoBtn" title="Deshacer">↺</button>
+  <button class="ctrl pass" id="passBtn" title="Pasar">✕</button>
+  <button class="ctrl match" id="matchBtn" title="Match">♥</button>
 </div>
 
-<div class="tooltip" id="tooltip"></div>
-
-<aside class="panel" id="panel">
-  <button class="panel-close" id="panelClose">✕</button>
-  <div id="panelContent">
-    <div class="empty-state">
-      <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/>
-      </svg>
-      <h3>Nadie seleccionado</h3>
-      <p>Toca cualquier nodo del organigrama para ver su ficha y las personas que supervisa.</p>
-    </div>
+<div class="match-modal" id="matchModal">
+  <div class="match-card">
+    <div class="match-icon">💖</div>
+    <div class="match-title">¡Es un match!</div>
+    <div class="match-sub" id="matchSub"></div>
+    <button class="match-continue" id="matchContinue">Continuar</button>
   </div>
-</aside>
+</div>
+
+<div class="summary" id="summary"></div>
 
 <script>
 /* =========================================================
-   DATA — estructura completa
+   DATOS — candidatos con score de afinidad a programas
    ========================================================= */
-const data = {
-  id:'key', name:'Key', role:'Dirección General · Fundación Hernández', area:'key',
-  bio:'Núcleo de la fundación. Dirige las cuatro grandes áreas: Windsor (tecnología), Heliot Media (editorial), Cosecha (programa social) y la operación interna.',
-  children:[
-
-    /* ============ WINDSOR ============ */
-    { id:'windsor', name:'Windsor', role:'Tecnología · Diseño · Estrategia', area:'windsor',
-      angle:135, // arriba-izquierda
-      bio:'División tecnológica, creativa y estratégica de la fundación.',
-      children:[
-        { id:'w-tech', name:'Tecnología', role:'Desarrollo de software', area:'windsor',
-          bio:'Equipo de desarrollo full stack, IA, blockchain y cloud.',
-          people:[
-            {id:'josue', name:'Josué Aguilar', role:'Arquitecto de Software', bio:'Full Stack & Cloud (Azure/AWS). Microsoft Certified Trainer.'},
-            {id:'cristian', name:'Cristian Escalante', role:'Backend · Blockchain', bio:'Ing. Software. Blockchain, IA y ML.'},
-            {id:'bryan-c', name:'Bryan Cornejo', role:'Full Stack Dev', bio:'Java, React, Node.js.'},
-            {id:'gerson', name:'Gerson Franco', role:'Full Stack Dev', bio:'Flutter, Node.js, Laravel. DTE.'},
-            {id:'diego-l', name:'Diego López', role:'Full Stack Jr', bio:'PHP, Python, Java, SQL.'},
-            {id:'david-r', name:'David Rivera', role:'Frontend Dev', bio:'Vue.js, TypeScript, Vite.'},
-            {id:'victor', name:'Víctor Polanco', role:'Soporte / Dev', bio:'Software developer & IT support.'},
-            {id:'briant', name:'Briant Hernández', role:'Dev en formación', bio:'Estudiante de desarrollo.'},
-            {id:'ariel', name:'Ariel Díaz', role:'Android Junior', bio:'Python, Java, C#, MySQL.'},
-            {id:'levi', name:'Levi Palacios', role:'IA · Automatizaciones', bio:'Junior Developer, AI Automations.'},
-            {id:'jose-p', name:'José Palacios', role:'IA · Automatizaciones', bio:'AI Automations y gamificación.'},
-            {id:'rutvik', name:'Rutvik Talaviya', role:'Full Stack Senior', bio:'.NET, Angular, React.'},
-            {id:'diego-v', name:'Diego Valenzuela', role:'IA · Computer Vision', bio:'YOLOv8, ML.'},
-            {id:'roberto', name:'Roberto Vásquez', role:'Mecatrónica', bio:'Ing. Mecatrónica en ITESM.'},
-            {id:'eduardo-b', name:'Eduardo Borjas', role:'Innovación IA', bio:'CEO & Founder de Korvex.'}
-          ]
-        },
-        { id:'w-ciber', name:'Ciberseguridad', role:'Infraestructura segura', area:'windsor',
-          bio:'Protección de datos, redes e infraestructura TI.',
-          people:[
-            {id:'michael', name:'Michael Barrientos', role:'Ciberseguridad', bio:'Forense digital y OSINT.'},
-            {id:'steven', name:'Steven Cáceres', role:'Redes', bio:'Infraestructura de Redes (ITCA).'},
-            {id:'brandon', name:'Brandom Sánchez', role:'Soporte y Redes', bio:'Ing. Sistemas. CCTV y redes.'},
-            {id:'wilber', name:'Wilber Reyes', role:'Redes (formación)', bio:'Estudiante de Ing. en Sistemas.'},
-            {id:'erick', name:'Erick Cerritos', role:'Soporte Refrigeración', bio:'Aire acondicionado y refrigeración.'}
-          ]
-        },
-        { id:'w-diseno', name:'Diseño y Arte', role:'Identidad visual', area:'windsor',
-          bio:'Diseño gráfico, ilustración y branding.',
-          people:[
-            {id:'bryan-m', name:'Bryan Molina', role:'Director de Arte', bio:'+10 años de trayectoria.'},
-            {id:'otoniel', name:'Otoniel Cañenguez', role:'Diseñador Gráfico', bio:'Diseñador freelance.'},
-            {id:'gisela', name:'Gisela Juárez', role:'Diseño Publicitario', bio:'Estudiante de Diseño Gráfico.'}
-          ]
-        },
-        { id:'w-estrategia', name:'Estrategia', role:'Negocio y crecimiento', area:'windsor',
-          bio:'Análisis de negocio, QA, crecimiento y SEO.',
-          people:[
-            {id:'rodrigo', name:'Rodrigo Romero', role:'Business Analyst · QA', bio:'Ing. Civil, BA & QA. +6 años.'},
-            {id:'william', name:'William Panameño', role:'Growth Specialist', bio:'Estratega digital, UX/UI.'},
-            {id:'hafiz', name:'Hafiz Waqas', role:'SEO · Marketing', bio:'Founder de HumTech.'},
-            {id:'luisa', name:'Luisa Taveras', role:'Consultoría e-learning', bio:'Co-founder de OPEX Solutions.'},
-            {id:'martin', name:'Martin Cruz', role:'Estrategia Internacional', bio:'CEO de EQUITTY.'},
-            {id:'sofia', name:'Sofía Pereira', role:'Business Analysis', bio:'Estudiante de Ing. Sistemas.'}
-          ]
-        }
-      ]
-    },
-
-    /* ============ HELIOT ============ */
-    { id:'heliot', name:'Heliot Media', role:'Editorial · Cultura · Academia', area:'heliot',
-      angle:45, // arriba-derecha
-      bio:'Proyecto editorial independiente: información, cultura, academia y sociedad.',
-      children:[
-        { id:'h-editorial', name:'Editorial', role:'Contenido y noticias', area:'heliot',
-          bio:'Producción editorial y noticias.',
-          people:[
-            {id:'fernando-ch', name:'Fernando Chávez', role:'Editor General', bio:'Lic. Comunicaciones. Coordinador UNIVO News.'},
-            {id:'oscar', name:'Oscar Magaña', role:'Coordinador de Medios', bio:'Lic. Ciencias de la Comunicación.'}
-          ]
-        },
-        { id:'h-av', name:'Audiovisual', role:'Producción y streaming', area:'heliot',
-          bio:'Producción audiovisual, video y eventos.',
-          people:[
-            {id:'francisco', name:'Francisco Rivas', role:'Productor Audiovisual', bio:'Filmmaker (NYFA). Líder de audiovisuales FGK.'}
-          ]
-        },
-        { id:'h-marketing', name:'Marketing y Diseño', role:'Marca y comunicación', area:'heliot',
-          bio:'Estrategia de marca y redes sociales.',
-          people:[
-            {id:'karol', name:'Karol Alfaro', role:'Estratega Digital', bio:'UX/UI, marketing.'},
-            {id:'sara', name:'Sara Judith Flores', role:'Relaciones Públicas', bio:'Estudiante de RRPP y Marketing.'},
-            {id:'fernando-r', name:'Fernando Romero', role:'Marketing Digital', bio:'Estudiante de Marketing Digital.'}
-          ]
-        },
-        { id:'h-columnas', name:'Columnistas', role:'Voces invitadas', area:'heliot',
-          bio:'Analistas, investigadores y colaboradores externos.',
-          people:[
-            {id:'nelson', name:'Nelson Inno', role:'Columnista Innovación', bio:'CEO WeSpark. Innovación, IA y Bitcoin.'},
-            {id:'somesh', name:'Somesh Sharma', role:'Colaborador Internacional', bio:'Jamaica. UWI.'},
-            {id:'eduardo-r', name:'Eduardo Romero', role:'Analista de Tecnología', bio:'Investigador en ética de IA.'}
-          ]
-        }
-      ]
-    },
-
-    /* ============ COSECHA ============ */
-    { id:'cosecha', name:'Cosecha', role:'Programa Social · Adultos Mayores', area:'cosecha',
-      angle:315, // abajo-derecha
-      bio:'Apoyo económico a adultos mayores de Oriente a cambio de sus historias de vida.',
-      children:[
-        { id:'c-equipo', name:'Equipo Cosecha', role:'Psicología y acompañamiento', area:'cosecha',
-          bio:'Psicólogos y coordinadores del programa Cosecha.',
-          people:[
-            {id:'gabriela-q', name:'Gabriela Quintanilla', role:'Coordinadora', bio:'Psicóloga. Experta en niñez y educación socioemocional.'},
-            {id:'jeison', name:'Jeison Paz', role:'Psicólogo', bio:'Maestría en Docencia.'},
-            {id:'marcela', name:'Marcela Cruz', role:'Psicóloga', bio:'Psicóloga UES. +15 años.'},
-            {id:'katherine-s', name:'Katherine Sorto', role:'Psicóloga de Campo', bio:'Universidad de Oriente.'},
-            {id:'nataly', name:'Nataly Rivera', role:'Coord. Voluntariado', bio:'Lic. Psicología (UPED).'},
-            {id:'alfredo', name:'Alfredo Martínez', role:'Asistente Psicosocial', bio:'Estudiante de Psicología de la Salud.'},
-            {id:'yoselin', name:'Yoselin Cartagena', role:'Evaluadora', bio:'Poligrafista, neuropsicología.'}
-          ]
-        }
-      ]
-    },
-
-    /* ============ KEY CENTRAL (resto) ============ */
-    { id:'key-central', name:'Key Central', role:'Núcleo operativo', area:'key',
-      angle:225, // abajo-izquierda
-      bio:'Departamentos que dependen directamente de Key: dirección, operaciones, educación, empleabilidad y la cantera de jóvenes.',
-      children:[
-        { id:'dir-ejec', name:'Dirección Ejecutiva', role:'Estrategia y representación', area:'key',
-          bio:'Define estrategia general y coordina programas.',
-          people:[
-            {id:'juana', name:'Juana Jule', role:'Dirección General', bio:'MBA (Purdue/GISMA). Ex-directora ejecutiva FGK.'},
-            {id:'pineda', name:'José M. Pineda', role:'Dirección de Programas', bio:'Ex-Ministro de Educación. PRINCE2.'},
-            {id:'violeta', name:'Violeta Valencia', role:'Programas Sociales', bio:'Psicóloga UCA, Máster FLACSO.'},
-            {id:'jose-gutierrez', name:'José Gutiérrez', role:'Alianzas Estratégicas', bio:'Founder & CEO Grupo AVALES.'},
-            {id:'omar', name:'Omar Palacios', role:'Administración y Finanzas', bio:'Contador, Lic. Ciencias Jurídicas.'},
-            {id:'ivonne', name:'Ivonne Cruz', role:'Gestión de Talento', bio:'Gestión de personas y relaciones laborales.'}
-          ]
-        },
-        { id:'ops', name:'Operaciones', role:'Ejecución y capacitación', area:'key',
-          bio:'Coordina centros de capacitación y ejecución.',
-          people:[
-            {id:'carlos', name:'Carlos Quintanilla', role:'Dir. de Operaciones', bio:'Director del Centro de Capacitación FGK San Miguel.'},
-            {id:'elmer', name:'Elmer Galdámez', role:'Coordinación Académica', bio:'+18 años de docencia universitaria.'},
-            {id:'felix', name:'Félix Claros', role:'Coordinador de Programa', bio:'Coordinador en ITCA-FEPADE.'},
-            {id:'alejandra', name:'Alejandra Santos', role:'Representante de Programas', bio:'Representante de Postgrados UFG.'}
-          ]
-        },
-        { id:'edu', name:'Educación y Bienestar', role:'Formación', area:'key',
-          bio:'Acompaña a jóvenes en formación y bienestar.',
-          people:[
-            {id:'karen', name:'Karen Carreño', role:'Coordinadora', bio:'Psicóloga, Maestría en Psicopedagogía Social y Laboral.'},
-            {id:'gabriela-paiz', name:'Gabriela Paiz', role:'Psicóloga de Bienestar', bio:'Lic. Psicología (UTEC). Psicoterapeuta.'},
-            {id:'ingrid', name:'Ingrid Vela', role:'Educación Digital', bio:'Maestría en Docencia Universitaria.'},
-            {id:'zuleima', name:'Zuleima Rivera', role:'Coach de Empleabilidad', bio:'Profesora de Inglés.'}
-          ]
-        },
-        { id:'empleo', name:'Empleabilidad', role:'Talento y colocación', area:'key',
-          bio:'Prepara a jóvenes para el mercado laboral.',
-          people:[
-            {id:'monica', name:'Mónica Gálvez', role:'Directora', bio:'Coach ejecutiva, MBA + Coaching.'},
-            {id:'keny', name:'Keny Márquez', role:'Desarrollo Profesional', bio:'Coach certificada.'},
-            {id:'ernesto', name:'Ernesto Bonilla', role:'Reclutamiento', bio:'Psicólogo, Maestría en RRHH.'},
-            {id:'daniel', name:'Daniel Miranda', role:'Generalista RRHH', bio:'Psicólogo organizacional.'},
-            {id:'wilmer', name:'Wilmer Luna', role:'Reclutamiento', bio:'Selección por competencias.'},
-            {id:'katherine-g', name:'Katherine Guzmán', role:'Análisis de Talento', bio:'Analista de reclutamiento.'},
-            {id:'abigail', name:'Abigail Sigarán', role:'Reclutamiento', bio:'Lic. Psicología (UTEC).'},
-            {id:'stephanie', name:'Stephanie Arévalo', role:'Análisis de Impacto', bio:'Lic. Psicología (UCA).'},
-            {id:'katherine-p', name:'Katherine Peñate', role:'Auxiliar de Selección', bio:'Auxiliar de reclutamiento.'}
-          ]
-        },
-        { id:'jovenes', name:'Jóvenes Key', role:'Cantera de talento', area:'key',
-          bio:'Red de jóvenes voluntarios y becarios en formación.',
-          people:[
-            {id:'alexander', name:'Alexander Hernández', role:'Asistente', bio:'Fundador de Heliot Media.'},
-            {id:'anabel', name:'Anabel Mejía', role:'Joven Key', bio:'Estudiante.'},
-            {id:'bessy', name:'Bessy Amaya', role:'Joven Key', bio:'Técnico Contable.'},
-            {id:'bethzy', name:'Bethzy Luna', role:'Joven Key', bio:'Ing. Industrial.'},
-            {id:'cesar', name:'César Meléndez', role:'Joven Key', bio:'Técnico en Computación.'},
-            {id:'david-ch', name:'David Chavarría', role:'Joven Key', bio:'Ingeniería.'},
-            {id:'esteban', name:'Esteban Romero', role:'Joven Key', bio:'Contaduría Pública.'},
-            {id:'fidelia', name:'Fidelia González', role:'Joven Key', bio:'Técnico Contable.'},
-            {id:'gema', name:'Gema García', role:'Joven Key', bio:'Bachillerato en Salud.'},
-            {id:'harry', name:'Harry Brizuela', role:'Joven Key', bio:'Economía y Negocios (ESEN).'},
-            {id:'hector', name:'Héctor Chavarría', role:'Joven Key', bio:'Ing. Civil.'},
-            {id:'ingri', name:'Ingri Durán', role:'Joven Key', bio:'Ing. Civil.'},
-            {id:'jeison-r', name:'Jeison Romero', role:'Joven Key', bio:'Ing. Industrial.'},
-            {id:'jose-gaspar', name:'José Eduardo Gaspar', role:'Joven Key', bio:'Ing. en Alimentos.'},
-            {id:'juan', name:'Juan Alexis Ventura', role:'Joven Key', bio:'Admin. y Turismo.'},
-            {id:'leonardo', name:'Leonardo Montesinos', role:'Joven Key', bio:'RRII.'},
-            {id:'marcos', name:'Marcos Romero', role:'Joven Key', bio:'Administración.'},
-            {id:'maria-jose', name:'María José Turcios', role:'Joven Key', bio:'RRII.'},
-            {id:'maydely', name:'Maydely Santos', role:'Joven Key', bio:'Marketing.'},
-            {id:'milagro', name:'Milagro Martínez', role:'Joven Key', bio:'Emprendedora.'},
-            {id:'monica-r', name:'Mónica Ruiz', role:'Joven Key', bio:'Ing. Civil.'},
-            {id:'myleen', name:'Myleen Romero', role:'Joven Key', bio:'Marketing Digital.'},
-            {id:'oscar-r', name:'Oscar Reyes', role:'Joven Key', bio:'Ing. Civil.'},
-            {id:'ruth', name:'Ruth Emeli Amaya', role:'Joven Key', bio:'Estudiante.'},
-            {id:'veronica', name:'Verónica Gómez', role:'Joven Key', bio:'Ing. Industrial.'},
-            {id:'yemmy', name:'Yemmy Coca', role:'Joven Key', bio:'Ing. Civil.'},
-            {id:'yuridia', name:'Yuridia Claros', role:'Joven Key', bio:'Educación Media.'}
-          ]
-        }
-      ]
-    }
-  ]
+const PROGRAMS = {
+  key:      {name:'Key · Dirección',    color:'#a78bfa', short:'Key'},
+  windsor:  {name:'Windsor · Tech',     color:'#22d3ee', short:'Windsor'},
+  heliot:   {name:'Heliot Media',       color:'#fbbf24', short:'Heliot'},
+  cosecha:  {name:'Cosecha',            color:'#34d399', short:'Cosecha'}
 };
 
-/* =========================================================
-   LAYOUT CONSTANTS
-   ========================================================= */
-const NS = 'http://www.w3.org/2000/svg';
-const areaHex = {key:'#a78bfa', windsor:'#22d3ee', heliot:'#fbbf24', cosecha:'#34d399'};
-const areaNames = {key:'Key', windsor:'Windsor', heliot:'Heliot Media', cosecha:'Cosecha'};
+const candidates = [
+  {id:'juana', name:'Juana Jule', role:'Dirección General',
+   bio:'MBA (Purdue/GISMA). Ex-directora ejecutiva de FGK. Lideró Oportunidades durante más de una década.',
+   scores:{key:98, windsor:42, heliot:55, cosecha:60},
+   chips:['MBA','Dirección estratégica','Educación','10+ años']},
+  {id:'pineda', name:'José M. Pineda', role:'Director de Programas',
+   bio:'Ex-Ministro de Educación. PRINCE2. Especialista en políticas públicas y transformación educativa.',
+   scores:{key:96, windsor:35, heliot:62, cosecha:70},
+   chips:['Ex-Ministro','PRINCE2','Políticas públicas','Educación']},
+  {id:'violeta', name:'Violeta Valencia', role:'Programas Sociales',
+   bio:'Psicóloga UCA. Máster en Ciencias Sociales (FLACSO). Experta en cooperación internacional.',
+   scores:{key:94, windsor:30, heliot:58, cosecha:85},
+   chips:['Psicóloga','FLACSO','Cooperación','Programas sociales']},
+  {id:'josue', name:'Josué Aguilar', role:'Arquitecto de Software',
+   bio:'Full Stack & Cloud (Azure/AWS). Microsoft Certified Trainer. +17 años de experiencia.',
+   scores:{key:72, windsor:97, heliot:38, cosecha:25},
+   chips:['Azure','AWS','.NET','MCT','Arquitecto']},
+  {id:'keny', name:'Keny Márquez', role:'Desarrollo Profesional',
+   bio:'Coach certificada. +14 años en desarrollo juvenil, consejería de carrera y liderazgo.',
+   scores:{key:92, windsor:40, heliot:58, cosecha:70},
+   chips:['Coach','Project Manager','Carrera','Liderazgo']},
+  {id:'monica', name:'Mónica Gálvez', role:'Directora de Empleabilidad',
+   bio:'Coach ejecutiva. MBA + Coaching. +10 años liderando el pilar de empleabilidad en FGK.',
+   scores:{key:93, windsor:48, heliot:65, cosecha:62},
+   chips:['MBA','Coaching','Empleabilidad','Marca']},
+  {id:'cristian', name:'Cristian Escalante', role:'Backend · Blockchain',
+   bio:'Ingeniero de Software especializado en Blockchain, IA y Machine Learning. Assembly, Rust, Python.',
+   scores:{key:55, windsor:95, heliot:42, cosecha:20},
+   chips:['Blockchain','Rust','IA','Python','Solidity']},
+  {id:'bryan-m', name:'Bryan Molina', role:'Director de Arte',
+   bio:'Diseñador gráfico e ilustrador. +10 años creando narrativa visual y branding ilustrado.',
+   scores:{key:58, windsor:88, heliot:94, cosecha:45},
+   chips:['Ilustración','Branding','Narrativa visual','10+ años']},
+  {id:'fernando-ch', name:'Fernando Chávez', role:'Editor General',
+   bio:'Lic. Comunicaciones. Coordinador de UNIVO News. Docente universitario en radio y periodismo.',
+   scores:{key:62, windsor:45, heliot:96, cosecha:55},
+   chips:['Periodismo','Comunicación','Docencia','Radio']},
+  {id:'karen', name:'Karen Carreño', role:'Coordinadora de Orientación',
+   bio:'Psicóloga. Maestría en Psicopedagogía Social y Laboral. Diseñadora de experiencias formativas.',
+   scores:{key:91, windsor:38, heliot:55, cosecha:82},
+   chips:['Psicóloga','Psicopedagogía','Orientación','Formación']},
+  {id:'gabriela-q', name:'Gabriela Quintanilla', role:'Coordinadora Cosecha',
+   bio:'Psicóloga. Experta en niñez, adolescencia y educación socioemocional. Save the Children.',
+   scores:{key:78, windsor:32, heliot:48, cosecha:96},
+   chips:['Psicóloga','Niñez','Socioemocional','Save the Children']},
+  {id:'nelson', name:'Nelson Inno', role:'Columnista de Innovación',
+   bio:'CEO WeSpark. Innovación, IA, Bitcoin y educación. Autor de "Unstable Innovation".',
+   scores:{key:70, windsor:82, heliot:90, cosecha:40},
+   chips:['Innovación','IA','Bitcoin','Autor','TEDx']},
+  {id:'jeison', name:'Jeison Paz', role:'Psicólogo Cosecha',
+   bio:'Psicólogo. Maestría en Docencia. Experto en niñez, migración y primera infancia.',
+   scores:{key:75, windsor:30, heliot:45, cosecha:93},
+   chips:['Psicólogo','Docencia','Migración','Niñez']},
+  {id:'marcela', name:'Marcela Cruz', role:'Psicóloga de Campo',
+   bio:'Psicóloga UES. +15 años en niñez, adolescencia, violencia y derechos humanos.',
+   scores:{key:72, windsor:28, heliot:42, cosecha:94},
+   chips:['Psicóloga','DDHH','Violencia','Niñez']},
+  {id:'carlos', name:'Carlos Quintanilla', role:'Director de Operaciones',
+   bio:'Director del Centro de Capacitación FGK San Miguel. +13 años trabajando con ONGs.',
+   scores:{key:88, windsor:45, heliot:52, cosecha:65},
+   chips:['ONGs','Operaciones','Capacitación','Liderazgo']},
+  {id:'elmer', name:'Elmer Galdámez', role:'Coordinación Académica',
+   bio:'Coach de desarrollo profesional. +18 años de docencia universitaria. Administrador Moodle.',
+   scores:{key:87, windsor:62, heliot:55, cosecha:58},
+   chips:['Docencia','Moodle','Coaching','18+ años']},
+  {id:'ingrid', name:'Ingrid Vela', role:'Educación Digital',
+   bio:'Lic. Computación. Maestría en Docencia Universitaria. Especialista en entornos virtuales.',
+   scores:{key:86, windsor:75, heliot:52, cosecha:48},
+   chips:['EVA','Moodle','Docencia','Educación digital']},
+  {id:'gabriela-paiz', name:'Gabriela Paiz', role:'Psicóloga de Bienestar',
+   bio:'Lic. Psicología (UTEC). Analista RRHH y psicoterapeuta. Enfoque organizacional y clínico.',
+   scores:{key:89, windsor:42, heliot:48, cosecha:75},
+   chips:['Psicóloga','Clínica','RRHH','Bienestar']},
+  {id:'ernesto', name:'Ernesto Bonilla', role:'Reclutamiento',
+   bio:'Psicólogo. Maestría en Dirección de RRHH. +10 años en selección y clima organizacional.',
+   scores:{key:87, windsor:55, heliot:42, cosecha:58},
+   chips:['Psicólogo','RRHH','Selección','Clima']},
+  {id:'alexander', name:'Alexander Hernández', role:'Asistente · Heliot',
+   bio:'Fundador de Heliot Media. Interés en Psicología y RRHH. Becario FGK.',
+   scores:{key:78, windsor:55, heliot:85, cosecha:52},
+   chips:['Emprendedor','Marketing','RRHH','Joven Key']}
+];
 
-const CX = 1100, CY = 1100;       // centro del lienzo
-const R_SUN = 62;                  // Key
-const R_SUB = 260;                 // sub-centros
-const R_RING_SUB = 34;             // radio visual sub-centro
-const R_AREAS = 480;               // sub-áreas
-const R_RING_AREA = 24;
-const R_PEOPLE_BASE = 640;         // primer anillo de personas
-const R_PEOPLE_STEP = 70;          // separación entre anillos
-const R_PERSON = 11;
+/* =========================================================
+   ESTADO
+   ========================================================= */
+let queue = [...candidates].sort(()=>Math.random()-0.5);
+let currentIndex = 0;
+let matches = [];
+let passed = [];
+let history = [];
+
+const deck = document.getElementById('deck');
+const controls = document.getElementById('controls');
+const modal = document.getElementById('matchModal');
+const modalSub = document.getElementById('matchSub');
+const summary = document.getElementById('summary');
 
 /* =========================================================
-   HELPERS
+   RENDER CARD
    ========================================================= */
+function bestProgram(c){
+  return Object.entries(c.scores).sort((a,b)=>b[1]-a[1])[0][0];
+}
+function topPrograms(c){
+  return Object.entries(c.scores).sort((a,b)=>b[1]-a[1]).slice(1);
+}
+
+function buildCard(c){
+  const best = bestProgram(c);
+  const bestColor = PROGRAMS[best].color;
+  const bestPct = c.scores[best];
+  const others = topPrograms(c);
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.dataset.id = c.id;
+  card.style.setProperty('--accent', bestColor);
+
+  card.innerHTML = `
+    <div class="card-cover">
+      <div class="card-badge">${PROGRAMS[best].short}</div>
+      <div class="card-match" style="color:${bestColor}">
+        <span class="match-dot" style="background:${bestColor};box-shadow:0 0 8px ${bestColor}"></span>
+        ${bestPct}%
+      </div>
+      <div class="card-avatar">${initials(c.name)}</div>
+    </div>
+    <div class="card-body">
+      <div class="card-name">${c.name}</div>
+      <div class="card-role">${c.role}</div>
+      <div class="card-bio">${c.bio}</div>
+
+      <div class="match-section">
+        <div class="match-label">Compatibilidad con ${PROGRAMS[best].name}</div>
+        <div class="match-bar">
+          <div class="match-fill" style="width:${bestPct}%;background:linear-gradient(90deg,${bestColor},#ff66a3)"></div>
+        </div>
+        <div class="match-pct">
+          <span>Match perfecto</span>
+          <strong style="color:${bestColor}">${bestPct}%</strong>
+        </div>
+      </div>
+
+      <div class="chips">
+        ${c.chips.map(ch => `<span class="chip accent" style="--accent:${bestColor}">${ch}</span>`).join('')}
+      </div>
+
+      <div class="other-matches">
+        <div class="other-label">También encaja en</div>
+        <div class="other-row">
+          ${others.map(([pid, pct])=>{
+            const p = PROGRAMS[pid];
+            return `<div class="other-item">
+              <span><strong style="color:${p.color}">${p.short}</strong> · ${pct}%</span>
+              <span class="other-pct">${pct >= 70 ? '🎯' : pct >= 50 ? '👌' : '👋'}</span>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="drag-label like">MATCH</div>
+    <div class="drag-label nope">NOPE</div>
+  `;
+  return card;
+}
+
 function initials(name){
   return name.split(' ').filter(w=>w.length>1).slice(0,2).map(w=>w[0]).join('').toUpperCase();
 }
-function el(tag, attrs={}, parent){
-  const e = document.createElementNS(NS, tag);
-  for(const k in attrs) e.setAttribute(k, attrs[k]);
-  if(parent) parent.appendChild(e);
-  return e;
-}
-function polar(cx, cy, r, deg){
-  const rad = (deg - 90) * Math.PI / 180;
-  return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
-}
 
-/* =========================================================
-   BUILD SVG
-   ========================================================= */
-const map = document.getElementById('map');
-map.setAttribute('viewBox', `0 0 ${CX*2} ${CY*2}`);
+function renderNext(){
+  deck.innerHTML = '';
+  if(currentIndex >= queue.length){ showSummary(); return; }
 
-const defs = el('defs', {}, map);
-// Radial gradient for Key nucleus
-const grad = el('radialGradient', {id:'sunGrad', cx:'50%', cy:'50%', r:'50%'}, defs);
-el('stop', {offset:'0%', 'stop-color':'#ffffff', 'stop-opacity':'.98'}, grad);
-el('stop', {offset:'40%', 'stop-color':'#a78bfa', 'stop-opacity':'.95'}, grad);
-el('stop', {offset:'100%', 'stop-color':'#7c3aed', 'stop-opacity':'.55'}, grad);
-const glowGrad = el('radialGradient', {id:'sunGlow', cx:'50%', cy:'50%', r:'50%'}, defs);
-el('stop', {offset:'0%', 'stop-color':'#a78bfa', 'stop-opacity':'.55'}, glowGrad);
-el('stop', {offset:'60%', 'stop-color':'#a78bfa', 'stop-opacity':'.12'}, glowGrad);
-el('stop', {offset:'100%', 'stop-color':'#a78bfa', 'stop-opacity':'0'}, glowGrad);
-
-const linksG = el('g', {class:'links'}, map);
-const ringsG = el('g', {class:'rings'}, map);
-const nodesG = el('g', {class:'nodes'}, map);
-
-/* =========================================================
-   DIBUJAR KEY (núcleo central)
-   ========================================================= */
-function drawKey(){
-  const g = el('g', {class:'node-body', 'data-id':'key'}, nodesG);
-  // glow
-  el('circle', {cx:CX, cy:CY, r:R_SUN*3, fill:'url(#sunGlow)'}, g);
-  // pulse
-  const pulse = el('circle', {
-    class:'sun-glow', cx:CX, cy:CY, r:R_SUN,
-    fill:'none', stroke:'#a78bfa', 'stroke-width':2
-  }, g);
-  el('animate', {attributeName:'r', from:R_SUN, to:R_SUN*2.4, dur:'3.5s', repeatCount:'indefinite'}, pulse);
-  el('animate', {attributeName:'opacity', from:.7, to:0, dur:'3.5s', repeatCount:'indefinite'}, pulse);
-  // core
-  el('circle', {
-    class:'sun-core', cx:CX, cy:CY, r:R_SUN,
-    fill:'url(#sunGrad)', stroke:'rgba(255,255,255,.6)', 'stroke-width':2,
-    style:'filter:drop-shadow(0 0 26px #a78bfa) drop-shadow(0 0 50px #a78bfa)'
-  }, g);
-  // label
-  el('text', {x:CX, y:CY, fill:'#fff', 'font-size':22, 'font-weight':800, 'letter-spacing':1}, g).textContent = 'KEY';
-
-  // hover y click
-  g.addEventListener('mouseenter', ()=> showTooltip(data, CX, CY - R_SUN - 10));
-  g.addEventListener('mouseleave', hideTooltip);
-  g.addEventListener('click', ()=> selectNode(data));
-}
-
-/* =========================================================
-   DIBUJAR SUB-CENTROS + SUB-ÁREAS + PERSONAS
-   ========================================================= */
-function drawSubCenter(sub){
-  const area = sub.area;
-  const color = areaHex[area];
-  const angle = sub.angle;
-
-  // --- Posición del sub-centro ---
-  const [sx, sy] = polar(CX, CY, R_SUB, angle);
-
-  // Link desde Key
-  el('line', {
-    class:'link',
-    'data-from':'key', 'data-to':sub.id,
-    x1:CX, y1:CY, x2:sx, y2:sy,
-    stroke: color, 'stroke-width':2, opacity:.5
-  }, linksG);
-
-  // --- Sub-centro nodo ---
-  const sg = el('g', {class:'node-body', 'data-id':sub.id}, nodesG);
-  el('circle', {class:'halo', cx:sx, cy:sy, r:R_RING_SUB*1.7, fill:color}, sg);
-  el('circle', {
-    cx:sx, cy:sy, r:R_RING_SUB,
-    fill:'rgba(10,12,20,.95)', stroke:color, 'stroke-width':2.5,
-    style:`filter:drop-shadow(0 0 12px ${color})`
-  }, sg);
-  el('text', {
-    x:sx, y:sy - R_RING_SUB - 14,
-    fill:color, 'font-size':14, 'font-weight':800
-  }, sg).textContent = sub.name;
-  el('text', {
-    x:sx, y:sy + 1, fill:color, 'font-size':11, 'font-weight':700
-  }, sg).textContent = initials(sub.name);
-
-  sg.addEventListener('mouseenter', ()=> showTooltip(sub, sx, sy - R_RING_SUB - 22));
-  sg.addEventListener('mouseleave', hideTooltip);
-  sg.addEventListener('click', ()=> selectNode(sub));
-
-  // --- Sub-áreas ---
-  const areas = sub.children || [];
-  const n = areas.length;
-
-  // Ángulo en el que se abre el abanico (centrado en el ángulo del subcentro)
-  // Abanico total ~70°
-  const fan = 70;
-  const half = fan / 2;
-  const startA = angle - half;
-  const stepA = n > 1 ? fan / (n - 1) : 0;
-
-  areas.forEach((a, i)=>{
-    const aAngle = n === 1 ? angle : startA + stepA * i;
-    const [ax, ay] = polar(CX, CY, R_AREAS, aAngle);
-
-    // Link desde sub-centro a sub-área
-    el('line', {
-      class:'link',
-      'data-from':sub.id, 'data-to':a.id,
-      x1:sx, y1:sy, x2:ax, y2:ay,
-      stroke: color, 'stroke-width':1.5, opacity:.35
-    }, linksG);
-
-    // --- Nodo sub-área ---
-    const ag = el('g', {class:'node-body', 'data-id':a.id}, nodesG);
-    el('circle', {class:'halo', cx:ax, cy:ay, r:R_RING_AREA*1.8, fill:color}, ag);
-    el('circle', {
-      cx:ax, cy:ay, r:R_RING_AREA,
-      fill:'rgba(10,12,20,.9)', stroke:color, 'stroke-width':2,
-      style:`filter:drop-shadow(0 0 8px ${color})`
-    }, ag);
-    el('text', {
-      x:ax, y:ay - R_RING_AREA - 12,
-      fill:color, 'font-size':11, 'font-weight':700
-    }, ag).textContent = a.name;
-    el('text', {
-      x:ax, y:ay + 1, fill:color, 'font-size':9, 'font-weight':700
-    }, ag).textContent = initials(a.name);
-
-    ag.addEventListener('mouseenter', ()=> showTooltip(a, ax, ay - R_RING_AREA - 20));
-    ag.addEventListener('mouseleave', hideTooltip);
-    ag.addEventListener('click', ()=> selectNode(a));
-
-    // --- Personas ---
-    const people = a.people || [];
-    const pn = people.length;
-
-    // Distribuir en anillos según cantidad
-    const perRing = pn <= 10 ? pn : Math.ceil(pn / Math.ceil(pn / 10));
-    const rings = Math.ceil(pn / perRing);
-
-    // Ángulo del abanico alrededor de la sub-área (más cerrado)
-    const pFan = Math.min(45, 12 + pn * 2);
-    const pHalf = pFan / 2;
-
-    people.forEach((p, j)=>{
-      const ringIdx = Math.floor(j / perRing);
-      const idxInRing = j % perRing;
-      const totalInRing = Math.min(perRing, pn - ringIdx * perRing);
-
-      const ringR = R_PEOPLE_BASE + ringIdx * R_PEOPLE_STEP;
-
-      // Distribuir dentro del anillo, centrado en aAngle
-      const pStart = totalInRing === 1 ? aAngle : aAngle - pHalf;
-      const pStep = totalInRing > 1 ? (pHalf * 2) / (totalInRing - 1) : 0;
-      const pAngle = totalInRing === 1 ? aAngle : pStart + pStep * idxInRing;
-
-      const [px, py] = polar(CX, CY, ringR, pAngle);
-
-      // Link desde la sub-área
-      el('line', {
-        class:'link',
-        'data-from':a.id, 'data-to':p.id,
-        x1:ax, y1:ay, x2:px, y2:py,
-        stroke: color, 'stroke-width':1, opacity:.22
-      }, linksG);
-
-      // --- Nodo persona ---
-      const pg = el('g', {class:'node-body', 'data-id':p.id}, nodesG);
-      el('circle', {class:'halo', cx:px, cy:py, r:R_PERSON*2.2, fill:color}, pg);
-      el('circle', {
-        cx:px, cy:py, r:R_PERSON,
-        fill:'rgba(10,12,20,.95)', stroke:color, 'stroke-width':1.5
-      }, pg);
-      el('text', {
-        x:px, y:py + 1, fill:color, 'font-size':8, 'font-weight':700
-      }, pg).textContent = initials(p.name);
-
-      pg.addEventListener('mouseenter', ()=> showTooltip(p, px, py - R_PERSON - 12));
-      pg.addEventListener('mouseleave', hideTooltip);
-      pg.addEventListener('click', ()=> selectNode(p));
-    });
-  });
-}
-
-/* =========================================================
-   RENDER
-   ========================================================= */
-function render(){
-  linksG.innerHTML = '';
-  ringsG.innerHTML = '';
-  nodesG.innerHTML = '';
-
-  drawKey();
-
-  data.children.forEach(sub=> drawSubCenter(sub));
-}
-
-render();
-
-/* =========================================================
-   TOOLTIP
-   ========================================================= */
-const tooltip = document.getElementById('tooltip');
-function showTooltip(node, svgX, svgY){
-  const svg = document.getElementById('map');
-  const rect = svg.getBoundingClientRect();
-  const vb = svg.viewBox.baseVal;
-  const scaleX = rect.width / vb.width;
-  const scaleY = rect.height / vb.height;
-  const scale = Math.min(scaleX, scaleY);
-  const offsetX = (rect.width - vb.width * scale) / 2;
-  const offsetY = (rect.height - vb.height * scale) / 2;
-
-  // Considera el transform del stage (zoom + pan)
-  const t = currentTransform;
-  const screenX = (svgX * scale * t.scale) + offsetX + rect.left + t.x;
-  const screenY = (svgY * scale * t.scale) + offsetY + rect.top + t.y;
-
-  const area = node.area || 'key';
-  const color = areaHex[area] || '#a78bfa';
-
-  tooltip.innerHTML = `
-    <div class="tooltip-name">${node.name}</div>
-    <div class="tooltip-role">${node.role || ''}</div>
-  `;
-  tooltip.style.left = screenX + 'px';
-  tooltip.style.top = (screenY - 10) + 'px';
-  tooltip.classList.add('show');
-}
-function hideTooltip(){ tooltip.classList.remove('show'); }
-
-/* =========================================================
-   PANEL
-   ========================================================= */
-const panel = document.getElementById('panel');
-const panelContent = document.getElementById('panelContent');
-const stage = document.getElementById('stage');
-
-function findNode(root, id){
-  if(root.id === id) return root;
-  if(root.children){
-    for(const c of root.children){
-      const f = findNode(c, id);
-      if(f) return f;
+  // Render top 2 cards (next behind current)
+  const remaining = queue.slice(currentIndex, currentIndex + 2);
+  remaining.reverse().forEach((c, i)=>{
+    const card = buildCard(c);
+    if(i === 0){
+      // card behind — slightly offset
+      card.style.transform = 'scale(0.94) translateY(-12px)';
+      card.style.opacity = '0.5';
+      card.style.pointerEvents = 'none';
+    } else {
+      // top card — interactive
+      attachDragEvents(card, c);
     }
-  }
-  return null;
+    deck.appendChild(card);
+  });
+
+  updateProgress();
 }
 
-function selectNode(node){
-  const area = node.area || 'key';
-  const color = areaHex[area];
-  const directChildren = node.children || [];
-  const people = node.people || [];
+/* =========================================================
+   DRAG / SWIPE
+   ========================================================= */
+function attachDragEvents(card, c){
+  let startX = 0, startY = 0, currentX = 0, currentY = 0;
+  let dragging = false;
 
-  // Combine: children (sub-áreas) + people
-  const reports = directChildren.length ? directChildren : people;
+  const likeLabel = card.querySelector('.drag-label.like');
+  const nopeLabel = card.querySelector('.drag-label.nope');
 
-  const reportsHTML = reports.length ? `
-    <div class="section">
-      <h3>${directChildren.length ? 'Sub-áreas / equipo directo' : 'Personas en este nodo'} · ${reports.length}</h3>
-      <div class="report-list">
-        ${reports.map(r=>{
-          const rColor = areaHex[r.area || area] || color;
-          return `<div class="report-item" data-id="${r.id}">
-            <div class="report-avatar" style="background:linear-gradient(135deg,${rColor},${rColor}99);box-shadow:0 0 10px ${rColor}55">${initials(r.name)}</div>
-            <div class="report-info">
-              <div class="report-name">${r.name}</div>
-              <div class="report-role">${r.role || ''}</div>
-            </div>
-          </div>`;
-        }).join('')}
+  function onStart(e){
+    dragging = true;
+    card.classList.add('dragging');
+    const p = e.touches ? e.touches[0] : e;
+    startX = p.clientX;
+    startY = p.clientY;
+  }
+  function onMove(e){
+    if(!dragging) return;
+    const p = e.touches ? e.touches[0] : e;
+    currentX = p.clientX - startX;
+    currentY = p.clientY - startY;
+    const rot = currentX / 20;
+    card.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rot}deg)`;
+
+    const likeOp = Math.max(0, Math.min(1, currentX / 100));
+    const nopeOp = Math.max(0, Math.min(1, -currentX / 100));
+    likeLabel.style.opacity = likeOp;
+    nopeLabel.style.opacity = nopeOp;
+  }
+  function onEnd(){
+    if(!dragging) return;
+    dragging = false;
+    card.classList.remove('dragging');
+    const threshold = 90;
+    if(currentX > threshold) completeSwipe('right', card, c);
+    else if(currentX < -threshold) completeSwipe('left', card, c);
+    else {
+      card.style.transform = '';
+      likeLabel.style.opacity = 0;
+      nopeLabel.style.opacity = 0;
+    }
+    currentX = 0; currentY = 0;
+  }
+
+  card.addEventListener('mousedown', onStart);
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onEnd);
+  card.addEventListener('touchstart', onStart, {passive:true});
+  card.addEventListener('touchmove', onMove, {passive:true});
+  card.addEventListener('touchend', onEnd);
+}
+
+/* =========================================================
+   SWIPE ACTIONS
+   ========================================================= */
+function completeSwipe(direction, card, c){
+  card.classList.add(direction === 'right' ? 'exit-right' : 'exit-left');
+  if(direction === 'right'){
+    matches.push(c);
+    history.push({type:'match', candidate:c});
+    // Delay to let animation finish
+    setTimeout(()=>{
+      currentIndex++;
+      renderNext();
+      if(currentIndex < queue.length) showMatchModal(c);
+      else setTimeout(showSummary, 300);
+    }, 280);
+  } else {
+    passed.push(c);
+    history.push({type:'pass', candidate:c});
+    setTimeout(()=>{
+      currentIndex++;
+      renderNext();
+      if(currentIndex >= queue.length) setTimeout(showSummary, 300);
+    }, 280);
+  }
+}
+
+function currentCard(){
+  return deck.querySelector('.card:not([style*="scale(0.94)"])');
+}
+
+document.getElementById('matchBtn').addEventListener('click', ()=>{
+  const c = queue[currentIndex];
+  const card = deck.querySelector('.card:not([style*="scale(0.94)"])');
+  if(card && c) completeSwipe('right', card, c);
+});
+document.getElementById('passBtn').addEventListener('click', ()=>{
+  const c = queue[currentIndex];
+  const card = deck.querySelector('.card:not([style*="scale(0.94)"])');
+  if(card && c) completeSwipe('left', card, c);
+});
+document.getElementById('undoBtn').addEventListener('click', ()=>{
+  if(currentIndex === 0) return;
+  const last = history.pop();
+  if(!last) return;
+  if(last.type === 'match') matches.pop();
+  else passed.pop();
+  currentIndex--;
+  renderNext();
+});
+
+document.addEventListener('keydown', e=>{
+  if(modal.classList.contains('show')){
+    if(e.key === 'Enter' || e.key === ' ') document.getElementById('matchContinue').click();
+    return;
+  }
+  if(e.key === 'ArrowRight') document.getElementById('matchBtn').click();
+  if(e.key === 'ArrowLeft') document.getElementById('passBtn').click();
+});
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+function updateProgress(){
+  const total = queue.length;
+  const done = currentIndex;
+  document.getElementById('progressText').textContent = `${done} / ${total}`;
+  document.getElementById('progressFill').style.width = `${(done/total)*100}%`;
+}
+
+/* =========================================================
+   MATCH MODAL + CONFETTI
+   ========================================================= */
+function showMatchModal(c){
+  const best = bestProgram(c);
+  const p = PROGRAMS[best];
+  modalSub.innerHTML = `<strong style="color:${p.color}">${c.name}</strong> encaja perfecto como <strong style="color:${p.color}">${c.role}</strong> en <strong style="color:${p.color}">${p.name}</strong> con <strong style="color:${p.color}">${c.scores[best]}%</strong> de compatibilidad.`;
+  modal.classList.add('show');
+  modal.style.setProperty('--accent', p.color);
+  launchConfetti();
+}
+
+document.getElementById('matchContinue').addEventListener('click', ()=>{
+  modal.classList.remove('show');
+});
+
+function launchConfetti(){
+  const colors = ['#ff66a3','#a78bfa','#22d3ee','#fbbf24','#34d399'];
+  for(let i = 0; i < 40; i++){
+    setTimeout(()=>{
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.top = '-20px';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.animationDuration = (2 + Math.random()*2) + 's';
+      c.style.transform = `rotate(${Math.random()*360}deg)`;
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      document.body.appendChild(c);
+      setTimeout(()=> c.remove(), 4000);
+    }, i * 30);
+  }
+}
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+function showSummary(){
+  controls.style.display = 'none';
+
+  // Agrupar matches por programa ganador
+  const grouped = {key:[], windsor:[], heliot:[], cosecha:[]};
+  matches.forEach(c=>{
+    const best = bestProgram(c);
+    grouped[best].push(c);
+  });
+
+  summary.innerHTML = `
+    <div class="summary-header">
+      <h2>💖 Tus matches</h2>
+      <p>Así queda tu equipo según los matches que hiciste</p>
+    </div>
+    <div class="summary-stats">
+      <div class="stat">
+        <div class="stat-num" style="color:#ff66a3">${matches.length}</div>
+        <div class="stat-lbl">Matches</div>
       </div>
-    </div>` : '';
-
-  panelContent.innerHTML = `
-    <div class="panel-header">
-      <div class="panel-avatar" style="background:linear-gradient(135deg,${color},${color}88);box-shadow:0 0 22px ${color}66">${initials(node.name)}</div>
-      <div style="min-width:0;flex:1">
-        <div class="panel-name">${node.name}</div>
-        <div class="panel-role">${node.role || ''}</div>
-        <span class="panel-area" style="background:${color}22;color:${color}">${areaNames[area]}</span>
+      <div class="stat">
+        <div class="stat-num" style="color:#9b93b8">${passed.length}</div>
+        <div class="stat-lbl">Pasados</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:#a78bfa">${matches.length ? Math.round(matches.reduce((a,c)=>a + c.scores[bestProgram(c)], 0) / matches.length) : 0}%</div>
+        <div class="stat-lbl">Match promedio</div>
       </div>
     </div>
-    ${node.bio ? `<div class="section"><h3>Sobre su rol</h3><div class="bio" style="border-left-color:${color}">${node.bio}</div></div>` : ''}
-    ${reportsHTML}
+
+    ${Object.entries(grouped).map(([pid, list])=>{
+      if(list.length === 0) return '';
+      const p = PROGRAMS[pid];
+      return `
+        <div class="program-section">
+          <div class="program-title" style="color:${p.color}">
+            <span class="program-dot" style="background:${p.color};box-shadow:0 0 10px ${p.color}"></span>
+            ${p.name} · ${list.length} ${list.length === 1 ? 'persona' : 'personas'}
+          </div>
+          <div class="program-list">
+            ${list.map(c => `
+              <div class="match-row">
+                <div class="mr-avatar" style="background:linear-gradient(135deg,${p.color},${p.color}99)">${initials(c.name)}</div>
+                <div class="mr-info">
+                  <div class="mr-name">${c.name}</div>
+                  <div class="mr-role">${c.role}</div>
+                </div>
+                <div class="mr-pct" style="color:${p.color}">${c.scores[pid]}%</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }).join('')}
+
+    ${matches.length === 0 ? `
+      <div style="text-align:center;padding:40px 20px;color:var(--muted);font-size:13px">
+        No hiciste ningún match 😢<br>Intenta de nuevo.
+      </div>
+    ` : ''}
+
+    <button class="restart-btn" onclick="restart()">↺ Volver a empezar</button>
   `;
-
-  // Click en sub-item → seleccionar ese
-  panelContent.querySelectorAll('.report-item').forEach(el=>{
-    el.addEventListener('click', ()=>{
-      const child = findNode(data, el.dataset.id);
-      if(child) selectNode(child);
-    });
-  });
-
-  panel.classList.add('open');
-  stage.classList.add('with-panel');
-
-  // Resaltar en el mapa
-  applySelection(node);
+  summary.classList.add('show');
 }
 
-function applySelection(node){
-  const allBodies = document.querySelectorAll('.node-body');
-  allBodies.forEach(b => b.classList.remove('selected','descendant','dimmed'));
-  // Resalta el nodo y atenúa todo lo demás (simplificado)
-  allBodies.forEach(b=>{
-    if(b.dataset.id === node.id) b.classList.add('selected');
-    else b.classList.add('dimmed');
-  });
+function restart(){
+  queue = [...candidates].sort(()=>Math.random()-0.5);
+  currentIndex = 0;
+  matches = [];
+  passed = [];
+  history = [];
+  summary.classList.remove('show');
+  controls.style.display = '';
+  renderNext();
 }
-
-function closePanel(){
-  panel.classList.remove('open');
-  stage.classList.remove('with-panel');
-  document.querySelectorAll('.node-body').forEach(b => b.classList.remove('selected','dimmed','descendant'));
-}
-
-document.getElementById('panelClose').addEventListener('click', closePanel);
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closePanel(); });
 
 /* =========================================================
-   ZOOM & PAN
+   INIT
    ========================================================= */
-const svg = document.getElementById('map');
-let currentTransform = {x:0, y:0, scale:1};
-function applyTransform(){
-  svg.style.transform = `translate(${currentTransform.x}px, ${currentTransform.y}px) scale(${currentTransform.scale})`;
-}
-
-document.getElementById('zoomIn').addEventListener('click', ()=>{
-  currentTransform.scale = Math.min(currentTransform.scale * 1.25, 4);
-  applyTransform();
-});
-document.getElementById('zoomOut').addEventListener('click', ()=>{
-  currentTransform.scale = Math.max(currentTransform.scale / 1.25, 0.4);
-  applyTransform();
-});
-document.getElementById('zoomReset').addEventListener('click', ()=>{
-  currentTransform = {x:0, y:0, scale:1};
-  applyTransform();
-});
-
-// Zoom con rueda
-stage.addEventListener('wheel', (e)=>{
-  e.preventDefault();
-  const delta = e.deltaY > 0 ? 0.9 : 1.1;
-  currentTransform.scale = Math.max(0.4, Math.min(4, currentTransform.scale * delta));
-  applyTransform();
-}, {passive:false});
-
-// Pan con drag
-let isDragging = false;
-let dragStart = {x:0, y:0};
-let transformStart = {x:0, y:0};
-
-stage.addEventListener('mousedown', (e)=>{
-  if(e.target.closest('.node-body')) return;
-  isDragging = true;
-  stage.classList.add('grabbing');
-  dragStart = {x:e.clientX, y:e.clientY};
-  transformStart = {x:currentTransform.x, y:currentTransform.y};
-});
-document.addEventListener('mousemove', (e)=>{
-  if(!isDragging) return;
-  currentTransform.x = transformStart.x + (e.clientX - dragStart.x);
-  currentTransform.y = transformStart.y + (e.clientY - dragStart.y);
-  applyTransform();
-});
-document.addEventListener('mouseup', ()=>{
-  isDragging = false;
-  stage.classList.remove('grabbing');
-});
-
-// Touch pan (móvil)
-let touchStart = null;
-stage.addEventListener('touchstart', (e)=>{
-  if(e.target.closest('.node-body')) return;
-  if(e.touches.length === 1){
-    touchStart = {x:e.touches[0].clientX, y:e.touches[0].clientY, tx:currentTransform.x, ty:currentTransform.y};
-  }
-}, {passive:true});
-stage.addEventListener('touchmove', (e)=>{
-  if(!touchStart || e.touches.length !== 1) return;
-  currentTransform.x = touchStart.tx + (e.touches[0].clientX - touchStart.x);
-  currentTransform.y = touchStart.ty + (e.touches[0].clientY - touchStart.y);
-  applyTransform();
-}, {passive:true});
-stage.addEventListener('touchend', ()=>{ touchStart = null; });
-
-// Cerrar panel al click en fondo
-stage.addEventListener('click', (e)=>{
-  if(!e.target.closest('.node-body')) closePanel();
-});
+renderNext();
 </script>
-
 </body>
 </html>
